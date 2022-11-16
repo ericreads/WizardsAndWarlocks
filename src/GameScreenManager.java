@@ -42,11 +42,7 @@ public class GameScreenManager {
 	//Remove all the screens from the list
 	public void clearScreens()
 	{
-		for(int i = 0; i < screens.size(); i++)
-		{
-			screens.remove(i);
-			i--;
-		}
+		screens.clear();
 	}
 	//Calls the update method of the screen at the top of the list
 	public void update(int deltaTime)

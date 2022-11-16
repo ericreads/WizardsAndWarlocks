@@ -62,6 +62,8 @@ public class GameJPanel extends JPanel
 	
 	public static void main(String[] args) throws InterruptedException{
 	{
+		//Enable hardware accelerated graphics to improve performance for linux users(eric)
+		System.setProperty("sun.java2d.opengl", "true");
 		//Initialize a new window
 		JFrame frame = new JFrame("Wizards and Warlocks");
 		GameJPanel p = new GameJPanel();
@@ -76,7 +78,8 @@ public class GameJPanel extends JPanel
 		{
 			p.update();
 			p.repaint();
-			Thread.sleep(10);
+			//Set refresh rate to around 16.66ms the default refresh rate of most monitors
+			Thread.sleep(16);
 		}
 	}}
 }

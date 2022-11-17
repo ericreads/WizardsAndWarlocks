@@ -60,7 +60,7 @@ public class GameJPanel extends JPanel
 		//Draw the current GameScreen
 		GameScreenManager.getInstance().draw(g2d);
 	}
-	
+	//2
 	public static void main(String[] args) throws InterruptedException{
 	{
 		//Enable hardware accelerated graphics to improve performance for linux users(eric)

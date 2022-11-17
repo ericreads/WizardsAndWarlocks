@@ -9,6 +9,7 @@ public class GameJPanel extends JPanel
 	//Create a long to store the time the last time the loop was run (for calculating deltaTime)
 	private long pastTime;
 	
+	// hi
 	public GameJPanel()
 	{
 		addKeyListener(new KeyListener() {

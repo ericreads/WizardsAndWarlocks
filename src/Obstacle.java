@@ -27,6 +27,11 @@ public class Obstacle {
 	{
 		return enabled;
 	}
+	//Method to get the bounds of the obstacle
+	public Rectangle getBounds()
+	{
+		return bounds;
+	}
 	public void draw(Graphics2D g)
 	{
 		//Draw a temp rectangle

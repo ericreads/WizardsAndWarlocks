@@ -7,8 +7,8 @@ public class Player {
 	
 	private int x;
 	private int y;
-	private float speedX;
-	private float speedY;
+	private float velocityX;
+	private float velocityY;
 	
 	private static int width = 50;
 	private static int height = 50; 
@@ -26,6 +26,8 @@ public class Player {
 	public Player(int x, int y) {
 		this.x = x;
 		this.y = y;
+		this.velocityX = 0;
+		this.velocityY = 0;
 		
 		// Rectangle class stores player's position; used for collision detection
 		position = new Rectangle(x, y, width, height);
@@ -39,7 +41,7 @@ public class Player {
 		health = 5; 
 		isDead = false;
 	}
-
+	
 	public Rectangle getPosition()
 	{
 		return this.position;
@@ -73,22 +75,22 @@ public class Player {
         if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) 
         {
             left = false;
-            speedX = 0;
+            velocityX = 0;
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) 
         {
             right = false;
-            speedX = 0;
+            velocityX = 0;
         }
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) 
         {
             up = false;
-            speedY = 0;
+            velocityY = 0;
         }
         if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) 
         {
             down = false;
-            speedY = 0;
+            velocityY = 0;
         }
     }
 
@@ -105,11 +107,11 @@ public class Player {
     public void paint(Graphics2D g) 
     {
 		// Ellipse temporarily represents player
-    	g.setColor(Color.BLACK);
+    	g.setColor(Color.RED);
     	g.fillOval(x, y, width, height);
     	
     	// Draw position to represent player's bounds
-    	g.setColor(Color.RED);
+    	g.setColor(Color.BLACK);
     	g.drawRect((int)(position.getX()), (int)(position.getY()), (int)(position.getWidth()), (int)(position.getHeight())); 
     }
     
@@ -119,50 +121,50 @@ public class Player {
     		// Prevent player from moving off-screen
     		if (x - 0.4 < 0)
     		{
-    			speedX = 0;
+    			velocityX = 0;
     		}
     		else
     		{
-    			speedX = -0.4f;
+    			velocityX = -0.4f;
     		}
     	}
     	if (right) 
     	{
     		if (x + width + 0.4 > 1262)
     		{
-    			speedX = 0;
+    			velocityX = 0;
     		}
     		else
     		{
-    			speedX = 0.4f;
+    			velocityX = 0.4f;
     		}
     	}
     	if (up) 
     	{
     		if (y - 0.4 < 0)
     		{
-    			speedY = 0;
+    			velocityY = 0;
     		}
     		else
     		{
-    			speedY = -0.4f;
+    			velocityY = -0.4f;
     		}
     	}
     	if (down) 
     	{
     		if (y + height + 0.4 > 680)
     		{
-    			speedY = 0;
+    			velocityY = 0;
     		}
     		else
     		{
-    			speedY = 0.4f;
+    			velocityY = 0.4f;
     		}
     	}
     	
     	// Set player's position 
-    	x += speedX * deltaTime;
-    	y += speedY * deltaTime;
+    	x += velocityX * deltaTime;
+    	y += velocityY * deltaTime;
     	
     	position.setLocation(x, y);
     }

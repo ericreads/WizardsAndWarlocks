@@ -1,4 +1,4 @@
-//Import required modules
+// Import required modules
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -9,7 +9,6 @@ public class GameJPanel extends JPanel
 	//Create a long to store the time the last time the loop was run (for calculating deltaTime)
 	private long pastTime;
 	
-	// hi
 	public GameJPanel()
 	{
 		addKeyListener(new KeyListener() {
@@ -55,13 +54,14 @@ public class GameJPanel extends JPanel
 	@Override
 	public void paint(Graphics g)
 	{
+		// Refresh screen each time
+		super.paint(g);
 		//Cast g to a usable Graphics2D
 		Graphics2D g2d = (Graphics2D) g;
 		//Draw the current GameScreen
 		GameScreenManager.getInstance().draw(g2d);
 	}
-	//2
-	// 4
+
 	public static void main(String[] args) throws InterruptedException{
 	{
 		//Enable hardware accelerated graphics to improve performance for linux users(eric)
@@ -74,8 +74,8 @@ public class GameJPanel extends JPanel
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		//Put the test screen in the GameScreenManager
-		GameScreenManager.getInstance().addScreen(new TestScreen());
+		//Put the player screen in the GameScreenManager
+		GameScreenManager.getInstance().addScreen(new PlayerScreen());
 		while(true)
 		{
 			p.update();

@@ -23,13 +23,17 @@ public class Player {
 	private int health;
 	private boolean isDead;
 	
-	public Player(int x, int y) {
+	private Obstacle[][] obstacles;
+	
+	public Player(int x, int y, Stage stage) {
 		this.x = x;
 		this.y = y;
 		
 		// Rectangle class stores player's position; used for collision detection
 		position = new Rectangle(x, y, width, height);
 		
+		//Store a reference to the obstacles
+		obstacles = stage.getObstacles();
 		// Initialize movement indicators (left, right, up, and down)
 		left = false;
 		right = false;
@@ -163,6 +167,36 @@ public class Player {
     	// Set player's position 
     	x += speedX * deltaTime;
     	y += speedY * deltaTime;
+    	
+    	//Collision Detection
+    	for(int i = 0; i < obstacles.length; i++)
+    	{
+    		for(int j = 0; j < obstacles[i].length; j++)
+    		{
+    			if(obstacles[i][j].getEnabled())
+    			{
+    				if(obstacles[i][j].getBounds().intersects(position))
+    				{
+    					//To push the player out of the object take the rectangle created from the intersection of the player and the object,
+    					//then move them along the shortest dimension of that rectangle to get them out.
+    					if(obstacles[i][j].getBounds().intersection(position).width < obstacles[i][j].getBounds().intersection(position).height)
+    					{
+    						if(position.x < obstacles[i][j].getBounds().intersection(position).x)
+    							x -= obstacles[i][j].getBounds().intersection(position).width;
+    						else
+    							x += obstacles[i][j].getBounds().intersection(position).width;
+    					} else
+    					{
+    						if(position.y < obstacles[i][j].getBounds().intersection(position).y)
+    							y -= obstacles[i][j].getBounds().intersection(position).height;
+    						else
+    							y += obstacles[i][j].getBounds().intersection(position).height;
+    					}
+    				}
+    					
+    			}
+    		}
+    	}
     	
     	position.setLocation(x, y);
     }

@@ -74,7 +74,7 @@ public class GameJPanel extends JPanel
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		//Put the player screen in the GameScreenManager
-		GameScreenManager.getInstance().addScreen(new GameplayScreen());
+		//GameScreenManager.getInstance().addScreen();
 		while(true)
 		{
 			p.update();

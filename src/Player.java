@@ -23,7 +23,7 @@ public class Player {
 	private boolean dead;
 	
 	private Enemy[] enemies;
-  private Obstacle[][] obstacles;
+  	private Obstacle[][] obstacles;
   
 	public Player(int x, int y, Enemy[] enemies, Stage stage) {
 		this.x = x;

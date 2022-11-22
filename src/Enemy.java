@@ -75,8 +75,6 @@ public class Enemy
 		y += velocityY * deltaTime;
 		
 		position.setLocation(x, y);
-		
-		
 	}
 	
 	public void update(int deltaTime)

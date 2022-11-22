@@ -1,5 +1,5 @@
 // Import required modules
-import javax.swing.*;
+//import javax.swing.*;
 import java.awt.*;
 
 public class Enemy 
@@ -12,18 +12,19 @@ public class Enemy
 	private double velocityY;
 	
 	private Rectangle position;
+	private Obstacle[][] obstacles;
 	
 	private static int width = 40;
 	private static int height = 40;
 	
 	private Player player;
 	
-	public Enemy(int x, int y, Player player)
+	public Enemy(int x, int y, Player player, Stage stage)
 	{
 		this.x = x;
 		this.y = y;
 		
-		speed = 0.15;
+		speed = Math.random() * 0.2;
 		velocityX = 0;
 		velocityY = 0;
 		
@@ -31,6 +32,7 @@ public class Enemy
 		position = new Rectangle(x, y, width, height);
 		
 		this.player = player;		
+		this.obstacles = stage.getObstacles();
 	}
 	
 	public Rectangle getPosition()
@@ -47,8 +49,14 @@ public class Enemy
 		g.drawRect((int)(position.getX()), (int)(position.getY()), (int)(position.getWidth()), (int)(position.getHeight())); 
 	}
 	
-	public void move(int deltaTime) 
+	public void update(int deltaTime) 
 	{
+		
+		if (player.intersects(this))
+    	{
+    		player.takeDamage(0.5f);
+    	}
+		
 		// Determine individual x and y displacements
 		double displacementX = player.getPosition().getX() - this.x;
 		double displacementY = player.getPosition().getY() - this.y;
@@ -75,12 +83,39 @@ public class Enemy
 		y += velocityY * deltaTime;
 		
 		position.setLocation(x, y);
-	}
-	
-	public void update(int deltaTime)
-	{
-		// This method will be used when Enemy deaths are implemented
-		this.move(deltaTime);
+		
+		//Collision Detection
+    	for(int i = 0; i < obstacles.length; i++)
+    	{
+    		for(int j = 0; j < obstacles[i].length; j++)
+    		{
+    			if(obstacles[i][j].getEnabled())
+    			{
+    				if(obstacles[i][j].getBounds().intersects(position))
+    				{
+    					//To push the player out of the object take the rectangle created from the intersection of the player and the object,
+    					//then move them along the shortest dimension of that rectangle to get them out.
+    					if(obstacles[i][j].getBounds().intersection(position).width < obstacles[i][j].getBounds().intersection(position).height)
+    					{
+    						if(position.x < obstacles[i][j].getBounds().intersection(position).x)
+    							x -= obstacles[i][j].getBounds().intersection(position).width;
+    						else
+    							x += obstacles[i][j].getBounds().intersection(position).width;
+    					} else
+    					{
+    						if(position.y < obstacles[i][j].getBounds().intersection(position).y)
+    							y -= obstacles[i][j].getBounds().intersection(position).height;
+    						else
+    							y += obstacles[i][j].getBounds().intersection(position).height;
+    					}
+    				}
+    					
+    			}
+    		}
+    	}
+    	
+    	position.setLocation(x, y);
+    		
 	}
 	
 	// Returns 'unit vector' (-1, 1, or 0, representing direction of vector)

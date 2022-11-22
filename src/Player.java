@@ -4,33 +4,37 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Player {
-	
 	private int x;
 	private int y;
-	private float velocityX;
-	private float velocityY;
 	
-	private static int width = 50;
-	private static int height = 50; 
+	private double speed;
+	private double velocityX;
+	private double velocityY;
 	
-	private Rectangle position; 
+	private static int width = 40;
+	private static int height = 40; 
 	
-	private boolean left;
-	private boolean right;
-	private boolean up;
-	private boolean down;
+	private Rectangle position;	
+	private int collisionDuration; // Collision duration, in # of frames
 	
-	private int health;
-	private boolean isDead;
+	private boolean left, right, up, down;
 	
-	public Player(int x, int y) {
+	private double health;
+	private boolean dead;
+	
+	private Enemy[] enemies; 
+	
+	public Player(int x, int y, Enemy[] enemies) {
 		this.x = x;
 		this.y = y;
-		this.velocityX = 0;
-		this.velocityY = 0;
+		
+		speed = 0.3;
+		velocityX = 0;
+		velocityY = 0;
 		
 		// Rectangle class stores player's position; used for collision detection
 		position = new Rectangle(x, y, width, height);
+		collisionDuration = 0;
 		
 		// Initialize movement indicators (left, right, up, and down)
 		left = false;
@@ -38,13 +42,28 @@ public class Player {
 		up = false;
 		down = false;
 	
+		// Initialize full health (5 'hearts')
 		health = 5; 
-		isDead = false;
+		dead = false;
+		
+		this.enemies = enemies;
 	}
 	
 	public Rectangle getPosition()
 	{
 		return this.position;
+	}
+	
+	public boolean intersects(Enemy enemy)
+	{
+		if (enemy.getPosition().intersects(this.position))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	// KeyEvent input is passed from GameScreenManager Class when key is pressed
@@ -94,21 +113,35 @@ public class Player {
         }
     }
 
-	public void takeDamage(int damage)
+	public void takeDamage(double damage) 
 	{
 		health -= damage;
-
-		if (health <= 0)
-		{
-			isDead = true;
-		}
 	}
     
-    public void paint(Graphics2D g) 
+    public void draw(Graphics2D g) 
     {
-		// Ellipse temporarily represents player
-    	g.setColor(Color.RED);
-    	g.fillOval(x, y, width, height);
+		// Ellipse temporarily represents player (red if alive, black if dead)
+    	if (!dead)
+    	{
+    		g.setColor(Color.RED);
+    		
+    		for (Enemy enemy : enemies)
+    		{
+    			if (this.intersects(enemy) && collisionDuration % 60 < 30)
+    			{
+    				g.setColor(Color.YELLOW); // Player flashes yellow to visually demonstrate taking damage (temporary)
+    			}
+    		}
+    		
+    		g.fillOval(x, y, width, height);
+    		
+    	}
+    	else
+    	{
+    		g.setColor(Color.black);
+    		g.fillOval(x, y, width, height);
+    	}
+    	
     	
     	// Draw position to represent player's bounds
     	g.setColor(Color.BLACK);
@@ -118,47 +151,47 @@ public class Player {
     public void move(int deltaTime) {
     	if (left)
     	{
-    		// Prevent player from moving off-screen
-    		if (x - 0.4 < 0)
+    		// Prohibit player from moving off-screen
+    		if (x - speed < 0)
     		{
     			velocityX = 0;
     		}
     		else
     		{
-    			velocityX = -0.4f;
+    			velocityX = -speed;
     		}
     	}
     	if (right) 
     	{
-    		if (x + width + 0.4 > 1262)
+    		if (x + width + speed > 1262)
     		{
     			velocityX = 0;
     		}
     		else
     		{
-    			velocityX = 0.4f;
+    			velocityX = speed;
     		}
     	}
     	if (up) 
     	{
-    		if (y - 0.4 < 0)
+    		if (y - speed < 0)
     		{
     			velocityY = 0;
     		}
     		else
     		{
-    			velocityY = -0.4f;
+    			velocityY = -speed;
     		}
     	}
     	if (down) 
     	{
-    		if (y + height + 0.4 > 680)
+    		if (y + height + speed > 680)
     		{
     			velocityY = 0;
     		}
     		else
     		{
-    			velocityY = 0.4f;
+    			velocityY = speed;
     		}
     	}
     	
@@ -167,5 +200,30 @@ public class Player {
     	y += velocityY * deltaTime;
     	
     	position.setLocation(x, y);
+    }
+    
+    public void update(int deltaTime)
+    {
+    	if (this.health <= 0)
+    	{
+    		dead = true; 
+    	}
+    	
+    	if (!dead)	
+    	{    		
+    		for (Enemy enemy: enemies)
+    		{
+    			if (this.intersects(enemy))
+        		{
+        			collisionDuration++;
+        			
+        			if (collisionDuration % 15 == 0) 
+        			{
+        				this.takeDamage(0.5); // For every 15 frames that Enemy intersects Player, Player takes damage
+        			}
+        		}
+    		}
+    		this.move(deltaTime); 
+    	}
     }
 }

@@ -80,7 +80,6 @@ public class Enemy
 	public void update(int deltaTime)
 	{
 		// This method will be used when Enemy deaths are implemented
-		
 		this.move(deltaTime);
 	}
 	

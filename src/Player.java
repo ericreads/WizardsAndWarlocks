@@ -1,5 +1,4 @@
 // Import required modules
-// import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -137,11 +136,6 @@ public class Player {
     		g.setColor(Color.black);
     		g.fillOval(x, y, width, height);
     	}
-    	
-    	
-    	// Draw position to represent player's bounds
-    	g.setColor(Color.BLACK);
-    	g.drawRect((int)(position.getX()), (int)(position.getY()), (int)(position.getWidth()), (int)(position.getHeight())); 
     }
     
     public void update(int deltaTime) {

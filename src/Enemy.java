@@ -1,5 +1,4 @@
 // Import required modules
-//import javax.swing.*;
 import java.awt.*;
 
 public class Enemy 
@@ -44,9 +43,6 @@ public class Enemy
 	{
 		g.setColor(Color.BLUE);
 		g.fillOval(x,  y, width, height);
-		
-		g.setColor(Color.BLACK);
-		g.drawRect((int)(position.getX()), (int)(position.getY()), (int)(position.getWidth()), (int)(position.getHeight())); 
 	}
 	
 	public void update(int deltaTime) 

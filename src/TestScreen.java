@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
-//import javax.swing.*;
 
 public class TestScreen extends GameScreen {
 
@@ -21,7 +20,7 @@ public class TestScreen extends GameScreen {
 		
 		for (int i = 0; i < enemies.length; i++)
 		{
-			enemies[i] = new Enemy((i * 300), -100, player, stage);
+			enemies[i] = new Enemy(1280 / enemies.length * i, -100, player, stage);
 		}
 	}
 
@@ -44,7 +43,7 @@ public class TestScreen extends GameScreen {
 		for (Enemy enemy : enemies)
 		{
 			enemy.draw(g);
-	}
+		}
 	}
 		
 

@@ -44,11 +44,9 @@ public class TestScreen extends GameScreen {
 		for (Enemy enemy : enemies)
 		{
 			enemy.draw(g);
-		}
-
-		
-		
 	}
+	}
+		
 
 	@Override
 	public void keyPressed(KeyEvent e) {

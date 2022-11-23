@@ -30,4 +30,15 @@ public class Spell {
 		bounds.y += vy * deltaTime;
 	}
 	
+	public int damage(int x, int y, int health)
+	{
+		int result = 0;
+		if (bounds.x == x && bounds.y == y)
+		{
+			result = health - damage;
+		}
+		 
+		return result;
+	}
+	
 }

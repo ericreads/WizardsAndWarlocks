@@ -17,6 +17,15 @@ public class SpellManager {
 	public void add(Spell spell, boolean playerFired)
 	{
 		
+		if (playerFired)
+		{
+			playerSpells.add(spell);
+		}
+		
+		else if (!playerFired)
+		{
+			enemySpells.add(spell);
+		}
 	}
 	
 }

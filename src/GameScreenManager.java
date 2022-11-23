@@ -30,7 +30,7 @@ public class GameScreenManager {
 	public void addScreen(GameScreen gameScreen)
 	{
 		screens.add(gameScreen);
-		screens.get(screens.size()-1).initialize();
+		screens.get(screens.size()-1).runInitialize();
 	}
 	//Removes one screen from the top of the list (making the one below it the one being rendered)
 	public void clearScreen()
@@ -48,13 +48,13 @@ public class GameScreenManager {
 	public void update(int deltaTime)
 	{
 		if(screens.size() > 0)
-			screens.get(screens.size()-1).update(deltaTime);
+			screens.get(screens.size()-1).runUpdate(deltaTime);
 	}
 	//Calls the draw method of the screen at the top of the list
 	public void draw(Graphics2D g)
 	{
 		if(screens.size() > 0)
-			screens.get(screens.size()-1).draw(g);
+			screens.get(screens.size()-1).runDraw(g);
 	}
 	//Calls the keyPressed method of the screen at the top of the list
 	public void keyPressed(KeyEvent e)

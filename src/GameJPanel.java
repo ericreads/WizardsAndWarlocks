@@ -8,7 +8,6 @@ public class GameJPanel extends JPanel
 {
 	//Create a long to store the time the last time the loop was run (for calculating deltaTime)
 	private long pastTime;
-	
 	public GameJPanel()
 	{
 		addKeyListener(new KeyListener() {
@@ -35,7 +34,6 @@ public class GameJPanel extends JPanel
 		});
 		setFocusable(true);
 	}
-	
 	public void update()
 	{
 		//Get the current time in milliseconds
@@ -75,7 +73,7 @@ public class GameJPanel extends JPanel
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		//Put the player screen in the GameScreenManager
-		//GameScreenManager.getInstance().addScreen();
+		GameScreenManager.getInstance().addScreen(new TestScreen());
 		while(true)
 		{
 			p.update();

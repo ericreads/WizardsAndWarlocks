@@ -8,8 +8,9 @@ public class Spell {
 	private Image sprite;
 	private Rectangle bounds;
 	private int vx, vy, damage;
+	private boolean isDead = false;
 	
-	public Spell(Image sprite, Rectangle bounds, int vx, int vy)
+	public Spell(Image sprite, Rectangle bounds, int vx, int vy, int damage)
 	{
 		this.bounds = bounds;
 		this.sprite = sprite;
@@ -18,16 +19,38 @@ public class Spell {
 		this.damage = damage;
 	}
 	
-	public void draw(Graphics g) 
+	public void draw(Graphics2D g) 
 	{
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.drawOval(bounds.x, bounds.y, bounds.width, bounds.height);
+		if(!isDead)
+			g.drawOval(bounds.x, bounds.y, bounds.width, bounds.height);
 	}
 	
+	public boolean getIsDead()
+	{
+		return isDead;
+	}
+
+	public void kill()
+	{
+		isDead = true;
+	}
+
+	public Rectangle getBounds()
+	{
+		return bounds;
+	}
+	
+	public int getDamage()
+	{
+		return damage;
+	}
+
 	public void update(int deltaTime)
 	{
 		bounds.x += vx * deltaTime;
 		bounds.y += vy * deltaTime;
+		if(bounds.x > 1290 || bounds.x < -10 || bounds.y > 730 || bounds.y < -10)
+			isDead = true;
 	}
 	
 	

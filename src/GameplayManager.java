@@ -1,0 +1,45 @@
+import java.awt.*;
+import java.awt.event.*;
+public class GameplayManager {
+    private Player player;
+    private Stage stage;
+    private SpellManager spellManager;
+    private EnemyManager enemyManager;
+    private float[] stageRands = new float[] {0.35f, 0.25f, 0.15f, 0.05f};
+    private int[] enemyCounts = new int[] {};
+    private int level = 0;
+    public GameplayManager()
+    {
+        stage = new Stage(stageRands[0]);
+		player = new Player(600, 370, stage);
+        enemyManager = new EnemyManager(player, stage, enemyLevels[0]);
+        spellManager = new SpellManager(stage, enemyManager, player);
+    }
+    public void update(int deltaTime)
+    {
+        player.update(deltaTime);
+        enemyManager.update(deltaTime);
+        spellManager.update(deltaTime);
+        if(enemyManager.shouldAdvance() && level + 1 > stageRands.length)
+        {
+            level++;
+            stage.randomize(stageRands[level]);
+            enemyManager.newWave(enemyLevels[level]);
+        }
+    }
+    public void draw(Graphics2D g)
+    {
+        stage.draw(g);
+        player.draw(g);
+        enemyManager.draw(g);
+        spellManager.draw(g);
+    }
+    public void keyPressed(KeyEvent e)
+    {
+        player.keyPressed(e);
+    }
+    public void keyReleased(KeyEvent e)
+    {
+        player.keyReleased(e);
+    }
+}

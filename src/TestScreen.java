@@ -3,59 +3,33 @@ import java.awt.event.KeyEvent;
 
 public class TestScreen extends GameScreen {
 
-	Player player;
-	Stage stage;
-	Enemy[] enemies;
+	GameplayManager gameManager;
 	
 	@Override
 	public void initialize() {
-		
-		stage = new Stage(0.15f);
-		player = new Player(600, 370, stage);
-		
-		
-		enemies = new Enemy[20];
-		
-		
-		
-		for (int i = 0; i < enemies.length; i++)
-		{
-			enemies[i] = new Enemy(1280 / enemies.length * i, -100, player, stage);
-		}
+		gameManager = new GameplayManager();
 	}
 
 	@Override
 	public void update(int deltaTime) {
-		player.update(deltaTime);
-		
-		for (Enemy enemy : enemies)
-		{
-			enemy.update(deltaTime);
-		}
-
+		gameManager.update(deltaTime);
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		player.draw(g);
-		stage.draw(g);
-		
-		for (Enemy enemy : enemies)
-		{
-			enemy.draw(g);
-		}
+		gameManager.draw(g);
 	}
 		
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		player.keyPressed(e);
+		gameManager.keyPressed(e);
 
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		player.keyReleased(e);
+		gameManager.keyReleased(e);
 
 	}
 

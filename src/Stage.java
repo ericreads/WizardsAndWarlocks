@@ -28,7 +28,7 @@ public class Stage {
 		for (int i = 0; i < obstacles.length; i++) {
 			for (int j = 0; j < obstacles[i].length; j++) {
 
-				if (Math.random() < obstaclePercent)
+				if (Math.random() < obstaclePercent && i != 0 && i != obstacles.length-1 && j != 0 && j != obstacles[i].length-1)
 					obstacles[i][j].enable();
 				else
 					obstacles[i][j].disable();

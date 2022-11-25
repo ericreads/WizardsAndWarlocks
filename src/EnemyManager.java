@@ -6,24 +6,27 @@ public class EnemyManager {
     private Stage stage;
     private Player player;
     private int enemyFreq;
+    private int enemyCount;
+    private int enemiesSpawned;
     private long counter;
-    private boolean calmBeforeTheStorm = true;
 
-    public EnemyManager(Player player, Stage stage, int enemyFreq)
+    public EnemyManager(Player player, Stage stage, int enemyCount)
     {
         this.player = player;
         this.stage = stage;
         this.counter = 0;
-        this.enemyFreq = enemyFreq;
+        this.enemyFreq = 2000;
+        this.enemyCount = enemyCount;
+        this.enemiesSpawned = 0;
         enemies = new ArrayList<Enemy>();
         enemies.add(new Enemy(-100, 0, player, stage));
     }
-
     public void update(int deltaTime)
     {
         counter += deltaTime;
-        if(counter > enemyFreq)
+        if(counter > enemyFreq && enemiesSpawned < enemyCount)
         {
+        	enemiesSpawned++;
             counter = 0;
             double randValue = Math.random();
             if(randValue < 0.25)
@@ -53,9 +56,14 @@ public class EnemyManager {
             }
         }
     }
-    public void newWave(int freq)
+    public void newWave(int count)
     {
-        
+        enemyCount = count;
+        enemiesSpawned = 0;
+    }
+    public boolean shouldAdvance()
+    {
+    	return enemiesSpawned >= enemyCount && enemies.size() <= 0;
     }
     public void draw(Graphics2D g)
     {

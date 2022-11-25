@@ -5,8 +5,8 @@ public class GameplayManager {
     private Stage stage;
     private SpellManager spellManager;
     private EnemyManager enemyManager;
-    private float[] stageRands = new float[] {0.35f, 0.25f, 0.15f, 0.05f};
-    private int[] enemyCounts = new int[] {};
+    private float[] stageRands = new float[] {0.25f, 0.15f, 0.10f, 0.05f};
+    private int[] enemyLevels = new int[] {10, 20, 30, 40, 50};
     private int level = 0;
     public GameplayManager()
     {
@@ -20,7 +20,7 @@ public class GameplayManager {
         player.update(deltaTime);
         enemyManager.update(deltaTime);
         spellManager.update(deltaTime);
-        if(enemyManager.shouldAdvance() && level + 1 > stageRands.length)
+        if(enemyManager.shouldAdvance() && level + 1 < stageRands.length)
         {
             level++;
             stage.randomize(stageRands[level]);

@@ -29,6 +29,7 @@ public class EnemyManager {
         	enemiesSpawned++;
             counter = 0;
             double randValue = Math.random();
+            //Randomly spawn enemies on each side of the screen
             if(randValue < 0.25)
             {
                 enemies.add(new Enemy((int)(randValue * 1280), -70, player, stage));

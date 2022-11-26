@@ -62,11 +62,11 @@ public class SpellManager {
 					playerSpells.get(i).kill();
 				}
 			}
-			for(int j = 0; i < stage.getObstacles().length; i++)
+			for(int j = 0; j < stage.getObstacles().length; j++)
 			{
 				for(int k = 0; k < stage.getObstacles()[j].length; k++)
 				{
-					if(stage.getObstacles()[j][k].getBounds().intersects(playerSpells.get(i).getBounds()))
+					if(stage.getObstacles()[j][k].getEnabled() && stage.getObstacles()[j][k].getBounds().intersects(playerSpells.get(i).getBounds()))
 						playerSpells.get(i).kill();
 				}
 			}
@@ -74,8 +74,10 @@ public class SpellManager {
 		for (int i = 0; i < playerSpells.size(); i++)
 		{
 			if(playerSpells.get(i).getIsDead())
+			{
 				playerSpells.remove(playerSpells.get(i));
-			i--;
+				i--;
+			}
 		}
 		for (int i = 0; i < enemySpells.size(); i++)
 		{
@@ -85,11 +87,11 @@ public class SpellManager {
 				player.takeDamage(enemySpells.get(i).getDamage());
 				enemySpells.get(i).kill();
 			}
-			for(int j = 0; i < stage.getObstacles().length; i++)
+			for(int j = 0; j < stage.getObstacles().length; j++)
 			{
 				for(int k = 0; k < stage.getObstacles()[j].length; k++)
 				{
-					if(stage.getObstacles()[j][k].getBounds().intersects(enemySpells.get(i).getBounds()))
+					if(stage.getObstacles()[j][k].getEnabled() && stage.getObstacles()[j][k].getBounds().intersects(enemySpells.get(i).getBounds()))
 						enemySpells.get(i).kill();
 				}
 			}
@@ -97,8 +99,10 @@ public class SpellManager {
 		for (int i = 0; i < enemySpells.size(); i++)
 		{
 			if(enemySpells.get(i).getIsDead())
+			{
 				enemySpells.remove(enemySpells.get(i));
-			i--;
+				i--;
+			}
 		}
 	}
 }

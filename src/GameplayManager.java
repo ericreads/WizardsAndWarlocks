@@ -5,6 +5,7 @@ public class GameplayManager {
     private Stage stage;
     private SpellManager spellManager;
     private EnemyManager enemyManager;
+    private HUD hud;
     //Arrays to hold random stage values and the number of enemies spawned in each level
     private float[] stageRands = new float[] {0.25f, 0.15f, 0.10f, 0.05f};
     private int[] enemyLevels = new int[] {10, 20, 30, 40, 50};
@@ -14,6 +15,7 @@ public class GameplayManager {
     {
         stage = new Stage(stageRands[0]);
 		player = new Player(600, 370, stage);
+		hud = new HUD(player, 1);
         enemyManager = new EnemyManager(player, stage, enemyLevels[0]);
         spellManager = new SpellManager(stage, enemyManager, player);
     }
@@ -26,6 +28,7 @@ public class GameplayManager {
         if(enemyManager.shouldAdvance() && level + 1 < stageRands.length)
         {
             level++;
+            hud.setLevel(level+1);
             stage.randomize(stageRands[level]);
             enemyManager.newWave(enemyLevels[level]);
         }
@@ -38,6 +41,7 @@ public class GameplayManager {
         player.draw(g);
         enemyManager.draw(g);
         spellManager.draw(g);
+        hud.draw(g);
     }
     public void keyPressed(KeyEvent e)
     {

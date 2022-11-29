@@ -1,5 +1,4 @@
 //Import required modules
-import javax.swing.*;
 import java.awt.*;
 public class Obstacle {
 	//A rectangle to store pos, size and help with collision

@@ -18,6 +18,7 @@ public class Player {
 	private int collisionDuration; // Collision duration, in # of frames
 	
 	private double health;
+	private int maxHealth;
 	private boolean dead;
 	
 
@@ -43,8 +44,9 @@ public class Player {
 		up = false;
 		down = false;
 	
-		// Initialize full health (5 'hearts')
-		health = 5; 
+		// Initialize full health
+		maxHealth = 10;
+		health = 10;
 		dead = false;
 	}
 	
@@ -232,4 +234,6 @@ public class Player {
     	
     	position.setLocation(x, y);
     }
+    public double getHealth() { return health; }
+    public int getMaxHealth() { return maxHealth; }
 }

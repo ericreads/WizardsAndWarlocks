@@ -19,7 +19,7 @@ public class Enemy
 		
 	private Rectangle position;
 	private Stage stage;
-	private Obstacle[][] nodes; // Grid of 50 x 50 tiles, used in pathfinding methods
+	private Obstacle[][] nodes; // Grid of 50 x 50 tiles, used in path finding methods
 		
 	private Obstacle start; 
 	private Obstacle goal;
@@ -99,13 +99,13 @@ public class Enemy
 	    		player.takeDamage(0.5f);
 	    	}
 			
-			// Execute A* Pathfinding when Enemy is on-screen
-			if ((this.x > 0 && this.x + width < 1240) && (this.y > 0 && this.y + height < 680))
+			// Execute A* path finding when Enemy is on-screen
+			if ((this.x > 0 && this.x + width < 1230) && (this.y > 0 && this.y + height < 680))
 			{
 				// Instantiate nodes and assign G, H, and F Costs
 				this.setNodes();
 				
-				// Search for shortest path from current position to Player's position
+				// If pathFound returns true, move according to path
 				if (this.pathFound())
 				{
 					// Determine x and y coordinates of next node in path
@@ -144,12 +144,12 @@ public class Enemy
 			}
 			else
 			{
-				// Move Enemy up, down, left, or right according to postion off screen
+				// Move Enemy up, down, left, or right according to position off-screen
 				if (this.x <= 40)
 				{
 					velocityX = speed;
 				}
-				else if (this.x + width >= 1240)
+				else if (this.x + width >= 1230)
 				{
 					velocityX = -speed;
 				}
@@ -188,26 +188,35 @@ public class Enemy
 						if(nodes[i][j].getBounds().intersection(position).width < nodes[i][j].getBounds().intersection(position).height)
 						{
 							if(position.x < nodes[i][j].getBounds().intersection(position).x)
+							{
 								x -= nodes[i][j].getBounds().intersection(position).width;
+							}
 							else
+							{
 								x += nodes[i][j].getBounds().intersection(position).width;
+							}
 						} 
 						else
 						{
 							if(position.y < nodes[i][j].getBounds().intersection(position).y)
+							{
 								y -= nodes[i][j].getBounds().intersection(position).height;
+							}
 							else
+							{
 								y += nodes[i][j].getBounds().intersection(position).height;
+							}
 						}	
 	    			}
 	    		}
 	    	}	
-	    	position.setLocation((int)x, (int)y);
+			position.setLocation((int)x, (int)y);
 		}
 	}
 	
-	private void resetNodes()
+	private void setNodes()
 	{
+		// Reset node attributes 
 		for (int i = 0; i < nodes.length; i++)
 		{
 			for (int j = 0; j < nodes[i].length; j++)
@@ -217,21 +226,17 @@ public class Enemy
 				nodes[i][j].path = false;
 			}
 		}
+		
 		open.clear();
 		path.clear();
-		
+
 		reached = false;
-		steps = 0;
-	}
-	
-	private void setNodes()
-	{
-		this.resetNodes();
 		
-		start = nodes[(int)x / stage.getDimension()][(int) y / stage.getDimension()];
-		current = start;
-		goal = nodes[(int)player.getX() / stage.getDimension()][(int)player.getY() / stage.getDimension()];
+		// Assign start, current, and goal nodes
+		start = nodes[(int)x / stage.getDimension()][(int) y / stage.getDimension()]; // Represents node of this Enemy's position
+		goal = nodes[(int)player.getX() / stage.getDimension()][(int)player.getY() / stage.getDimension()]; // Represnts node of Player's position
 		
+		current = start; // Represents node being evaluated
 		open.add(current);
 		
 		// Assign G, H, and F Cost 
@@ -262,23 +267,15 @@ public class Enemy
 		}
 	}
 	
-	private void openNode(Obstacle node)
-	{
-		if (!node.getEnabled() && !node.getChecked() && !node.getOpen())
-		{
-			node.setOpen(true);
-			node.setParent(current);
-			open.add(node);
-		}
-	}
-	
+	// Search for shortest path from current position to Player's position
 	private boolean pathFound()
 	{
-		while (!reached && steps < 700)
+		while (!reached)
 		{
 			current.setChecked(true);
 			open.remove(current);
-			
+		
+			// Open nodes above, below, and to the right and left of current to be evaluated 
 			if (current.getY() - 1 >= 0)
 			{
 				openNode(nodes[current.getX()][current.getY() - 1]);
@@ -296,8 +293,8 @@ public class Enemy
 				openNode(nodes[current.getX() + 1][current.getY()]);
 			}
 			
-			int index = 0;
-			int fCost = 100000;
+			int index = 0; // Index of node with lowest F Cost
+			int fCost = Integer.MAX_VALUE; // Lowest F Cost
 			
 			for (int i = 0 ; i < open.size(); i++)
 			{
@@ -315,6 +312,7 @@ public class Enemy
 				}
 			}
 
+			// If there are no suitable paths, break loop
 			if (open.size() == 0)
 			{
 				break;
@@ -322,26 +320,32 @@ public class Enemy
 			
 			current = open.get(index);
 			
+			// If goal node is located, re-trace steps to create path ArrayList
 			if (current == goal)
 			{
 				reached = true;
-				this.track();
+
+				Obstacle node = goal;
+				
+				while (node != start)
+				{
+					path.add(0, node); // Append node to first index (0) of path
+					node.path = true;
+					node = node.parent; // Continue for each nodes 'came-from' node
+				}
 			}
-			steps++;
 		}
 		return reached;
 	}
 	
-	private void track()
+	private void openNode(Obstacle node)
 	{
-		Obstacle node = goal;
-		
-		while (node != start)
+		if (!node.getEnabled() && !node.getChecked() && !node.getOpen())
 		{
-			path.add(0, node);
-			node.path = true;
-			node = node.parent;
+			node.setOpen(true);
+			node.setParent(current);
+			open.add(node);
 		}
-	}
+	}		
 }
 	

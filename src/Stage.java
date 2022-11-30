@@ -1,29 +1,54 @@
-//Import required modules
+// Import required modules
 import java.awt.*;
 import java.util.*;
 
-public class Stage {
-	// list to store the obstacles
-	private Obstacle[][] obstacles;
-	// Int to store the width and height of the obstacles
-	private static int DIMENSION = 50;
+public class Stage 
+{
+	private Obstacle[][] obstacles; 
+	
+	private int width; // represents width in # of nodes
+	private int height; // represents height in # of nodes
+	private static int DIMENSION = 50; 
 
-	public Stage(float initialPercent) {
-		// Initialize the obstacles list
-		obstacles = new Obstacle[(1280 - DIMENSION) / DIMENSION][(720 - DIMENSION) / DIMENSION];
+	public Stage(float initialPercent) 
+	{
+		this.width = 1280 / DIMENSION;
+		this.height = (720 - DIMENSION) / DIMENSION;
+
+		// Instantiate obstacles
+		obstacles = new Obstacle[width][height]; 
 
 		// Create new obstacles for each array element
-		for (int i = 0; i < obstacles.length; i++) {
-			for (int j = 0; j < obstacles[i].length; j++) {
+		for (int i = 0; i < obstacles.length; i++) 
+		{
+			for (int j = 0; j < obstacles[i].length; j++) 
+			{
 				obstacles[i][j] = new Obstacle(i * DIMENSION, j * DIMENSION, DIMENSION);
 			}
 		}
+		
 		// Randomize the blocks with the starting obstacle percent
 		randomize(initialPercent);
 	}
 
+	public int getWidth()
+	{
+		return this.width;
+	}
+
+	public int getHeight()
+	{
+		return this.height;
+	}
+
+	public int getDimension()
+	{
+		return DIMENSION;
+	}
+
 	// Method to randomize the blocks
-	public void randomize(float obstaclePercent) {
+	public void randomize(float obstaclePercent) 
+	{
 		// Randomize the obstacles based on the obstacle percent
 		for (int i = 0; i < obstacles.length; i++) {
 			for (int j = 0; j < obstacles[i].length; j++) {
@@ -37,17 +62,27 @@ public class Stage {
 		}
 	}
 
-	public void draw(Graphics2D g) {
+	public void draw(Graphics2D g) 
+	{
 		// Draw every obstacle in the array
-		for (int i = 0; i < obstacles.length; i++) {
-			for (int j = 0; j < obstacles[i].length; j++) {
+		for (int i = 0; i < obstacles.length; i++) 
+		{
+			for (int j = 0; j < obstacles[i].length; j++) 
+			{
 				obstacles[i][j].draw(g);
 			}
 		}
 	}
 
 	// Method which gets the obstacles
-	public Obstacle[][] getObstacles() {
+	public Obstacle[][] getObstacles() 
+	{
 		return obstacles;
+	}
+	
+	// Method to get node that Object is on
+	public Rectangle getNode(int x, int y)
+	{
+		return obstacles[x / DIMENSION][y / DIMENSION].getBounds();
 	}
 }

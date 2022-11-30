@@ -3,8 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Player {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	
 	private double speed;
 	private double velocityX;
@@ -53,6 +53,16 @@ public class Player {
 	public Rectangle getPosition()
 	{
 		return this.position;
+	}
+	
+	public double getX()
+	{
+		return this.x;
+	}
+	
+	public double getY()
+	{
+		return this.y;
 	}
 	
 	public boolean intersects(Enemy enemy)
@@ -130,13 +140,13 @@ public class Player {
     	if (!dead)
     	{
     		g.setColor(Color.RED);
-    		g.fillOval(x, y, width, height);
+    		g.fillOval((int) x, (int) y, width, height);
     		
     	}
     	else
     	{
     		g.setColor(Color.black);
-    		g.fillOval(x, y, width, height);
+    		g.fillOval((int) x, (int) y, width, height);
     	}
     }
     
@@ -232,7 +242,7 @@ public class Player {
         	
     	}
     	
-    	position.setLocation(x, y);
+    	position.setLocation((int) x, (int) y);
     }
     public double getHealth() { return health; }
     public int getMaxHealth() { return maxHealth; }

@@ -16,6 +16,7 @@ public class Enemy
 
 	private double health;
 	private boolean dead;
+	private double collisionDuration;
 		
 	private Rectangle position;
 	private Stage stage;
@@ -96,8 +97,18 @@ public class Enemy
 			// If Enemy intersects Player, Player loses 0.5 health
 			if (player.intersects(this))
 	    	{
-	    		player.takeDamage(0.5f);
-	    	}
+				collisionDuration += deltaTime;
+		
+				if (collisionDuration > 175) 
+				{
+	    			player.takeDamage(0.5f);
+					collisionDuration = 0;
+	    		}
+			}
+			else
+			{
+				collisionDuration = 101;
+			}
 			
 			// Execute A* path finding when Enemy is on-screen
 			if ((this.x > 0 && this.x + width < 1230) && (this.y > 0 && this.y + height < 680))

@@ -157,12 +157,7 @@ public class Player {
 
 	public void takeDamage(double damage) 
 	{
-		collisionDuration++;
-		
-		if (collisionDuration % 15 == 0) 
-		{
-			health -= damage;
-		}
+		health -= damage;
 	}
     
     public void draw(Graphics2D g) 

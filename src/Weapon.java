@@ -25,7 +25,7 @@ public class Weapon {
 		//Find the angle to the mouse
 		weaponAngle = Helper.angleTowards(bounds.x, bounds.y, GameJPanel.getMouseX(), GameJPanel.getMouseY());
 		//Shoot at a certain interval
-		if(shooting && shootCounter > 50)
+		if(shooting && shootCounter > 75)
 		{
 			shoot();
 			shootCounter = 0;
@@ -37,8 +37,9 @@ public class Weapon {
 	}
 	public void shoot()
 	{
+		double[] unitVector = Helper.unitVector(bounds.x, bounds.y, GameJPanel.getMouseX(), GameJPanel.getMouseY());
 		//Shoot a particle in the direction of the mouse
-		spellManager.add(new Spell(null, new Rectangle(bounds.x, bounds.y, 10, 10), (float)Helper.unitVector(bounds.x, bounds.y, GameJPanel.getMouseX(), GameJPanel.getMouseY())[0], (float)Helper.unitVector(bounds.x, bounds.y, GameJPanel.getMouseX(), GameJPanel.getMouseY())[1], damagePerParticle), true);
+		spellManager.add(new Spell(null, new Rectangle(bounds.x + (int)(unitVector[0]*40), bounds.y + (int)(unitVector[1]*40), 10, 10), (float)unitVector[0], (float)unitVector[1], damagePerParticle), true);
 	}
 	public void press()
 	{

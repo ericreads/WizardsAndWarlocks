@@ -1,7 +1,7 @@
 
 //Import Required Modules
 import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public abstract class GameScreen {
 	//Boolean to store if the variables are initialized
@@ -36,5 +36,7 @@ public abstract class GameScreen {
 	public abstract void keyReleased(KeyEvent e);
 	//Method will be called when a key is typed
 	public abstract void keyTyped(KeyEvent e);
+	//Method will be called when the mouse is clicked
+	public abstract void mouseClicked(MouseEvent e);
 	
 }

@@ -1,8 +1,7 @@
 //Import required modules
 import java.util.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class GameScreenManager {
@@ -73,5 +72,11 @@ public class GameScreenManager {
 	{
 		if(screens.size() > 0)
 			screens.get(screens.size()-1).keyTyped(e);
+	}
+	///Calls the mouseClicked method of the screen at the top of the list
+	public void mouseClicked(MouseEvent e)
+	{
+		if(screens.size() > 0)
+			screens.get(screens.size()-1).mouseClicked(e);
 	}
 }

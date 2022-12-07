@@ -42,7 +42,19 @@ public class TestScreen extends GameScreen {
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		
+		gameManager.mouseClicked(e);
+	}
+	
+	@Override
+	public void mousePressed(MouseEvent e)
+	{
+		gameManager.mousePressed(e);
+	}
+	
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		gameManager.mouseReleased(e);
 	}
 
 }

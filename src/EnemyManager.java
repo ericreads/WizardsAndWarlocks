@@ -10,12 +10,12 @@ public class EnemyManager {
     private int enemiesSpawned;
     private long counter;
 
-    public EnemyManager(Player player, Stage stage, int enemyCount)
+    public EnemyManager(Player player, Stage stage, int enemyCount, int enemyFreq)
     {
         this.player = player;
         this.stage = stage;
         this.counter = 0;
-        this.enemyFreq = 2000;
+        this.enemyFreq = enemyFreq;
         this.enemyCount = enemyCount;
         this.enemiesSpawned = 0;
         enemies = new ArrayList<Enemy>();
@@ -57,9 +57,10 @@ public class EnemyManager {
             }
         }
     }
-    public void newWave(int count)
+    public void newWave(int count, int freq)
     {
         enemyCount = count;
+        enemyFreq = freq;
         enemiesSpawned = 0;
     }
     public boolean shouldAdvance()

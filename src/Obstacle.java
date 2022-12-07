@@ -143,10 +143,5 @@ public class Obstacle
 			g.fillRect((int) bounds.x, (int) bounds.y, (int) bounds.getWidth(), (int) bounds.getHeight());
 			
 		}
-		if (path)
-		{
-			g.setColor(Color.ORANGE);
-			g.fillRect((int) bounds.x, (int) bounds.y, (int) bounds.getWidth(), (int) bounds.getHeight());
-		}
 	}
 }

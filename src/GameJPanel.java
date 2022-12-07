@@ -51,12 +51,12 @@ public class GameJPanel extends JPanel
 			@Override
 			public void mousePressed(MouseEvent e)
 			{
-
+				GameScreenManager.getInstance().mousePressed(e);
 			}
 			@Override
 			public void mouseReleased(MouseEvent e)
 			{
-
+				GameScreenManager.getInstance().mouseReleased(e);
 			}
 		});
 		setFocusable(true);

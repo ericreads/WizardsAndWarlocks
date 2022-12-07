@@ -79,4 +79,16 @@ public class GameScreenManager {
 		if(screens.size() > 0)
 			screens.get(screens.size()-1).mouseClicked(e);
 	}
+	//Calls the mousePressed method of the screen at the top of the list
+	public void mousePressed(MouseEvent e)
+	{
+		if(screens.size() > 0)
+			screens.get(screens.size()-1).mousePressed(e);
+	}
+	//Calls the mouseReleased method of the screen at the top of the list
+	public void mouseReleased(MouseEvent e)
+	{
+		if(screens.size() > 0)
+			screens.get(screens.size()-1).mouseReleased(e);
+	}
 }

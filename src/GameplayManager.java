@@ -6,9 +6,10 @@ public class GameplayManager {
     private SpellManager spellManager;
     private EnemyManager enemyManager;
     private HUD hud;
-    //Arrays to hold random stage values and the number of enemies spawned in each level
-    private float[] stageRands = new float[] {0.25f, 0.15f, 0.10f, 0.05f};
-    private int[] enemyLevels = new int[] {10, 20, 30, 40, 50};
+    //Arrays to hold random stage values and the number of enemies spawned in each level and enemy spawn speeds
+    private float[] stageRands = new float[] {0.25f, 0.15f, 0.10f, 0.05f, 0.25f};
+    private int[] enemyLevels = new int[] {10, 20, 30, 40, 50, 75};
+    private int[] enemyFreq = new int[] {2000, 1500, 1000, 500, 250};
     //Into to store the current level
     private int level = 0;
     public GameplayManager()
@@ -16,8 +17,9 @@ public class GameplayManager {
         stage = new Stage(stageRands[0]);
 		player = new Player(600, 370, stage);
 		hud = new HUD(player, 1);
-        enemyManager = new EnemyManager(player, stage, enemyLevels[0]);
+        enemyManager = new EnemyManager(player, stage, enemyLevels[0], enemyFreq[0]);
         spellManager = new SpellManager(stage, enemyManager, player);
+        player.setSpellManager(spellManager);
     }
     public void update(int deltaTime)
     {
@@ -30,7 +32,8 @@ public class GameplayManager {
             level++;
             hud.setLevel(level+1);
             stage.randomize(stageRands[level]);
-            enemyManager.newWave(enemyLevels[level]);
+            enemyManager.newWave(enemyLevels[level], enemyFreq[level]);
+            player.reset();
         }
     }
     
@@ -50,5 +53,17 @@ public class GameplayManager {
     public void keyReleased(KeyEvent e)
     {
         player.keyReleased(e);
+    }
+    public void mouseClicked(MouseEvent e)
+    {
+    	
+    }
+    public void mousePressed(MouseEvent e)
+    {
+    	player.mousePressed(e);
+    }
+    public void mouseReleased(MouseEvent e)
+    {
+    	player.mouseReleased(e);
     }
 }

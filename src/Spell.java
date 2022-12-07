@@ -15,7 +15,6 @@ public class Spell {
 	{
 		this.bounds = bounds;
 		this.sprite = sprite;
-		System.out.println(vx + "," + vy);
 		this.vx = vx;
 		this.vy = vy;
 		this.damage = damage;

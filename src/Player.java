@@ -5,6 +5,8 @@ import java.awt.event.*;
 public class Player {
 	private double x;
 	private double y;
+	private double startX;
+	private double startY;
 	
 	private double speed;
 	private double velocityX;
@@ -21,12 +23,17 @@ public class Player {
 	private int maxHealth;
 	private boolean dead;
 	
+	private Weapon weapon;
+	
 
   	private Obstacle[][] obstacles;
   
 	public Player(int x, int y, Stage stage) {
 		this.x = x;
 		this.y = y;
+		
+		startX = x;
+		startY = y;
 		
 		speed = 0.3;
 		velocityX = 0;
@@ -48,8 +55,13 @@ public class Player {
 		maxHealth = 10;
 		health = 10;
 		dead = false;
+		
+		weapon = new Weapon(x, y, 1);
 	}
-	
+	public void setSpellManager(SpellManager spellManager)
+	{
+		weapon.setSpellManager(spellManager);
+	}
 	public Rectangle getPosition()
 	{
 		return this.position;
@@ -123,6 +135,25 @@ public class Player {
             velocityY = 0;
         }
     }
+    //Called on the start of the next wave
+    public void reset()
+    {
+    	x = startX;
+    	y = startY;
+    	position.setLocation((int)startX, (int)startY);
+    }
+    //Called when the mouse is pressed
+    public void mousePressed(MouseEvent e)
+    {
+    	if(e.getButton() == MouseEvent.BUTTON1)
+    		weapon.press();
+    }
+    //Called when the mouse is released
+    public void mouseReleased(MouseEvent e)
+    {
+    	if(e.getButton() == MouseEvent.BUTTON1)
+    		weapon.release();
+    }
 
 	public void takeDamage(double damage) 
 	{
@@ -141,6 +172,7 @@ public class Player {
     	{
     		g.setColor(Color.RED);
     		g.fillOval((int) x, (int) y, width, height);
+    		weapon.draw(g);
     		
     	}
     	else
@@ -203,6 +235,8 @@ public class Player {
         	// Set player's position 
         	x += velocityX * deltaTime;
         	y += velocityY * deltaTime;
+        	
+        
     	}
     	
     	//Collision Detection
@@ -243,6 +277,8 @@ public class Player {
     	}
     	
     	position.setLocation((int) x, (int) y);
+    	weapon.updatePosition((int)x+20, (int)y+20);
+    	weapon.update(deltaTime);
     }
     public double getHealth() { return health; }
     public int getMaxHealth() { return maxHealth; }

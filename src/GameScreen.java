@@ -38,5 +38,9 @@ public abstract class GameScreen {
 	public abstract void keyTyped(KeyEvent e);
 	//Method will be called when the mouse is clicked
 	public abstract void mouseClicked(MouseEvent e);
+	//Method will be called when the mouse is pressed
+	public abstract void mousePressed(MouseEvent e);
+	//Method will be called when the mouse is released
+	public abstract void mouseReleased(MouseEvent e);
 	
 }

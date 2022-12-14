@@ -104,14 +104,16 @@ public class GameJPanel extends JPanel
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		//Put the player screen in the GameScreenManager
-		GameScreenManager.getInstance().addScreen(new TestScreen());
-		while(true)
+		GameScreenManager.getInstance().addScreen(new MainMenu());
+		while(!GameScreenManager.getInstance().getShouldClose())
 		{
 			p.update();
 			p.repaint();
 			//Set refresh rate to around 16.66ms the default refresh rate of most monitors
 			Thread.sleep(16);
 		}
+		//close the game when the loop ends
+		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}}
 	//Getters for the mouse position
 	public static int getMouseX()

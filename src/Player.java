@@ -1,6 +1,9 @@
 // Import required modules
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.*;
+import java.io.*;
 
 public class Player {
 	private double x;
@@ -10,20 +13,29 @@ public class Player {
 	private double velocityX;
 	private double velocityY;
 	
-	private static int width = 40;
-	private static int height = 40; 
+	private static int width = 45;
+	private static int height = 45; 
 	
 	private Rectangle position;	
 	private boolean left, right, up, down;
+	private String lastPosition = "down";
 	private int collisionDuration; // Collision duration, in # of frames
 	
 	private double health;
 	private int maxHealth;
 	private boolean dead;
 	
-
   	private Obstacle[][] obstacles;
   
+  	
+  	private BufferedImage front_idle, back_idle, left_idle, right_idle;
+  	private BufferedImage front_walk_00, front_walk_01, front_walk_02, front_walk_03, front_walk_04, front_walk_05, front_walk_06, front_walk_07;
+  	private BufferedImage back_walk_00, back_walk_01, back_walk_02, back_walk_03, back_walk_04, back_walk_05, back_walk_06, back_walk_07;
+  	private BufferedImage left_walk_00, left_walk_01, left_walk_02, left_walk_03, left_walk_04, left_walk_05, left_walk_06, left_walk_07;
+  	private BufferedImage right_walk_00, right_walk_01, right_walk_02, right_walk_03, right_walk_04, right_walk_05, right_walk_06, right_walk_07;
+  	
+  	private int frames = 0; 
+  	
 	public Player(int x, int y, Stage stage) {
 		this.x = x;
 		this.y = y;
@@ -48,6 +60,59 @@ public class Player {
 		maxHealth = 10;
 		health = 10;
 		dead = false;
+		
+		// Load sprites
+		try {
+			// Player idle
+			front_idle = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_idle.png"));		
+			back_idle = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_idle.png"));		
+			left_idle = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_idle.png"));		
+			right_idle = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_idle.png"));		
+			
+			// Player running forward
+			front_walk_00 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk1.png"));		
+			front_walk_01 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk2.png"));
+			front_walk_02 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk3.png"));
+			front_walk_03 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk4.png"));
+			front_walk_04 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk5.png"));
+			front_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk6.png"));
+			front_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk7.png"));
+			front_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk8.png"));
+			
+			// Player running back
+			back_walk_00 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk1.png"));		
+			back_walk_01 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk2.png"));
+			back_walk_02 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk3.png"));
+			back_walk_03 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk4.png"));
+			back_walk_04 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk5.png"));
+			back_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk6.png"));
+			back_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk7.png"));
+			back_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk8.png"));
+			
+			// Player running left
+			left_walk_00 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk1.png"));		
+			left_walk_01 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk2.png"));
+			left_walk_02 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk3.png"));
+			left_walk_03 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk4.png"));
+			left_walk_04 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk5.png"));
+			left_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk6.png"));
+			left_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk7.png"));
+			left_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk8.png"));
+			
+			// Player running right
+			right_walk_00 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk1.png"));		
+			right_walk_01 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk2.png"));
+			right_walk_02 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk3.png"));
+			right_walk_03 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk4.png"));
+			right_walk_04 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk5.png"));
+			right_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk6.png"));
+			right_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk7.png"));
+			right_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk8.png"));
+		} 
+		catch(IOException e)
+		{
+			System.out.println(e.toString());
+		}
 	}
 	
 	public Rectangle getPosition()
@@ -106,21 +171,25 @@ public class Player {
         {
             left = false;
             velocityX = 0;
+            lastPosition = "left";
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) 
         {
             right = false;
             velocityX = 0;
+            lastPosition = "right";
         }
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) 
         {
             up = false;
             velocityY = 0;
+            lastPosition = "up";
         }
         if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) 
         {
             down = false;
             velocityY = 0;
+            lastPosition = "down";
         }
     }
 
@@ -139,15 +208,177 @@ public class Player {
 		// Ellipse temporarily represents player (red if alive, black if dead)
     	if (!dead)
     	{
-    		g.setColor(Color.RED);
-    		g.fillOval((int) x, (int) y, width, height);
-    		
-    	}
+    		if (velocityX == 0 && velocityY == 0)
+    		{
+    			// Idle state
+    			switch (lastPosition)
+    			{
+    			case "left":
+    				g.drawImage(left_idle, (int) x, (int) y, width, height, null);
+    				break;
+    			case "right":
+    				g.drawImage(right_idle, (int) x, (int) y, width, height, null);
+    				break;
+    			case "up":
+    				g.drawImage(back_idle, (int) x, (int) y, width, height, null);
+    				break;
+    			case "down":
+    				g.drawImage(front_idle, (int) x, (int) y, width, height, null);
+    				break;
+    			}    		
+    		}
+    		else
+    		{
+    			if (left)
+    			{
+    				if (frames % 64 < 8)
+    				{
+    					g.drawImage(left_walk_00, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 16)
+    				{
+    					g.drawImage(left_walk_01, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 24)
+    				{
+    					g.drawImage(left_walk_02, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 32)
+    				{
+    					g.drawImage(left_walk_03, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 40)
+    				{
+    					g.drawImage(left_walk_04, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 48)
+    				{
+    					g.drawImage(left_walk_05, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 56)
+    				{
+    					g.drawImage(left_walk_06, (int) x, (int) y, width, height, null);
+    				}
+    				else 
+    				{
+    					g.drawImage(left_walk_07, (int) x, (int) y, width, height, null);
+    				}
+    			}
+    			if (right)
+    			{
+    				if (frames % 64 < 8)
+    				{
+    					g.drawImage(right_walk_00, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 16)
+    				{
+    					g.drawImage(right_walk_01, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 24)
+    				{
+    					g.drawImage(right_walk_02, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 32)
+    				{
+    					g.drawImage(right_walk_03, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 40)
+    				{
+    					g.drawImage(right_walk_04, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 48)
+    				{
+    					g.drawImage(right_walk_05, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 56)
+    				{
+    					g.drawImage(right_walk_06, (int) x, (int) y, width, height, null);
+    				}
+    				else 
+    				{
+    					g.drawImage(right_walk_07, (int) x, (int) y, width, height, null);
+    				}
+    			}
+    			if (up)
+    			{
+    				if (frames % 64 < 8)
+    				{
+    					g.drawImage(back_walk_00, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 16)
+    				{
+    					g.drawImage(back_walk_01, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 24)
+    				{
+    					g.drawImage(back_walk_02, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 32)
+    				{
+    					g.drawImage(back_walk_03, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 40)
+    				{
+    					g.drawImage(back_walk_04, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 48)
+    				{
+    					g.drawImage(back_walk_05, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 56)
+    				{
+    					g.drawImage(back_walk_06, (int) x, (int) y, width, height, null);
+    				}
+    				else 
+    				{
+    					g.drawImage(back_walk_07, (int) x, (int) y, width, height, null);
+    				}
+    			}
+    			if (down)
+    			{
+    				if (frames % 64 < 8)
+    				{
+    					g.drawImage(front_walk_00, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 16)
+    				{
+    					g.drawImage(front_walk_01, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 24)
+    				{
+    					g.drawImage(front_walk_02, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 32)
+    				{
+    					g.drawImage(front_walk_03, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 40)
+    				{
+    					g.drawImage(front_walk_04, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 48)
+    				{
+    					g.drawImage(front_walk_05, (int) x, (int) y, width, height, null);
+    				}
+    				else if (frames % 64 < 56)
+    				{
+    					g.drawImage(front_walk_06, (int) x, (int) y, width, height, null);
+    				}
+    				else 
+    				{
+    					g.drawImage(front_walk_07, (int) x, (int) y, width, height, null);
+    				}
+    			}
+    			
+    		}
+			g.setColor(Color.RED);
+			// g.drawRect(position.x, position.y, position.width, position.height);
+    	} 
     	else
     	{
     		g.setColor(Color.black);
     		g.fillOval((int) x, (int) y, width, height);
-    	}
+    	}	
     }
     
     public void update(int deltaTime) {
@@ -243,6 +474,8 @@ public class Player {
     	}
     	
     	position.setLocation((int) x, (int) y);
+    	
+    	frames++;
     }
     public double getHealth() { return health; }
     public int getMaxHealth() { return maxHealth; }

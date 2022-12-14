@@ -1,5 +1,6 @@
 // Import required modules
 import java.awt.*;
+import java.awt.image.*;
 
 // Obstacle class represents in-game obstacles and nodes for path finding
 public class Obstacle 
@@ -135,13 +136,9 @@ public class Obstacle
 		this.parent = parent;
 	}
 	
-	public void draw(Graphics2D g) 
+	public void draw(Graphics2D g, BufferedImage tile) 
 	{
-		if (enabled) 
-		{
-			g.setColor(Color.RED);
-			g.fillRect((int) bounds.x, (int) bounds.y, (int) bounds.getWidth(), (int) bounds.getHeight());
-			
-		}
+		g.drawImage(tile, (int) bounds.x, (int) bounds.y, (int) bounds.getWidth(), (int) bounds.getHeight(), null);
+		
 	}
 }

@@ -24,7 +24,6 @@ public class Enemy
 	private Obstacle start; 
 	private Obstacle goal;
 	private Obstacle current;
-	private int steps = 0;
 
 	private ArrayList<Obstacle> open = new ArrayList<>(); // Nodes being evaluated
 	private ArrayList<Obstacle> path = new ArrayList<>(); // Nodes that form shortest path from Enemy to Player

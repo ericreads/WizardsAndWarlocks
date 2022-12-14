@@ -20,6 +20,11 @@ public class Weapon {
 	{
 		this.spellManager = spellManager;
 	}
+	
+	public double getWeaponAngle() {
+		return this.weaponAngle; 
+	}
+	
 	public void update(int deltaTime)
 	{
 		//Find the angle to the mouse

@@ -5,9 +5,9 @@ public class SpellSlinger extends Weapon {
 	private boolean shooting = false;
 	private int shootCounter = 0;
 	
-	public SpellSlinger(int x, int y, int damagePerParticle, Image sprite)
+	public SpellSlinger(int x, int y, Image sprite)
 	{
-		super(x, y, damagePerParticle, sprite);
+		super(x, y, 2, sprite);
 	}
 	
 	@Override

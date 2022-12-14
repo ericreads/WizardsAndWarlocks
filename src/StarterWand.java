@@ -2,9 +2,9 @@ import java.awt.Image;
 import java.awt.Rectangle;
 
 public class StarterWand extends Weapon {
-	public StarterWand(int x, int y, int damagePerParticle, Image sprite)
+	public StarterWand(int x, int y, Image sprite)
 	{
-		super(x, y, damagePerParticle, sprite);
+		super(x, y, 5, sprite);
 	}
 	@Override
 	public void press() {

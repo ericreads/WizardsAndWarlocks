@@ -56,7 +56,7 @@ public class Player {
 		health = 10;
 		dead = false;
 		
-		weapon = new SpellSprayer(x, y, 1, null);
+		weapon = new SpellSprayer(x, y, null);
 	}
 	public void setSpellManager(SpellManager spellManager)
 	{

@@ -13,6 +13,11 @@ public class Inventory {
         this.index = 0;
     }
 
+    // Returns the weapon that is currently equipped
+    public Object getWeapon() {
+    	return this.inventory.get(index); 
+    }
+    
     // KeyEvent input is passed from GameScreenManager Class when key is pressed
 	public void keyPressed(KeyEvent e) 
 	{

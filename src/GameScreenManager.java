@@ -9,7 +9,8 @@ public class GameScreenManager {
 	private ArrayList<GameScreen> screens;
 	//The instance that will be statically returned allowing this class to be called *anywhere*
 	private static GameScreenManager instance;
-	
+	//Boolean that stores wether or not the window should close
+	private boolean shouldClose = false;
 	//Constructor is private to ensure only our static instance can be accessed 
 	private GameScreenManager()
 	{
@@ -91,4 +92,15 @@ public class GameScreenManager {
 		if(screens.size() > 0)
 			screens.get(screens.size()-1).mouseReleased(e);
 	}
+	//Sets it so the window should close
+	public void shouldClose()
+	{
+		shouldClose = true;
+	}
+	//Returns whether or not the window should close
+	public boolean getShouldClose()
+	{
+		return shouldClose;
+	}
+	
 }

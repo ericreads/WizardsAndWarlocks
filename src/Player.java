@@ -18,6 +18,7 @@ public class Player {
 	private Rectangle position;	
 	private boolean left, right, up, down;
 	private int collisionDuration; // Collision duration, in # of frames
+	private int deathCounter = 0;
 	
 	private double health;
 	private int maxHealth;
@@ -237,6 +238,15 @@ public class Player {
         	y += velocityY * deltaTime;
         	
         
+    	}
+    	else
+    	{
+    		deathCounter += deltaTime;
+    		if(deathCounter > 1000)
+    		{
+    			GameScreenManager.getInstance().clearScreens();
+    			GameScreenManager.getInstance().addScreen(new MainMenu());
+    		}
     	}
     	
     	//Collision Detection

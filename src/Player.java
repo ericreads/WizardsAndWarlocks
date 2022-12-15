@@ -427,7 +427,7 @@ public class Player {
         	}
         	if (right) 
         	{
-        		if (x + width + speed > 1262)
+        		if (x + width + speed > 1245)
         		{
         			velocityX = 0;
         		}
@@ -449,7 +449,7 @@ public class Player {
         	}
         	if (down) 
         	{
-        		if (y + height + speed > 680)
+        		if (y + height + speed > 665)
         		{
         			velocityY = 0;
         		}

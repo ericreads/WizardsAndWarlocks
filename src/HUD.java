@@ -31,6 +31,7 @@ public class HUD {
 		//Display the wave information
 		g.setColor(Color.black);
 		g.setFont(font);
+		g.drawString("$" + SaveManager.getInstance().getMoney(), 25, 100);
 		g.drawString("Wave : " + curLevel, 1100, 45);
 	}
 }

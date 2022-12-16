@@ -89,6 +89,8 @@ public class Enemy
 	{
 		if (health <= 0)
 		{
+			if(!dead)
+				SaveManager.getInstance().setMoney(SaveManager.getInstance().getMoney()+50);
 			dead = true;
 		}
 		

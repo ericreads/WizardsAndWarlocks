@@ -275,6 +275,8 @@ public class Player {
     		
     		if (this.health <= 0)
         	{
+    			if(!dead)
+    				SaveManager.getInstance().saveVals();
         		dead = true; 
         	}
         	

@@ -38,7 +38,7 @@ public class Stage
 		// Randomize the blocks with the starting obstacle percent
 		randomize(initialPercent);
 		
-		 tiles = new BufferedImage[15];
+		 tiles = new BufferedImage[20];
 
         try {
         	tiles[0] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0000.png")); // obstacle block
@@ -51,8 +51,14 @@ public class Stage
         	tiles[7] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0016.png")); // left corner
         	tiles[8] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0017.png")); // right corner
         	tiles[9] =  ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0049.png")); // detailed ground piece
-        	tiles[10] =  ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0072.png")); // detailed ground piece
-        	tiles[11] =  ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0052.png")); // left/right wall
+        	tiles[10] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0072.png")); // detailed ground piece
+        	tiles[11] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0052.png")); // left/right wall
+        	tiles[12] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0001.png")); // right bottom inner corner
+        	tiles[13] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0003.png")); // left bottom inner corner
+        	tiles[14] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0025.png")); // right bottom inner corner
+        	tiles[15] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0027.png")); // left bottom inner corner
+
+        	
         }
         catch (IOException e) {
         	System.out.println(e.toString());
@@ -139,7 +145,22 @@ public class Stage
 						}
 					}
 					// draw inner corner piece overlay
-					
+					if (!obstacles[i - 1][j + 1].getEnabled() && (obstacles[i - 1][j].getEnabled() && obstacles[i][j + 1].getEnabled())) 
+					{
+						obstacles[i][j].draw(g, tiles[13]);
+					}
+					else if (!obstacles[i + 1][j + 1].getEnabled() && (obstacles[i + 1][j].getEnabled() && obstacles[i][j + 1].getEnabled()))
+					{
+						obstacles[i][j].draw(g, tiles[12]);
+					}
+					else if (!obstacles[i - 1][j - 1].getEnabled() && (obstacles[i - 1][j].getEnabled() && obstacles[i][j - 1].getEnabled()))
+					{
+						obstacles[i][j].draw(g, tiles[15]);
+					}
+					else if (!obstacles[i + 1][j - 1].getEnabled() && (obstacles[i + 1][j].getEnabled() && obstacles[i][j - 1].getEnabled()))
+					{
+						obstacles[i][j].draw(g, tiles[14]);
+					}
 				}
 				else {
 					

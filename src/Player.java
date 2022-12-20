@@ -56,7 +56,7 @@ public class Player {
 		health = 10;
 		dead = false;
 		
-		weapon = new Weapon(x, y, 1);
+		weapon = new Weapon(x, y, 1, 50);
 	}
 	public void setSpellManager(SpellManager spellManager)
 	{
@@ -75,6 +75,11 @@ public class Player {
 	public double getY()
 	{
 		return this.y;
+	}
+	
+	public Weapon getWeapon() 
+	{
+		return weapon;
 	}
 	
 	public boolean intersects(Enemy enemy)
@@ -108,6 +113,12 @@ public class Player {
         if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) 
         {
             down = true;
+        }
+        
+        // Weapon reload
+        if (e.getKeyCode() == KeyEvent.VK_R) 
+        {
+            weapon.setReload(50);
         }
     }
 
@@ -182,7 +193,7 @@ public class Player {
     	}
     }
     
-    public void update(int deltaTime) {
+    public void update(int deltaTime) throws InterruptedException {
     	if (!dead)	
     	{    		
     		

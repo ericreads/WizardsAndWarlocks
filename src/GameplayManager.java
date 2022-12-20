@@ -16,12 +16,12 @@ public class GameplayManager {
     {
         stage = new Stage(stageRands[0]);
 		player = new Player(600, 370, stage);
-		hud = new HUD(player, 1);
+		hud = new HUD(player, 1, player.getWeapon());
         enemyManager = new EnemyManager(player, stage, enemyLevels[0], enemyFreq[0]);
         spellManager = new SpellManager(stage, enemyManager, player);
         player.setSpellManager(spellManager);
     }
-    public void update(int deltaTime)
+    public void update(int deltaTime) throws InterruptedException
     {
         player.update(deltaTime);
         enemyManager.update(deltaTime);

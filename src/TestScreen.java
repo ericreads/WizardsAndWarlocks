@@ -11,8 +11,13 @@ public class TestScreen extends GameScreen {
 	}
 
 	@Override
-	public void update(int deltaTime) {
-		gameManager.update(deltaTime);
+	public void update(int deltaTime){
+		try {
+			gameManager.update(deltaTime);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

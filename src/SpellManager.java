@@ -30,6 +30,7 @@ public class SpellManager {
 		{
 			enemySpells.add(spell);
 		}
+		
 	}
 	
 	public void draw(Graphics g)

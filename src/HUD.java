@@ -3,17 +3,20 @@ public class HUD {
 	private Player player;
 	private int curLevel;
 	private Font font;
-	public HUD(Player player, int curLevel)
+	private Weapon weapon;
+	public HUD(Player player, int curLevel, Weapon weapon)
 	{
 		this.player = player;
 		this.curLevel = curLevel;
 		this.font = new Font(Font.SANS_SERIF, Font.PLAIN, 35);
+		this.weapon = weapon;
 	}
 	//Set the wave number
 	public void setLevel(int level)
 	{
 		curLevel = level;
 	}
+	
 	
 	public void draw(Graphics2D g)
 	{
@@ -32,5 +35,12 @@ public class HUD {
 		g.setColor(Color.black);
 		g.setFont(font);
 		g.drawString("Wave : " + curLevel, 1100, 45);
+		
+		// Display Spell Count
+		g.setColor(Color.black);
+		Font Spell_font = new Font(Font.SANS_SERIF, Font.PLAIN, 25);
+		g.setFont(Spell_font);
+		g.drawString("Spells : " + weapon.getReload() + " /50", 1100, 645);
+		
 	}
 }

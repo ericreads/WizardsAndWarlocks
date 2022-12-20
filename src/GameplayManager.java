@@ -17,7 +17,7 @@ public class GameplayManager {
         stage = new Stage(stageRands[0]);
 		player = new Player(600, 370, stage);
 		hud = new HUD(player, 1, player.getWeapon());
-        enemyManager = new EnemyManager(player, stage, enemyLevels[0], enemyFreq[0]);
+        enemyManager = new EnemyManager(player, stage, hud, enemyLevels[0], enemyFreq[0]);
         spellManager = new SpellManager(stage, enemyManager, player);
         player.setSpellManager(spellManager);
     }
@@ -35,6 +35,7 @@ public class GameplayManager {
             enemyManager.newWave(enemyLevels[level], enemyFreq[level]);
             player.reset();
         }
+        hud.update(deltaTime);
     }
     
     public void draw(Graphics2D g)

@@ -1,31 +1,29 @@
 // Import required modules
 import java.awt.*;
-import java.awt.event.*;
 
-public class Weapon {
-	private int damagePerParticle;
+public abstract class Weapon {
+	protected int damagePerParticle;
 	private Image sprite;
-	private SpellManager spellManager;
-	private Rectangle bounds;
-	private double weaponAngle;
+	protected SpellManager spellManager;
+	protected Rectangle bounds;
+	protected double weaponAngle;
 	private boolean shooting = false;
 	private int shootCounter = 0;
 	private int reload = 50;
 	private int reload_count;
 	private long reload_time;
-	
-	public Weapon(int x, int y, int damagePerParticle, int reload_count)
+	public Weapon(int x, int y, int damagePerParticle, Image sprite, int reload_count)
 	{
 		bounds = new Rectangle(x, y, 50, 10);
 		this.damagePerParticle = damagePerParticle;
+		this.sprite = sprite;
 		this.reload_count = reload_count;
-
 	}
 	public void setSpellManager(SpellManager spellManager)
 	{
 		this.spellManager = spellManager;
 	}
-	public void update(int deltaTime) throws InterruptedException
+	public void update(int deltaTime)
 	{
 		//Find the angle to the mouse
 		weaponAngle = Helper.angleTowards(bounds.x, bounds.y, GameJPanel.getMouseX(), GameJPanel.getMouseY());
@@ -99,6 +97,7 @@ public class Weapon {
 		//Do arcane Graphics2D magic to rotate the weapon
 		Graphics2D gg = (Graphics2D)g.create();
 		gg.rotate(weaponAngle, (double)bounds.x, (double)bounds.y);
+		//gg.drawImage(sprite, bounds.x, bounds.y, null);
 		gg.fill(bounds);
 		gg.dispose();
 	}

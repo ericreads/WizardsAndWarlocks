@@ -18,6 +18,7 @@ public class Player {
 	private Rectangle position;	
 	private boolean left, right, up, down;
 	private int collisionDuration; // Collision duration, in # of frames
+	private int deathCounter = 0;
 	
 	private double health;
 	private int maxHealth;
@@ -56,7 +57,7 @@ public class Player {
 		health = 10;
 		dead = false;
 		
-		weapon = new Weapon(x, y, 1, 50);
+		weapon = new SpellSlinger(x, y, null);
 	}
 	public void setSpellManager(SpellManager spellManager)
 	{
@@ -168,12 +169,7 @@ public class Player {
 
 	public void takeDamage(double damage) 
 	{
-		collisionDuration++;
-		
-		if (collisionDuration % 15 == 0) 
-		{
-			health -= damage;
-		}
+		health -= damage;
 	}
     
     public void draw(Graphics2D g) 
@@ -249,6 +245,15 @@ public class Player {
         	
         
     	}
+    	else
+    	{
+    		deathCounter += deltaTime;
+    		if(deathCounter > 1000)
+    		{
+    			GameScreenManager.getInstance().clearScreens();
+    			GameScreenManager.getInstance().addScreen(new MainMenu());
+    		}
+    	}
     	
     	//Collision Detection
     	for(int i = 0; i < obstacles.length; i++)
@@ -281,6 +286,8 @@ public class Player {
     		
     		if (this.health <= 0)
         	{
+    			if(!dead)
+    				SaveManager.getInstance().saveVals();
         		dead = true; 
         	}
         	

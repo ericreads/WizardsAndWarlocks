@@ -9,8 +9,9 @@ public class EnemyManager {
     private int enemyCount;
     private int enemiesSpawned;
     private long counter;
+    private HUD hud;
 
-    public EnemyManager(Player player, Stage stage, int enemyCount, int enemyFreq)
+    public EnemyManager(Player player, Stage stage, HUD hud, int enemyCount, int enemyFreq)
     {
         this.player = player;
         this.stage = stage;
@@ -19,7 +20,8 @@ public class EnemyManager {
         this.enemyCount = enemyCount;
         this.enemiesSpawned = 0;
         enemies = new ArrayList<Enemy>();
-        enemies.add(new Enemy(-100, 0, player, stage));
+        this.hud = hud;
+        enemies.add(new Enemy(-100, 0, player, stage, hud));
     }
     public void update(int deltaTime)
     {
@@ -32,16 +34,16 @@ public class EnemyManager {
             //Randomly spawn enemies on each side of the screen
             if(randValue < 0.25)
             {
-                enemies.add(new Enemy((int)(randValue * 1280), -70, player, stage));
+                enemies.add(new Enemy((int)(randValue * 1280), -70, player, stage, hud));
             } else if(randValue < 0.5)
             {
-                enemies.add(new Enemy((int)(randValue*1280), 790, player,stage));
+                enemies.add(new Enemy((int)(randValue*1280), 790, player,stage, hud));
             } else if(randValue < 0.75)
             {
-                enemies.add(new Enemy(-70, (int)(randValue*720), player, stage));
+                enemies.add(new Enemy(-70, (int)(randValue*720), player, stage, hud));
             } else
             {
-                enemies.add(new Enemy(1350, (int)(randValue*720), player, stage));
+                enemies.add(new Enemy(1350, (int)(randValue*720), player, stage, hud));
             }
         }
         for(Enemy enemy : enemies)

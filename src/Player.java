@@ -57,7 +57,7 @@ public class Player {
 		health = 10;
 		dead = false;
 		
-		weapon = new SpellSprayer(x, y, null);
+		weapon = new SpellSlinger(x, y, null);
 	}
 	public void setSpellManager(SpellManager spellManager)
 	{
@@ -275,6 +275,8 @@ public class Player {
     		
     		if (this.health <= 0)
         	{
+    			if(!dead)
+    				SaveManager.getInstance().saveVals();
         		dead = true; 
         	}
         	

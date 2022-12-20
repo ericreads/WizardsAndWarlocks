@@ -15,6 +15,7 @@ public class MainMenu extends GameScreen {
 		buttonFont = new Font(Font.SANS_SERIF, Font.BOLD, 50);
 		exitButton = new ExitButton(1280/2-75+50, 500, "Exit", buttonFont, Color.blue.brighter(), Color.red);
 		playButton = new PlayButton(1280/2-150+50, 400, "Play Game", buttonFont, Color.blue.brighter(), Color.green);
+		SaveManager.getInstance().refreshVals();
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class MainMenu extends GameScreen {
 	@Override
 	public void draw(Graphics2D g) {
 		g.setFont(titleFont);
-		g.drawString("Wizards And Warlocks", 125, 200);;
+		g.drawString("Wizards And Warlocks", 125, 200);
 		exitButton.draw(g);
 		playButton.draw(g);;
 	}

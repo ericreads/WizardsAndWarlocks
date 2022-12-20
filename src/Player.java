@@ -8,6 +8,8 @@ import java.io.*;
 public class Player {
 	private double x;
 	private double y;
+	private double startX;
+	private double startY;
 	
 	private double speed;
 	private double velocityX;
@@ -20,11 +22,12 @@ public class Player {
 	private boolean left, right, up, down;
 	private String lastPosition = "down";
 	private int collisionDuration; // Collision duration, in # of frames
+	private int deathCounter = 0;
 	
 	private double health;
 	private int maxHealth;
 	private boolean dead;
-	
+	private Weapon weapon;
   	private Obstacle[][] obstacles;
   
   	
@@ -39,6 +42,9 @@ public class Player {
 	public Player(int x, int y, Stage stage) {
 		this.x = x;
 		this.y = y;
+		
+		startX = x;
+		startY = y;
 		
 		speed = 0.3;
 		velocityX = 0;
@@ -113,8 +119,12 @@ public class Player {
 		{
 			System.out.println(e.toString());
 		}
+		weapon = new SpellSlinger(x, y, null);
 	}
-	
+	public void setSpellManager(SpellManager spellManager)
+	{
+		weapon.setSpellManager(spellManager);
+	}
 	public Rectangle getPosition()
 	{
 		return this.position;
@@ -192,15 +202,29 @@ public class Player {
             lastPosition = "down";
         }
     }
+    //Called on the start of the next wave
+    public void reset()
+    {
+    	x = startX;
+    	y = startY;
+    	position.setLocation((int)startX, (int)startY);
+    }
+    //Called when the mouse is pressed
+    public void mousePressed(MouseEvent e)
+    {
+    	if(e.getButton() == MouseEvent.BUTTON1)
+    		weapon.press();
+    }
+    //Called when the mouse is released
+    public void mouseReleased(MouseEvent e)
+    {
+    	if(e.getButton() == MouseEvent.BUTTON1)
+    		weapon.release();
+    }
 
 	public void takeDamage(double damage) 
 	{
-		collisionDuration++;
-		
-		if (collisionDuration % 15 == 0) 
-		{
-			health -= damage;
-		}
+		health -= damage;
 	}
     
     public void draw(Graphics2D g) 
@@ -371,9 +395,8 @@ public class Player {
     			}
     			
     		}
-			g.setColor(Color.RED);
-			// g.drawRect(position.x, position.y, position.width, position.height);
-    	} 
+    		weapon.draw(g);
+    	}
     	else
     	{
     		g.setColor(Color.black);
@@ -434,6 +457,17 @@ public class Player {
         	// Set player's position 
         	x += velocityX * deltaTime;
         	y += velocityY * deltaTime;
+        	
+        
+    	}
+    	else
+    	{
+    		deathCounter += deltaTime;
+    		if(deathCounter > 1000)
+    		{
+    			GameScreenManager.getInstance().clearScreens();
+    			GameScreenManager.getInstance().addScreen(new MainMenu());
+    		}
     	}
     	
     	//Collision Detection
@@ -467,6 +501,8 @@ public class Player {
     		
     		if (this.health <= 0)
         	{
+    			if(!dead)
+    				SaveManager.getInstance().saveVals();
         		dead = true; 
         	}
         	
@@ -474,8 +510,9 @@ public class Player {
     	}
     	
     	position.setLocation((int) x, (int) y);
-    	
     	frames++;
+    	weapon.updatePosition((int)x+20, (int)y+20);
+    	weapon.update(deltaTime);
     }
     public double getHealth() { return health; }
     public int getMaxHealth() { return maxHealth; }

@@ -19,6 +19,7 @@ public class Enemy
 
 	private double health;
 	private boolean dead;
+	private double collisionDuration;
 		
 	private Rectangle position;
 	private Stage stage;
@@ -33,10 +34,10 @@ public class Enemy
 	
 	private boolean reached = false;
 	private Player player;
+	private HUD hud;
 	
 	private double frames = 0;
-	
-	public Enemy(int x, int y, Player player, Stage stage)
+	public Enemy(int x, int y, Player player, Stage stage, HUD hud)
 	{
 		this.x = x;
 		this.y = y;
@@ -56,6 +57,7 @@ public class Enemy
 		
 		this.player = player;		
 		this.stage = stage;
+		this.hud = hud;
 		
 		// Initialize nodes array
 		this.nodes = new Obstacle[stage.getObstacles().length][stage.getObstacles()[0].length];
@@ -82,6 +84,8 @@ public class Enemy
 	public void takeDamage(int damage)
 	{
 		health -= damage;
+		if(!(health <= 0))
+			hud.displayMoney("-" + Integer.toString(damage), (int)x, (int)y, Color.red);
 	}
 
 	public void draw(Graphics2D g)
@@ -94,6 +98,11 @@ public class Enemy
 	{
 		if (health <= 0)
 		{
+			if(!dead)
+			{
+				SaveManager.getInstance().setMoney(SaveManager.getInstance().getMoney()+50);
+				hud.displayMoney("$50", (int)x, (int)y, Color.green);
+			}
 			dead = true;
 		}
 		
@@ -102,8 +111,18 @@ public class Enemy
 			// If Enemy intersects Player, Player loses 0.5 health
 			if (player.intersects(this))
 	    	{
-	    		player.takeDamage(0.5f);
-	    	}
+				collisionDuration += deltaTime;
+		
+				if (collisionDuration > 175) 
+				{
+	    			player.takeDamage(0.5f);
+					collisionDuration = 0;
+	    		}
+			}
+			else
+			{
+				collisionDuration = 101;
+			}
 			
 			if (frames > 750) {
 				playerX = player.getX();

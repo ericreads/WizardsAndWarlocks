@@ -1,13 +1,13 @@
 // Import required modules
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class GameJPanel extends JPanel 
 {
 	//Create a long to store the time the last time the loop was run (for calculating deltaTime)
 	private long pastTime;
+	private static int mouseX, mouseY;
 	public GameJPanel()
 	{
 		addKeyListener(new KeyListener() {
@@ -32,6 +32,33 @@ public class GameJPanel extends JPanel
 				GameScreenManager.getInstance().keyPressed(e);
 			}
 		});
+		addMouseListener(new MouseListener() {
+			@Override 
+			public void mouseClicked(MouseEvent e)
+			{
+				GameScreenManager.getInstance().mouseClicked(e);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e)
+			{
+
+			}
+			@Override
+			public void mouseExited(MouseEvent e)
+			{
+
+			}
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				GameScreenManager.getInstance().mousePressed(e);
+			}
+			@Override
+			public void mouseReleased(MouseEvent e)
+			{
+				GameScreenManager.getInstance().mouseReleased(e);
+			}
+		});
 		setFocusable(true);
 	}
 	public void update()
@@ -47,6 +74,10 @@ public class GameJPanel extends JPanel
 		GameScreenManager.getInstance().update(deltaTime);
 		//Set the pastTime to the current time
 		pastTime = time;
+		//Get mouse position on the X axis
+		mouseX = MouseInfo.getPointerInfo().getLocation().x - this.getLocationOnScreen().x;
+		//Get the mouse position on the Y axis
+		mouseY = MouseInfo.getPointerInfo().getLocation().y - this.getLocationOnScreen().y;
 	}
 	
 	@Override
@@ -73,13 +104,24 @@ public class GameJPanel extends JPanel
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		//Put the player screen in the GameScreenManager
-		GameScreenManager.getInstance().addScreen(new TestScreen());
-		while(true)
+		GameScreenManager.getInstance().addScreen(new MainMenu());
+		while(!GameScreenManager.getInstance().getShouldClose())
 		{
 			p.update();
 			p.repaint();
 			//Set refresh rate to around 16.66ms the default refresh rate of most monitors
 			Thread.sleep(16);
 		}
+		//close the game when the loop ends
+		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}}
+	//Getters for the mouse position
+	public static int getMouseX()
+	{
+		return mouseX;
+	}
+	public static int getMouseY()
+	{
+		return mouseY;
+	}
 }

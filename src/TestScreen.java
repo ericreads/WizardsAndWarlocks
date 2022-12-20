@@ -1,5 +1,5 @@
 import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public class TestScreen extends GameScreen {
 
@@ -37,6 +37,24 @@ public class TestScreen extends GameScreen {
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e)
+	{
+		gameManager.mouseClicked(e);
+	}
+	
+	@Override
+	public void mousePressed(MouseEvent e)
+	{
+		gameManager.mousePressed(e);
+	}
+	
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		gameManager.mouseReleased(e);
 	}
 
 }

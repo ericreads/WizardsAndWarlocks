@@ -1,8 +1,7 @@
 //Import required modules
 import java.util.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class GameScreenManager {
@@ -10,7 +9,8 @@ public class GameScreenManager {
 	private ArrayList<GameScreen> screens;
 	//The instance that will be statically returned allowing this class to be called *anywhere*
 	private static GameScreenManager instance;
-	
+	//Boolean that stores wether or not the window should close
+	private boolean shouldClose = false;
 	//Constructor is private to ensure only our static instance can be accessed 
 	private GameScreenManager()
 	{
@@ -74,4 +74,33 @@ public class GameScreenManager {
 		if(screens.size() > 0)
 			screens.get(screens.size()-1).keyTyped(e);
 	}
+	///Calls the mouseClicked method of the screen at the top of the list
+	public void mouseClicked(MouseEvent e)
+	{
+		if(screens.size() > 0)
+			screens.get(screens.size()-1).mouseClicked(e);
+	}
+	//Calls the mousePressed method of the screen at the top of the list
+	public void mousePressed(MouseEvent e)
+	{
+		if(screens.size() > 0)
+			screens.get(screens.size()-1).mousePressed(e);
+	}
+	//Calls the mouseReleased method of the screen at the top of the list
+	public void mouseReleased(MouseEvent e)
+	{
+		if(screens.size() > 0)
+			screens.get(screens.size()-1).mouseReleased(e);
+	}
+	//Sets it so the window should close
+	public void shouldClose()
+	{
+		shouldClose = true;
+	}
+	//Returns whether or not the window should close
+	public boolean getShouldClose()
+	{
+		return shouldClose;
+	}
+	
 }

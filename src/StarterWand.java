@@ -1,10 +1,10 @@
 import java.awt.Image;
 import java.awt.Rectangle;
-
+import java.awt.image.*;
 public class StarterWand extends Weapon {
-	public StarterWand(int x, int y, Image sprite)
+	public StarterWand(int x, int y, BufferedImage sprite)
 	{
-		super(x, y, 5, sprite);
+		super(x, y, 5, sprite, "Starting Wand", "The wand of a beginner, ok but not remarkable.", sprite);
 	}
 	@Override
 	public void press() {

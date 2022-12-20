@@ -1,10 +1,10 @@
 // Import required modules
 import java.awt.*;
-
+import java.awt.image.*;
 public class SpellSprayer extends Weapon {
-	public SpellSprayer(int x, int y, Image sprite)
+	public SpellSprayer(int x, int y, BufferedImage sprite)
 	{
-		super(x, y, 2, sprite);
+		super(x, y, 2, sprite, "Spell Sprayer", "Shoots multiple low damage spells that can do massive damage at close range.", sprite);
 	}
 	@Override
 	public void press() {

@@ -1,13 +1,13 @@
 // Import required modules
 import java.awt.*;
-
+import java.awt.image.*;
 public class SpellSlinger extends Weapon {
 	private boolean shooting = false;
 	private int shootCounter = 0;
 	
-	public SpellSlinger(int x, int y, Image sprite)
+	public SpellSlinger(int x, int y, BufferedImage sprite)
 	{
-		super(x, y, 2, sprite, "Spell Slinger", "A wand thhat casts spells quickly.", );
+		super(x, y, 2, sprite, "Spell Slinger", "A wand that casts spells quickly.", sprite);
 	}
 	
 	@Override

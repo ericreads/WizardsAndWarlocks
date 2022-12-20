@@ -36,7 +36,7 @@ public class Player {
   	private BufferedImage back_walk_00, back_walk_01, back_walk_02, back_walk_03, back_walk_04, back_walk_05, back_walk_06, back_walk_07;
   	private BufferedImage left_walk_00, left_walk_01, left_walk_02, left_walk_03, left_walk_04, left_walk_05, left_walk_06, left_walk_07;
   	private BufferedImage right_walk_00, right_walk_01, right_walk_02, right_walk_03, right_walk_04, right_walk_05, right_walk_06, right_walk_07;
-  	
+  	private BufferedImage spellSlingerSprite;
   	private int frames = 0; 
   	
 	public Player(int x, int y, Stage stage) {
@@ -114,12 +114,15 @@ public class Player {
 			right_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk6.png"));
 			right_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk7.png"));
 			right_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk8.png"));
+			
+			//Wand Sprites
+			spellSlingerSprite = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0w130.png"));
 		} 
 		catch(IOException e)
 		{
 			System.out.println(e.toString());
 		}
-		weapon = new SpellSlinger(x, y, null);
+		weapon = new SpellSlinger(x, y, spellSlingerSprite);
 	}
 	public void setSpellManager(SpellManager spellManager)
 	{

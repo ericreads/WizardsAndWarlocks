@@ -39,8 +39,7 @@ public abstract class Weapon extends Object{
 		//Do arcane Graphics2D magic to rotate the weapon
 		Graphics2D gg = (Graphics2D)g.create();
 		gg.rotate(weaponAngle, (double)bounds.x, (double)bounds.y);
-		//gg.drawImage(sprite, bounds.x, bounds.y, null);
-		gg.fill(bounds);
+		gg.drawImage(sprite, bounds.x, bounds.y, null);
 		gg.dispose();
 	}
 }

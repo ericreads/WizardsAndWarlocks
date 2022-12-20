@@ -1,15 +1,17 @@
 // Import required modules
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
-public abstract class Weapon {
+public abstract class Weapon extends Object{
 	protected int damagePerParticle;
-	private Image sprite;
+	private BufferedImage sprite;
 	protected SpellManager spellManager;
 	protected Rectangle bounds;
 	protected double weaponAngle;
 	
-	public Weapon(int x, int y, int damagePerParticle, Image sprite)
+	public Weapon(int x, int y, int damagePerParticle, BufferedImage sprite, String name, String description, BufferedImage icon)
 	{
+		super(name, description, icon);
 		bounds = new Rectangle(x, y, 50, 10);
 		this.damagePerParticle = damagePerParticle;
 		this.sprite = sprite;

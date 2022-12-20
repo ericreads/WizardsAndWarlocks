@@ -7,7 +7,7 @@ public class SpellSlinger extends Weapon {
 	
 	public SpellSlinger(int x, int y, Image sprite)
 	{
-		super(x, y, 2, sprite);
+		super(x, y, 2, sprite, "Spell Slinger", "A wand thhat casts spells quickly.", );
 	}
 	
 	@Override

@@ -38,18 +38,21 @@ public class Stage
 		// Randomize the blocks with the starting obstacle percent
 		randomize(initialPercent);
 		
-		 tiles = new BufferedImage[10];
+		 tiles = new BufferedImage[15];
 
         try {
         	tiles[0] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0000.png")); // obstacle block
-        	tiles[1] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0048.png"));
+        	tiles[1] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0048.png")); // ground
         	tiles[2] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0002.png")); // obstacle front
         	tiles[3] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0026.png")); // obstacle back
         	tiles[4] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0040.png")); // stone brick
         	tiles[5] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0015.png")); // left wall
         	tiles[6] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0013.png")); // right wall
-        	tiles[5] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0016.png")); // left corner
-        	tiles[6] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0017.png")); // right corner
+        	tiles[7] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0016.png")); // left corner
+        	tiles[8] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0017.png")); // right corner
+        	tiles[9] =  ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0049.png")); // detailed ground piece
+        	tiles[10] =  ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0072.png")); // detailed ground piece
+        	tiles[11] =  ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0052.png")); // left/right wall
         }
         catch (IOException e) {
         	System.out.println(e.toString());
@@ -71,7 +74,6 @@ public class Stage
 		return DIMENSION;
 	}
 
-	// Method to randomize the blocks
 	public void randomize(float obstaclePercent) 
 	{
 		// Randomize the obstacles based on the obstacle percent
@@ -94,38 +96,63 @@ public class Stage
 		{
 			for (int j = 0; j < obstacles[i].length; j++) 
 			{
-				if (obstacles[i][j].getEnabled()) {
-					if (!obstacles[i][j + 1].getEnabled()) {
-						obstacles[i][j].draw(g, tiles[2]);
-					}
-//					else if (!obstacles[i][j - 1].getEnabled()){
-//						obstacles[i][j].draw(g, tiles[3]);
-//					}
-					else {
-						obstacles[i][j].draw(g, tiles[0]);
-					}
-					if (!obstacles[i - 1][j].getEnabled()) {
-						if (!obstacles[i][j + 1].getEnabled()) {
-							obstacles[i][j].draw(g, tiles[7]);
+				if (obstacles[i][j].getEnabled()) 
+				{
+					if (!obstacles[i - 1][j].getEnabled()) 
+					{
+						if (!obstacles[i][j + 1].getEnabled()) 
+						{
+							obstacles[i][j].draw(g, tiles[7]); // left corner
 						}
-						else {
-							obstacles[i][j].draw(g, tiles[5]);
-						}
-					}
-					else if (!obstacles[i + 1][j].getEnabled()) {
-						if (!obstacles[i][j + 1].getEnabled()) {
-							obstacles[i][j].draw(g, tiles[8]);
-						}
-						else {
-							obstacles[i][j].draw(g, tiles[6]);
+						else 
+						{
+							if (!obstacles[i + 1][j].getEnabled()) 
+							{
+								obstacles[i][j].draw(g, tiles[11]);
+							}
+							else 
+							{
+								obstacles[i][j].draw(g, tiles[5]); // left wall
+							}
 						}
 					}
+					else if (!obstacles[i + 1][j].getEnabled()) 
+					{
+						if (!obstacles[i][j + 1].getEnabled()) 
+						{
+							obstacles[i][j].draw(g, tiles[8]); // right corner
+						}
+						else 
+						{
+							obstacles[i][j].draw(g, tiles[6]); // right wall
+						}
+					}
+					else 
+					{
+						if (!obstacles[i][j + 1].getEnabled()) 
+						{
+							obstacles[i][j].draw(g, tiles[2]);
+						}
+						else 
+						{
+							obstacles[i][j].draw(g, tiles[0]);
+						}
+					}
+					// draw inner corner piece overlay
+					
 				}
 				else {
-					if (j != 0 && obstacles [i][j - 1].getEnabled()) {
+					
+					if (j != 0 && obstacles[i][j - 1].getEnabled()) 
+					{
 						obstacles[i][j].draw(g, tiles[4]);
 					}
-					else {
+					else if (obstacles[i][j].getNoise() < 10) 
+					{
+						obstacles[i][j].draw(g, tiles[9]);
+					}
+					else 
+					{
 						obstacles[i][j].draw(g, tiles[1]);
 					}
 				}

@@ -10,6 +10,7 @@ public class Obstacle
 	private int x;
 	private int y; 
 	private int dimension;
+	private int noise = (int)(Math.random() * 100); 
 	
 	private Rectangle bounds; // Rectangle stores position and size to be used in collision detection
 	private boolean enabled; // Represents if 'node' is walkable/un-walkable
@@ -31,7 +32,7 @@ public class Obstacle
 		bounds = new Rectangle(x, y, dimension, dimension);
 		enabled = false;
 		
-		// x and y represent indices this Obstacle in list in Stage class; NOT x and y coordinates of Obstacle
+		// x and y represent indices this Obstacle in list in Stage class
 		this.x = (x / dimension); 
 		this.y = (y / dimension);
 	}
@@ -62,6 +63,11 @@ public class Obstacle
 	public boolean getEnabled() 
 	{
 		return enabled;
+	}
+	
+	public int getNoise() 
+	{
+		return this.noise; 
 	}
 	
 	public boolean getOpen()

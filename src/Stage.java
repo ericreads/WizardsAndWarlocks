@@ -57,8 +57,8 @@ public class Stage
         	tiles[13] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0003.png")); // left bottom inner corner
         	tiles[14] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0025.png")); // right bottom inner corner
         	tiles[15] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0027.png")); // left bottom inner corner
-
-        	
+        	tiles[16] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0006.png")); // single block font
+        	tiles[17] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0004.png")); // single block
         }
         catch (IOException e) {
         	System.out.println(e.toString());
@@ -108,7 +108,21 @@ public class Stage
 					{
 						if (!obstacles[i][j + 1].getEnabled()) 
 						{
-							obstacles[i][j].draw(g, tiles[7]); // left corner
+							if (!obstacles[i + 1][j].getEnabled())
+							{
+								if (!obstacles[i][j - 1].getEnabled()) 
+								{
+									obstacles[i][j].draw(g, tiles[17]);
+								}
+								else 
+								{
+									obstacles[i][j].draw(g, tiles[16]);
+								}
+							}
+							else 
+							{
+								obstacles[i][j].draw(g, tiles[7]); // left corner
+							}
 						}
 						else 
 						{
@@ -145,22 +159,28 @@ public class Stage
 						}
 					}
 					// draw inner corner piece overlay
-					if (!obstacles[i - 1][j + 1].getEnabled() && (obstacles[i - 1][j].getEnabled() && obstacles[i][j + 1].getEnabled())) 
+					if (!obstacles[i - 1][j + 1].getEnabled() && 
+							(obstacles[i - 1][j].getEnabled() && obstacles[i][j + 1].getEnabled())) 
 					{
 						obstacles[i][j].draw(g, tiles[13]);
 					}
-					else if (!obstacles[i + 1][j + 1].getEnabled() && (obstacles[i + 1][j].getEnabled() && obstacles[i][j + 1].getEnabled()))
+					else if (!obstacles[i + 1][j + 1].getEnabled() && 
+							(obstacles[i + 1][j].getEnabled() && obstacles[i][j + 1].getEnabled()))
 					{
 						obstacles[i][j].draw(g, tiles[12]);
 					}
-					else if (!obstacles[i - 1][j - 1].getEnabled() && (obstacles[i - 1][j].getEnabled() && obstacles[i][j - 1].getEnabled()))
+					else if (!obstacles[i - 1][j - 1].getEnabled() && 
+							(obstacles[i - 1][j].getEnabled() && obstacles[i][j - 1].getEnabled()))
 					{
 						obstacles[i][j].draw(g, tiles[15]);
 					}
-					else if (!obstacles[i + 1][j - 1].getEnabled() && (obstacles[i + 1][j].getEnabled() && obstacles[i][j - 1].getEnabled()))
+					else if (!obstacles[i + 1][j - 1].getEnabled() && 
+							(obstacles[i + 1][j].getEnabled() && obstacles[i][j - 1].getEnabled()))
 					{
 						obstacles[i][j].draw(g, tiles[14]);
 					}
+					
+					
 				}
 				else {
 					

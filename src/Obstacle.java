@@ -9,11 +9,10 @@ public class Obstacle
 	
 	private int x;
 	private int y; 
-	private int dimension;
 	private int noise = (int)(Math.random() * 100); 
 	
 	private Rectangle bounds; // Rectangle stores position and size to be used in collision detection
-	private boolean enabled; // Represents if 'node' is walkable/un-walkable
+	private boolean enabled;  // Represents if 'node' is walkable/un-walkable
 	
 	private int gCost; // Distance from startNode to this node
 	private int hCost; // Distance from this node to goalNode
@@ -27,8 +26,6 @@ public class Obstacle
 	// Create an obstacle with the specified position, width, and height
 	public Obstacle(int x, int y, int dimension) 
 	{
-		this.dimension = dimension; 
-		
 		bounds = new Rectangle(x, y, dimension, dimension);
 		enabled = false;
 		

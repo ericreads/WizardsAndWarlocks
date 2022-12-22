@@ -1,11 +1,14 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 
 public class MainMenu extends GameScreen {
 
 	private Button exitButton;
 	private Button playButton;
+	private Button shopButton;
 	private Font buttonFont;
 	private Font titleFont;
 	
@@ -13,14 +16,18 @@ public class MainMenu extends GameScreen {
 	public void initialize() {
 		titleFont = new Font(Font.SANS_SERIF, Font.BOLD, 100);
 		buttonFont = new Font(Font.SANS_SERIF, Font.BOLD, 50);
-		exitButton = new ExitButton(1280/2-75+50, 500, "Exit", buttonFont, Color.blue.brighter(), Color.red);
-		playButton = new PlayButton(1280/2-150+50, 400, "Play Game", buttonFont, Color.blue.brighter(), Color.green);
+		AffineTransform at = new AffineTransform();
+        FontRenderContext frc = new FontRenderContext(at, true, true);
+		exitButton = new ExitButton(1280/2-(int)buttonFont.getStringBounds("Exit", frc).getWidth()/2, 600, "Exit", buttonFont, Color.blue.brighter(), Color.red);
+		shopButton = new ShopButton(1280/2-(int)buttonFont.getStringBounds("Shop", frc).getWidth()/2, 500, "Shop", buttonFont, Color.blue.brighter(), Color.green);
+		playButton = new PlayButton(1280/2-(int)buttonFont.getStringBounds("Play Game", frc).getWidth()/2, 400, "Play Game", buttonFont, Color.blue.brighter(), Color.green);
 		SaveManager.getInstance().refreshVals();
 	}
 
 	@Override
 	public void update(int deltaTime) {
 		exitButton.update();
+		shopButton.update();
 		playButton.update();
 	}
 
@@ -29,7 +36,8 @@ public class MainMenu extends GameScreen {
 		g.setFont(titleFont);
 		g.drawString("Wizards And Warlocks", 125, 200);
 		exitButton.draw(g);
-		playButton.draw(g);;
+		shopButton.draw(g);
+		playButton.draw(g);
 	}
 
 	@Override
@@ -53,6 +61,7 @@ public class MainMenu extends GameScreen {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		exitButton.mouseClicked(e);
+		shopButton.mouseClicked(e);
 		playButton.mouseClicked(e);
 	}
 

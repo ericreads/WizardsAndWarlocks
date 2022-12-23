@@ -80,6 +80,16 @@ public class GameJPanel extends JPanel
 		mouseY = MouseInfo.getPointerInfo().getLocation().y - this.getLocationOnScreen().y;
 	}
 	
+	//Getters for the mouse position
+	public static int getMouseX()
+	{
+		return mouseX;
+	}
+	public static int getMouseY()
+	{
+		return mouseY;
+	}
+
 	@Override
 	public void paint(Graphics g)
 	{
@@ -91,18 +101,25 @@ public class GameJPanel extends JPanel
 		GameScreenManager.getInstance().draw(g2d);
 	}
 
-	public static void main(String[] args) throws InterruptedException{
-	{
+	public static void main(String[] args) throws InterruptedException
+	{{
 		//Enable hardware accelerated graphics to improve performance for linux users(eric)
 		System.setProperty("sun.java2d.opengl", "true");
+		
 		//Initialize a new window
 		JFrame frame = new JFrame("Wizards and Warlocks");
 		GameJPanel p = new GameJPanel();
 		frame.add(p);
-		frame.setSize(1265, 688);
+		
+		frame.setSize(1265, 688); 
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		
+		// Set frame icon
+		ImageIcon icon = new ImageIcon("game_icon.png");
+		frame.setIconImage(icon.getImage());
+				
 		//Put the player screen in the GameScreenManager
 		GameScreenManager.getInstance().addScreen(new MainMenu());
 		while(!GameScreenManager.getInstance().getShouldClose())
@@ -114,14 +131,5 @@ public class GameJPanel extends JPanel
 		}
 		//close the game when the loop ends
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-	}}
-	//Getters for the mouse position
-	public static int getMouseX()
-	{
-		return mouseX;
-	}
-	public static int getMouseY()
-	{
-		return mouseY;
-	}
+	}}	
 }

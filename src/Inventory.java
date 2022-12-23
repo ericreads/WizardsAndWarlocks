@@ -42,20 +42,21 @@ public class Inventory {
     public void draw(Graphics2D g)
     {
         // Draw inventory slots
-    	//Had to move inventory up to see it on linux
+    	// Had to move inventory up to see it on linux
+    	// TODO: move inventory back down (y = 550)
 		for (int i = 0; i < 4; i++)
 		{
-			g.setColor(new Color(0, 0, 0, 20));
-			g.fillRect((i * 60) + 515, 550, 45, 45);
+			g.setColor(new Color(0, 0, 0, 80));
+			g.fillRect((i * 60) + 508, 575, 45, 45);
 
 			g.setColor(Color.black);
-			g.drawRect((i * 60) + 515, 550, 45, 45);
+			g.drawRect((i * 60) + 508, 575, 45, 45);
 			if(i < inventory.size())
-				g.drawImage(inventory.get(i).getIcon(), (i * 60) + 515, 550, 45, 45, null);
+				g.drawImage(inventory.get(i).getIcon(), (i * 60) + 508, 575, 45, 45, null);
 		}
 
 		// Draw inventory cursor (representing item player has equipped)
 		g.setStroke(new BasicStroke(4));
-		g.drawRect((index * 60) + 515, 550, 45, 45);
+		g.drawRect((index * 60) + 508, 575, 45, 45);
     }
 }

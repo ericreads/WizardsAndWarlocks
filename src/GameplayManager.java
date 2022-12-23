@@ -52,8 +52,8 @@ public class GameplayManager {
     {
     	//Draw all the actors
         stage.draw(g);
-        player.draw(g);
         enemyManager.draw(g);
+        player.draw(g);
         spellManager.draw(g);
         hud.draw(g);
     }

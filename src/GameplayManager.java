@@ -6,7 +6,6 @@ public class GameplayManager {
     private SpellManager spellManager;
     private EnemyManager enemyManager;
     private HUD hud;
-    private Inventory inventory;
     //Arrays to hold random stage values and the number of enemies spawned in each level and enemy spawn speeds
     private float[] stageRands = new float[] {0.25f, 0.15f, 0.10f, 0.05f, 0.25f};
     private int[] enemyLevels = new int[] {10, 20, 30, 40, 50, 75};
@@ -18,10 +17,9 @@ public class GameplayManager {
         stage = new Stage(stageRands[0]);
 		player = new Player(600, 370, stage);
 		hud = new HUD(player, 1);
-		inventory = new Inventory();
-    enemyManager = new EnemyManager(player, stage, hud, enemyLevels[0], enemyFreq[0]);
-    spellManager = new SpellManager(stage, enemyManager, player);
-    player.setSpellManager(spellManager);
+		enemyManager = new EnemyManager(player, stage, hud, enemyLevels[0], enemyFreq[0]);
+		spellManager = new SpellManager(stage, enemyManager, player);
+		player.setSpellManager(spellManager);
     }
     public void update(int deltaTime)
     {
@@ -29,13 +27,20 @@ public class GameplayManager {
         enemyManager.update(deltaTime);
         spellManager.update(deltaTime);
         //Check if all enemies are dead and have been spawned, if yes advance the level
-        if(enemyManager.shouldAdvance() && level + 1 < stageRands.length)
+        if(enemyManager.shouldAdvance())
         {
-            level++;
-            hud.setLevel(level+1);
-            stage.randomize(stageRands[level]);
-            enemyManager.newWave(enemyLevels[level], enemyFreq[level]);
-            player.reset();
+        	if(level + 1 < stageRands.length)
+        	{
+	            level++;
+	            hud.setLevel(level+1);
+	            stage.randomize(stageRands[level]);
+	            enemyManager.newWave(enemyLevels[level], enemyFreq[level]);
+	            player.reset();
+        	} else
+        	{
+        		GameScreenManager.getInstance().clearScreens();
+        		GameScreenManager.getInstance().addScreen(new MainMenu());
+        	}
         }
         hud.update(deltaTime);
     }
@@ -48,12 +53,10 @@ public class GameplayManager {
         enemyManager.draw(g);
         spellManager.draw(g);
         hud.draw(g);
-        inventory.draw(g);
     }
     public void keyPressed(KeyEvent e)
     {
         player.keyPressed(e);
-        inventory.keyPressed(e);
     }
     public void keyReleased(KeyEvent e)
     {

@@ -20,4 +20,17 @@ public class Helper {
 		int deltaY = y2-y1;
 		return new double[] {deltaX/Math.sqrt((double)deltaX*deltaX+deltaY*deltaY), deltaY/Math.sqrt((double)deltaX*deltaX + deltaY*deltaY)};
 	}
+	//Returns true if an integer is 1
+	public static boolean intToBool(int a)
+	{
+		return a == 1;
+	}
+	//Return a 0 if false, 1 if true
+	public static int boolToInt(boolean a)
+	{
+		if(a)
+			return 1;
+		else 
+			return 0;
+	}
 }

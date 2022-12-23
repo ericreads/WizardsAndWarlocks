@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Player {
 	private double x;
@@ -28,6 +29,7 @@ public class Player {
 	private int maxHealth;
 	private boolean dead;
 	private Weapon weapon;
+	private Inventory inventory;
   	private Obstacle[][] obstacles;
   
   	
@@ -36,7 +38,12 @@ public class Player {
   	private BufferedImage back_walk_00, back_walk_01, back_walk_02, back_walk_03, back_walk_04, back_walk_05, back_walk_06, back_walk_07;
   	private BufferedImage left_walk_00, left_walk_01, left_walk_02, left_walk_03, left_walk_04, left_walk_05, left_walk_06, left_walk_07;
   	private BufferedImage right_walk_00, right_walk_01, right_walk_02, right_walk_03, right_walk_04, right_walk_05, right_walk_06, right_walk_07;
-  	
+  	private BufferedImage starterWandSprite;
+	private BufferedImage spellSlingerSprite;
+	private BufferedImage spellSprayerSprite;
+	private BufferedImage starterWandIcon;
+	private BufferedImage spellSlingerIcon;
+	private BufferedImage spellSprayerIcon;
   	private int frames = 0; 
   	
 	public Player(int x, int y, Stage stage) {
@@ -114,16 +121,36 @@ public class Player {
 			right_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk6.png"));
 			right_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk7.png"));
 			right_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk8.png"));
+			
+			//Wand Sprites
+			starterWandSprite = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0127(rotated).png"));
+			spellSlingerSprite = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0130(rotated).png"));
+			spellSprayerSprite = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0129(rotated).png"));
+			
+			//Wand Icons
+			starterWandIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0127.png"));
+			spellSlingerIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0130.png"));
+			spellSprayerIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0129.png"));
 		} 
 		catch(IOException e)
 		{
 			System.out.println(e.toString());
 		}
-		weapon = new SpellSlinger(x, y, null);
+		ArrayList<Weapon> weapons = new ArrayList<Weapon>();
+		weapons.add(new StarterWand(x, y, starterWandSprite, starterWandIcon));
+		if(SaveManager.getInstance().hasSpellSlinger())
+			weapons.add(new SpellSlinger(x, y, spellSlingerSprite, spellSlingerIcon));
+		if(SaveManager.getInstance().hasSpellSprayer())
+			weapons.add(new SpellSprayer(x, y, spellSprayerSprite, spellSprayerIcon));
+		inventory = new Inventory(weapons);
+		weapon = inventory.getWeapon();
 	}
 	public void setSpellManager(SpellManager spellManager)
 	{
-		weapon.setSpellManager(spellManager);
+		for(Weapon w : inventory.getWeapons())
+		{
+			w.setSpellManager(spellManager);
+		}
 	}
 	public Rectangle getPosition()
 	{
@@ -172,6 +199,7 @@ public class Player {
         {
             down = true;
         }
+        inventory.keyPressed(e);
     }
 
 	// KeyEvent input is pressed from GameScreenManager Class when key is released
@@ -201,6 +229,7 @@ public class Player {
             velocityY = 0;
             lastPosition = "down";
         }
+        inventory.keyPressed(e);
     }
     //Called on the start of the next wave
     public void reset()
@@ -313,7 +342,7 @@ public class Player {
     				else if (frames % 64 < 48)
     				{
     					g.drawImage(right_walk_05, (int) x, (int) y, width, height, null);
-    				}
+    				}        
     				else if (frames % 64 < 56)
     				{
     					g.drawImage(right_walk_06, (int) x, (int) y, width, height, null);
@@ -401,7 +430,8 @@ public class Player {
     	{
     		g.setColor(Color.black);
     		g.fillOval((int) x, (int) y, width, height);
-    	}	
+    	}
+        inventory.draw(g);
     }
     
     public void update(int deltaTime) {
@@ -458,7 +488,7 @@ public class Player {
         	x += velocityX * deltaTime;
         	y += velocityY * deltaTime;
         	
-        
+        	weapon = inventory.getWeapon();
     	}
     	else
     	{

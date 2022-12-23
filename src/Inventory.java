@@ -5,18 +5,21 @@ import java.util.*;
 
 public class Inventory {
     
-    private ArrayList<Object> inventory = new ArrayList<>();
+    private ArrayList<Weapon> inventory;
     private int index; // # of item equipped
     
-    public Inventory()
+    public Inventory(ArrayList<Weapon> inventory)
     {
+    	this.inventory = inventory;
         this.index = 0;
     }
 
     // Returns the weapon that is currently equipped
-    public Object getWeapon() {
-    	return this.inventory.get(index); 
+    public Weapon getWeapon() {
+    	return inventory.get(index);
     }
+    //Returns the weapon list
+    public ArrayList<Weapon> getWeapons() { return inventory; }
     
     // KeyEvent input is passed from GameScreenManager Class when key is pressed
 	public void keyPressed(KeyEvent e) 
@@ -33,26 +36,27 @@ public class Inventory {
         {
             index = 2;
         }
-        if (e.getKeyCode() == KeyEvent.VK_4) 
-        {
-            index = 3;
-        }
+        if(index > inventory.size()-1)
+        	index = inventory.size()-1;
     }
 
     public void draw(Graphics2D g)
     {
         // Draw inventory slots
+    	//Had to move inventory up to see it on linux
 		for (int i = 0; i < 4; i++)
 		{
 			g.setColor(new Color(0, 0, 0, 20));
-			g.fillRect((i * 60) + 515, 625, 45, 45);
+			g.fillRect((i * 60) + 515, 550, 45, 45);
 
 			g.setColor(Color.black);
-			g.drawRect((i * 60) + 515, 625, 45, 45);
+			g.drawRect((i * 60) + 515, 550, 45, 45);
+			if(i < inventory.size())
+				g.drawImage(inventory.get(i).getIcon(), (i * 60) + 515, 550, 45, 45, null);
 		}
 
 		// Draw inventory cursor (representing item player has equipped)
 		g.setStroke(new BasicStroke(4));
-		g.drawRect((index * 60) + 515, 625, 45, 45);
+		g.drawRect((index * 60) + 515, 550, 45, 45);
     }
 }

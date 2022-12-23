@@ -11,11 +11,15 @@ public class Enemy
 	private double velocityX; // Directional vector representing movement along x axis
 	private double velocityY; // Directional vector representing movement along y axis
 	
+	private double playerX;
+	private double playerY;
+	
 	private static int width = 40;
 	private static int height = 40;
 
 	private double health;
 	private boolean dead;
+	private double collisionDuration;
 		
 	private Rectangle position;
 	private Stage stage;
@@ -29,10 +33,11 @@ public class Enemy
 	private ArrayList<Obstacle> path = new ArrayList<>(); // Nodes that form shortest path from Enemy to Player
 	
 	private boolean reached = false;
-
 	private Player player;
+	private HUD hud;
 	
-	public Enemy(int x, int y, Player player, Stage stage)
+	private double frames = 0;
+	public Enemy(int x, int y, Player player, Stage stage, HUD hud)
 	{
 		this.x = x;
 		this.y = y;
@@ -44,11 +49,15 @@ public class Enemy
 		velocityX = 0;
 		velocityY = 0;
 		
+		playerX = player.getX();
+		playerY = player.getY();
+		
 		// Rectangle class stores Enemy's position
 		position = new Rectangle(x, y, width, height);
 		
 		this.player = player;		
 		this.stage = stage;
+		this.hud = hud;
 		
 		// Initialize nodes array
 		this.nodes = new Obstacle[stage.getObstacles().length][stage.getObstacles()[0].length];
@@ -75,6 +84,8 @@ public class Enemy
 	public void takeDamage(int damage)
 	{
 		health -= damage;
+		if(!(health <= 0))
+			hud.displayMoney("-" + Integer.toString(damage), (int)x, (int)y, Color.red);
 	}
 
 	public void draw(Graphics2D g)
@@ -87,6 +98,11 @@ public class Enemy
 	{
 		if (health <= 0)
 		{
+			if(!dead)
+			{
+				SaveManager.getInstance().setMoney(SaveManager.getInstance().getMoney()+50);
+				hud.displayMoney("$50", (int)x, (int)y, Color.green);
+			}
 			dead = true;
 		}
 		
@@ -95,8 +111,24 @@ public class Enemy
 			// If Enemy intersects Player, Player loses 0.5 health
 			if (player.intersects(this))
 	    	{
-	    		player.takeDamage(0.5f);
-	    	}
+				collisionDuration += deltaTime;
+		
+				if (collisionDuration > 175) 
+				{
+	    			player.takeDamage(0.5f);
+					collisionDuration = 0;
+	    		}
+			}
+			else
+			{
+				collisionDuration = 101;
+			}
+			
+			if (frames > 750) {
+				playerX = player.getX();
+				playerY = player.getY();
+				frames = 0;
+			}
 			
 			// Execute A* path finding when Enemy is on-screen
 			if ((this.x > 0 && this.x + width < 1230) && (this.y > 0 && this.y + height < 680))
@@ -211,6 +243,7 @@ public class Enemy
 	    	}	
 			position.setLocation((int)x, (int)y);
 		}
+		frames += deltaTime;
 	}
 	
 	private void setNodes()
@@ -222,18 +255,18 @@ public class Enemy
 			{
 				nodes[i][j].setOpen(false);
 				nodes[i][j].setChecked(false);
-				nodes[i][j].path = false;
+				// nodes[i][j].path = false;
 			}
 		}
 		
 		open.clear();
 		path.clear();
-
+		
 		reached = false;
 		
 		// Assign start, current, and goal nodes
 		start = nodes[(int)x / stage.getDimension()][(int) y / stage.getDimension()]; // Represents node of this Enemy's position
-		goal = nodes[(int)player.getX() / stage.getDimension()][(int)player.getY() / stage.getDimension()]; // Represnts node of Player's position
+		goal = nodes[(int)playerX / stage.getDimension()][(int)playerY / stage.getDimension()]; // Represents node of Player's position
 		
 		current = start; // Represents node being evaluated
 		open.add(current);
@@ -329,7 +362,7 @@ public class Enemy
 				while (node != start)
 				{
 					path.add(0, node); // Append node to first index (0) of path
-					node.path = true;
+					// node.path = true;
 					node = node.parent; // Continue for each nodes 'came-from' node
 				}
 			}

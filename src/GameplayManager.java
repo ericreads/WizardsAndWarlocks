@@ -20,11 +20,9 @@ public class GameplayManager {
         stage = new Stage(stageRands[0]);
 		player = new Player(600, 370, stage);
 		hud = new HUD(player, 1);
-        enemyManager = new EnemyManager(player, stage, enemyLevels[0], enemyFreq[0]);
-        spellManager = new SpellManager(stage, enemyManager, player);
-        player.setSpellManager(spellManager);
-        
-       
+		enemyManager = new EnemyManager(player, stage, hud, enemyLevels[0], enemyFreq[0]);
+		spellManager = new SpellManager(stage, enemyManager, player);
+		player.setSpellManager(spellManager);
     }
     public void update(int deltaTime)
     {
@@ -32,16 +30,22 @@ public class GameplayManager {
         enemyManager.update(deltaTime);
         spellManager.update(deltaTime);
         //Check if all enemies are dead and have been spawned, if yes advance the level
-        if(enemyManager.shouldAdvance() && level + 1 < stageRands.length)
+        if(enemyManager.shouldAdvance())
         {
-            level++;
-            hud.setLevel(level+1);
-            stage.randomize(stageRands[level]);
-            enemyManager.newWave(enemyLevels[level], enemyFreq[level]);
-            player.reset();
+        	if(level + 1 < stageRands.length)
+        	{
+	            level++;
+	            hud.setLevel(level+1);
+	            stage.randomize(stageRands[level]);
+	            enemyManager.newWave(enemyLevels[level], enemyFreq[level]);
+	            player.reset();
+        	} else
+        	{
+        		GameScreenManager.getInstance().clearScreens();
+        		GameScreenManager.getInstance().addScreen(new MainMenu());
+        	}
         }
-        
-        
+        hud.update(deltaTime);
     }
     
     public void draw(Graphics2D g)

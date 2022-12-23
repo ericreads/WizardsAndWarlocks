@@ -1,9 +1,10 @@
 // Import required modules
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.*;
-import java.io.*;
+import java.awt.image.BufferedImage;
 import javax.imageio.*;
+import java.io.*;
+import java.util.ArrayList;
 
 public class Player {
 	private double x;
@@ -15,28 +16,36 @@ public class Player {
 	private double velocityX;
 	private double velocityY;
 	
-	private static int width = 40;
-	private static int height = 40; 
+	private static int width = 45;
+	private static int height = 45; 
 	
 	private Rectangle position;	
 	private double playerAngle; 
 	private boolean left, right, up, down;
 	private String lastPosition = "down";
 	private int collisionDuration; // Collision duration, in # of frames
+	private int deathCounter = 0;
 	
 	private double health;
 	private int maxHealth;
 	private boolean dead;
-	
 	private Weapon weapon;
+	private Inventory inventory;
   	private Obstacle[][] obstacles;
   
-	private BufferedImage front_idle, back_idle, left_idle, right_idle;
+  	private BufferedImage front_idle, back_idle, left_idle, right_idle;
   	private BufferedImage front_walk_00, front_walk_01, front_walk_02, front_walk_03, front_walk_04, front_walk_05, front_walk_06, front_walk_07;
   	private BufferedImage back_walk_00, back_walk_01, back_walk_02, back_walk_03, back_walk_04, back_walk_05, back_walk_06, back_walk_07;
   	private BufferedImage left_walk_00, left_walk_01, left_walk_02, left_walk_03, left_walk_04, left_walk_05, left_walk_06, left_walk_07;
   	private BufferedImage right_walk_00, right_walk_01, right_walk_02, right_walk_03, right_walk_04, right_walk_05, right_walk_06, right_walk_07;
   	
+  	private BufferedImage starterWandSprite;
+	private BufferedImage spellSlingerSprite;
+	private BufferedImage spellSprayerSprite;
+	private BufferedImage starterWandIcon;
+	private BufferedImage spellSlingerIcon;
+	private BufferedImage spellSprayerIcon;
+
   	private int frames = 0; 
   	
 	public Player(int x, int y, Stage stage) {
@@ -67,65 +76,83 @@ public class Player {
 		health = 10;
 		dead = false;
 		
-		weapon = new Weapon(x, y, 1);
-		playerAngle = weapon.getWeaponAngle();
-		
 		// Load sprites
-				try {
-					// Player idle
-					front_idle = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_idle.png"));		
-					back_idle = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_idle.png"));		
-					left_idle = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_idle.png"));		
-					right_idle = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_idle.png"));		
-					
-					// Player running forward
-					front_walk_00 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk1.png"));		
-					front_walk_01 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk2.png"));
-					front_walk_02 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk3.png"));
-					front_walk_03 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk4.png"));
-					front_walk_04 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk5.png"));
-					front_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk6.png"));
-					front_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk7.png"));
-					front_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk8.png"));
-					
-					// Player running back
-					back_walk_00 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk1.png"));		
-					back_walk_01 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk2.png"));
-					back_walk_02 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk3.png"));
-					back_walk_03 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk4.png"));
-					back_walk_04 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk5.png"));
-					back_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk6.png"));
-					back_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk7.png"));
-					back_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk8.png"));
-					
-					// Player running left
-					left_walk_00 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk1.png"));		
-					left_walk_01 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk2.png"));
-					left_walk_02 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk3.png"));
-					left_walk_03 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk4.png"));
-					left_walk_04 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk5.png"));
-					left_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk6.png"));
-					left_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk7.png"));
-					left_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk8.png"));
-					
-					// Player running right
-					right_walk_00 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk1.png"));		
-					right_walk_01 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk2.png"));
-					right_walk_02 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk3.png"));
-					right_walk_03 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk4.png"));
-					right_walk_04 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk5.png"));
-					right_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk6.png"));
-					right_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk7.png"));
-					right_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk8.png"));
-				} 
-				catch(IOException e)
-				{
-					System.out.println(e.toString());
-				}
+		try {
+			// Player idle
+			front_idle = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_idle.png"));		
+			back_idle = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_idle.png"));		
+			left_idle = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_idle.png"));		
+			right_idle = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_idle.png"));		
+			
+			// Player running forward
+			front_walk_00 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk1.png"));		
+			front_walk_01 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk2.png"));
+			front_walk_02 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk3.png"));
+			front_walk_03 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk4.png"));
+			front_walk_04 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk5.png"));
+			front_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk6.png"));
+			front_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk7.png"));
+			front_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_front_walk8.png"));
+			
+			// Player running back
+			back_walk_00 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk1.png"));		
+			back_walk_01 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk2.png"));
+			back_walk_02 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk3.png"));
+			back_walk_03 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk4.png"));
+			back_walk_04 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk5.png"));
+			back_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk6.png"));
+			back_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk7.png"));
+			back_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_back_walk8.png"));
+			
+			// Player running left
+			left_walk_00 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk1.png"));		
+			left_walk_01 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk2.png"));
+			left_walk_02 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk3.png"));
+			left_walk_03 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk4.png"));
+			left_walk_04 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk5.png"));
+			left_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk6.png"));
+			left_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk7.png"));
+			left_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side02_walk8.png"));
+			
+			// Player running right
+			right_walk_00 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk1.png"));		
+			right_walk_01 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk2.png"));
+			right_walk_02 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk3.png"));
+			right_walk_03 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk4.png"));
+			right_walk_04 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk5.png"));
+			right_walk_05 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk6.png"));
+			right_walk_06 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk7.png"));
+			right_walk_07 = ImageIO.read(getClass().getResourceAsStream("/wizard_sprites/elf_side01_walk8.png"));
+			
+			//Wand Sprites
+			starterWandSprite = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0127(rotated).png"));
+			spellSlingerSprite = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0130(rotated).png"));
+			spellSprayerSprite = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0129(rotated).png"));
+			
+			//Wand Icons
+			starterWandIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0127.png"));
+			spellSlingerIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0130.png"));
+			spellSprayerIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0129.png"));
+		} 
+		catch(IOException e)
+		{
+			System.out.println(e.toString());
+		}
+		ArrayList<Weapon> weapons = new ArrayList<Weapon>();
+		weapons.add(new StarterWand(x, y, starterWandSprite, starterWandIcon));
+		if(SaveManager.getInstance().hasSpellSlinger())
+			weapons.add(new SpellSlinger(x, y, spellSlingerSprite, spellSlingerIcon));
+		if(SaveManager.getInstance().hasSpellSprayer())
+			weapons.add(new SpellSprayer(x, y, spellSprayerSprite, spellSprayerIcon));
+		inventory = new Inventory(weapons);
+		weapon = inventory.getWeapon();
 	}
 	public void setSpellManager(SpellManager spellManager)
 	{
-		weapon.setSpellManager(spellManager);
+		for(Weapon w : inventory.getWeapons())
+		{
+			w.setSpellManager(spellManager);
+		}
 	}
 	public Rectangle getPosition()
 	{
@@ -174,6 +201,7 @@ public class Player {
         {
             down = true;
         }
+        inventory.keyPressed(e);
     }
 
 	// KeyEvent input is pressed from GameScreenManager Class when key is released
@@ -203,6 +231,7 @@ public class Player {
             velocityY = 0;
             lastPosition = "down";
         }
+        inventory.keyPressed(e);
     }
     //Called on the start of the next wave
     public void reset()
@@ -226,12 +255,7 @@ public class Player {
 
 	public void takeDamage(double damage) 
 	{
-		collisionDuration++;
-		
-		if (collisionDuration % 15 == 0) 
-		{
-			health -= damage;
-		}
+		health -= damage;
 	}
     
     public void draw(Graphics2D g) 
@@ -407,7 +431,8 @@ public class Player {
     	{
     		g.setColor(Color.black);
     		g.fillOval((int) x, (int) y, width, height);
-    	}	
+    	}
+        inventory.draw(g);
     }
     
     public void update(int deltaTime) {
@@ -462,7 +487,16 @@ public class Player {
         	// Set player's position 
         	x += velocityX * deltaTime;
         	y += velocityY * deltaTime;
-        
+        	weapon = inventory.getWeapon();
+    	}
+    	else
+    	{
+    		deathCounter += deltaTime;
+    		if(deathCounter > 1000)
+    		{
+    			GameScreenManager.getInstance().clearScreens();
+    			GameScreenManager.getInstance().addScreen(new MainMenu());
+    		}
     	}
     	
     	//Collision Detection
@@ -496,12 +530,15 @@ public class Player {
     		
     		if (this.health <= 0)
         	{
+    			if(!dead)
+    				SaveManager.getInstance().saveVals();
         		dead = true; 
         	}
         	
         	
     	}
     	position.setLocation((int) x, (int) y);
+    	frames++;
     	weapon.updatePosition((int)x+20, (int)y+20);
     	weapon.update(deltaTime);
     	

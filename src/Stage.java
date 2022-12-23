@@ -95,12 +95,15 @@ public class Stage
 		// Randomize the obstacles based on the obstacle percent
 		for (int i = 0; i < obstacles.length; i++) {
 			for (int j = 0; j < obstacles[i].length; j++) {
-
-				if (Math.random() < obstaclePercent && i != 0 && i != obstacles.length-1 && j != 0 && j != obstacles[i].length-1)
-					obstacles[i][j].enable();
-				else
+				if(i > 10 && i < 14 && j > 5 && j < 9)
 					obstacles[i][j].disable();
-
+				else 
+				{
+					if (Math.random() < obstaclePercent && i != 0 && i != obstacles.length-1 && j != 0 && j != obstacles[i].length-1)
+						obstacles[i][j].enable();
+					else
+						obstacles[i][j].disable();
+				}
 			}
 		}
 	}

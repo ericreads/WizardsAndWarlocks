@@ -20,6 +20,7 @@ public class Player {
 	private static int height = 45; 
 	
 	private Rectangle position;	
+	private double playerAngle; 
 	private boolean left, right, up, down;
 	private String lastPosition = "down";
 	private int collisionDuration; // Collision duration, in # of frames
@@ -32,18 +33,19 @@ public class Player {
 	private Inventory inventory;
   	private Obstacle[][] obstacles;
   
-  	
   	private BufferedImage front_idle, back_idle, left_idle, right_idle;
   	private BufferedImage front_walk_00, front_walk_01, front_walk_02, front_walk_03, front_walk_04, front_walk_05, front_walk_06, front_walk_07;
   	private BufferedImage back_walk_00, back_walk_01, back_walk_02, back_walk_03, back_walk_04, back_walk_05, back_walk_06, back_walk_07;
   	private BufferedImage left_walk_00, left_walk_01, left_walk_02, left_walk_03, left_walk_04, left_walk_05, left_walk_06, left_walk_07;
   	private BufferedImage right_walk_00, right_walk_01, right_walk_02, right_walk_03, right_walk_04, right_walk_05, right_walk_06, right_walk_07;
+  	
   	private BufferedImage starterWandSprite;
 	private BufferedImage spellSlingerSprite;
 	private BufferedImage spellSprayerSprite;
 	private BufferedImage starterWandIcon;
 	private BufferedImage spellSlingerIcon;
 	private BufferedImage spellSprayerIcon;
+
   	private int frames = 0; 
   	
 	public Player(int x, int y, Stage stage) {
@@ -205,7 +207,7 @@ public class Player {
 	// KeyEvent input is pressed from GameScreenManager Class when key is released
     public void keyReleased(KeyEvent e) 
     {
-        if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) 
+    	if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) 
         {
             left = false;
             velocityX = 0;
@@ -258,7 +260,6 @@ public class Player {
     
     public void draw(Graphics2D g) 
     {
-		// Ellipse temporarily represents player (red if alive, black if dead)
     	if (!dead)
     	{
     		if (velocityX == 0 && velocityY == 0)
@@ -342,7 +343,7 @@ public class Player {
     				else if (frames % 64 < 48)
     				{
     					g.drawImage(right_walk_05, (int) x, (int) y, width, height, null);
-    				}        
+    				}
     				else if (frames % 64 < 56)
     				{
     					g.drawImage(right_walk_06, (int) x, (int) y, width, height, null);
@@ -425,7 +426,7 @@ public class Player {
     			
     		}
     		weapon.draw(g);
-    	}
+    	} 
     	else
     	{
     		g.setColor(Color.black);
@@ -436,8 +437,7 @@ public class Player {
     
     public void update(int deltaTime) {
     	if (!dead)	
-    	{    		
-    		
+    	{    		  		
     		if (left)
         	{
         		// Prohibit player from moving off-screen
@@ -452,7 +452,7 @@ public class Player {
         	}
         	if (right) 
         	{
-        		if (x + width + speed > 1262)
+        		if (x + width + speed > 1245)
         		{
         			velocityX = 0;
         		}
@@ -474,7 +474,7 @@ public class Player {
         	}
         	if (down) 
         	{
-        		if (y + height + speed > 680)
+        		if (y + height + speed > 665)
         		{
         			velocityY = 0;
         		}
@@ -487,7 +487,6 @@ public class Player {
         	// Set player's position 
         	x += velocityX * deltaTime;
         	y += velocityY * deltaTime;
-        	
         	weapon = inventory.getWeapon();
     	}
     	else
@@ -538,11 +537,12 @@ public class Player {
         	
         	
     	}
-    	
     	position.setLocation((int) x, (int) y);
     	frames++;
     	weapon.updatePosition((int)x+20, (int)y+20);
     	weapon.update(deltaTime);
+    	
+    	frames++;
     }
     public double getHealth() { return health; }
     public int getMaxHealth() { return maxHealth; }

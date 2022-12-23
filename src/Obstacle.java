@@ -1,5 +1,6 @@
 // Import required modules
 import java.awt.*;
+import java.awt.image.*;
 
 // Obstacle class represents in-game obstacles and nodes for path finding
 public class Obstacle 
@@ -8,10 +9,10 @@ public class Obstacle
 	
 	private int x;
 	private int y; 
-	private int dimension;
+	private int noise = (int)(Math.random() * 100); 
 	
 	private Rectangle bounds; // Rectangle stores position and size to be used in collision detection
-	private boolean enabled; // Represents if 'node' is walkable/un-walkable
+	private boolean enabled;  // Represents if 'node' is walkable/un-walkable
 	
 	private int gCost; // Distance from startNode to this node
 	private int hCost; // Distance from this node to goalNode
@@ -25,12 +26,10 @@ public class Obstacle
 	// Create an obstacle with the specified position, width, and height
 	public Obstacle(int x, int y, int dimension) 
 	{
-		this.dimension = dimension; 
-		
 		bounds = new Rectangle(x, y, dimension, dimension);
 		enabled = false;
 		
-		// x and y represent indices this Obstacle in list in Stage class; NOT x and y coordinates of Obstacle
+		// x and y represent indices this Obstacle in list in Stage class
 		this.x = (x / dimension); 
 		this.y = (y / dimension);
 	}
@@ -61,6 +60,11 @@ public class Obstacle
 	public boolean getEnabled() 
 	{
 		return enabled;
+	}
+	
+	public int getNoise() 
+	{
+		return this.noise; 
 	}
 	
 	public boolean getOpen()
@@ -135,13 +139,9 @@ public class Obstacle
 		this.parent = parent;
 	}
 	
-	public void draw(Graphics2D g) 
+	public void draw(Graphics2D g, BufferedImage tile) 
 	{
-		if (enabled) 
-		{
-			g.setColor(Color.RED);
-			g.fillRect((int) bounds.x, (int) bounds.y, (int) bounds.getWidth(), (int) bounds.getHeight());
-			
-		}
+		g.drawImage(tile, (int) bounds.x, (int) bounds.y, (int) bounds.getWidth(), (int) bounds.getHeight(), null);
+		
 	}
 }

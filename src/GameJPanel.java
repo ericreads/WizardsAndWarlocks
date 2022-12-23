@@ -99,7 +99,7 @@ public class GameJPanel extends JPanel
 		JFrame frame = new JFrame("Wizards and Warlocks");
 		GameJPanel p = new GameJPanel();
 		frame.add(p);
-		frame.setSize(1280, 720);
+		frame.setSize(1265, 688);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);

@@ -4,7 +4,6 @@ import java.awt.event.*;
 import java.util.*;
 
 public class Inventory {
-    
     private ArrayList<Weapon> inventory;
     private int index; // # of item equipped
     

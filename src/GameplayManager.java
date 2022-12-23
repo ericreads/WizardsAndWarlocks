@@ -1,4 +1,6 @@
 import java.awt.*;
+
+
 import java.awt.event.*;
 public class GameplayManager {
     private Player player;
@@ -6,6 +8,7 @@ public class GameplayManager {
     private SpellManager spellManager;
     private EnemyManager enemyManager;
     private HUD hud;
+   
     //Arrays to hold random stage values and the number of enemies spawned in each level and enemy spawn speeds
     private float[] stageRands = new float[] {0.25f, 0.15f, 0.10f, 0.05f, 0.25f};
     private int[] enemyLevels = new int[] {10, 20, 30, 40, 50, 75};

@@ -1,7 +1,6 @@
 import javax.swing.*;
-import java.awt.image.*;
 import java.awt.*;
-
+import java.awt.image.*;
 public abstract class Object {
     
     private String name;

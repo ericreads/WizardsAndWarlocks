@@ -142,6 +142,7 @@ public class Obstacle
 	public void draw(Graphics2D g, BufferedImage tile) 
 	{
 		g.drawImage(tile, (int) bounds.x, (int) bounds.y, (int) bounds.getWidth(), (int) bounds.getHeight(), null);
-		
+//		g.setColor(Color.gray);
+//		g.drawRect((int) bounds.x, (int) bounds.y, (int) bounds.getWidth(), (int) bounds.getHeight());
 	}
 }

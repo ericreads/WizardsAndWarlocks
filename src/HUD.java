@@ -13,6 +13,8 @@ public class HUD {
 	
 	private BufferedImage healthBarEmpty, healthBarLeft, healthBarRight, segment;
 	private BufferedImage coin; 
+	private BufferedImage pause1, pause2, pause3;
+	private BufferedImage home1, home2, home3;
 	
 	public HUD(Player player, int curLevel)
 	{
@@ -27,12 +29,20 @@ public class HUD {
 			InputStream is = getClass().getResourceAsStream("/fonts/dogicapixelbold.ttf");
 			dogicaPixelBold = Font.createFont(Font.TRUETYPE_FONT, is);
 			
+			coin = ImageIO.read(getClass().getResourceAsStream("/icons/coin.png"));
+			
 			healthBarEmpty = ImageIO.read(getClass().getResourceAsStream("/ui/health_bar.png"));
 			healthBarLeft = ImageIO.read(getClass().getResourceAsStream("/ui/health_bar_left.png"));
 			healthBarRight = ImageIO.read(getClass().getResourceAsStream("/ui/health_bar_right.png"));
 			segment = ImageIO.read(getClass().getResourceAsStream("/ui/health_segment.png"));
 			
-			coin = ImageIO.read(getClass().getResourceAsStream("/icons/coin.png"));
+			pause1 = ImageIO.read(getClass().getResourceAsStream("/ui/pause1.png"));
+			pause2 = ImageIO.read(getClass().getResourceAsStream("/ui/pause2.png"));
+			pause3 = ImageIO.read(getClass().getResourceAsStream("/ui/pause3.png"));
+			
+			home1 = ImageIO.read(getClass().getResourceAsStream("/ui/home1.png"));
+			home2 = ImageIO.read(getClass().getResourceAsStream("/ui/home2.png"));
+			home3 = ImageIO.read(getClass().getResourceAsStream("/ui/home3.png"));
 		}
 		catch (FontFormatException | IOException e)
 		{
@@ -76,7 +86,7 @@ public class HUD {
 		// Draw health bar
 		g.drawImage(healthBarEmpty, 18, 12, null);
 		
-		if (player.getHealth() > 1)
+		if (player.getHealth() > 0.5)
 		{
 			g.drawImage(healthBarLeft, 18, 12, null);
 			
@@ -100,12 +110,15 @@ public class HUD {
 		String money = String.valueOf(SaveManager.getInstance().getMoney());
 		g.setFont(g.getFont().deriveFont(Font.PLAIN, 18F));
 		
-		g.drawImage(coin, 1130, 12, 25, 25, null); 
-		g.drawString(money, 1162 + 10 * (4 - money.length()), 33); // right align text
+		g.drawImage(coin, 18, 55, 25, 25, null); 
+		g.drawString(money, 50, 75); // right align text
 		
 		// Display wave number
 		g.setFont(g.getFont().deriveFont(Font.PLAIN, 20F));
 		g.drawString("Wave : " + curLevel, 555, 35);
 		
+		// Display home and pause buttons
+		g.drawImage(pause1, 1135, 10, 45, 45, null);
+		g.drawImage(home1, 1193, 10, 45, 45, null);
 	}
 }

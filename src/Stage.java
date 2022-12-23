@@ -96,7 +96,17 @@ public class Stage
 		for (int i = 0; i < obstacles.length; i++) {
 			for (int j = 0; j < obstacles[i].length; j++) {
 				if(i > 10 && i < 14 && j > 5 && j < 9)
+				{
 					obstacles[i][j].disable();
+				}
+				else if (j == 1 && i < 5)
+				{
+					obstacles[i][j].disable();
+				}
+				else if ((j == 0 || j == 1) && i > 20)
+				{
+					obstacles[i][j].disable();
+				}
 				else 
 				{
 					if (Math.random() < obstaclePercent && i != 0 && i != obstacles.length-1 && j != 0 && j != obstacles[i].length-1)
@@ -106,6 +116,8 @@ public class Stage
 				}
 			}
 		}
+		
+		
 	}
 
 	public void draw(Graphics2D g) 

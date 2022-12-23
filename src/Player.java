@@ -23,7 +23,6 @@ public class Player {
 	private double playerAngle; 
 	private boolean left, right, up, down;
 	private String lastPosition = "down";
-	private int collisionDuration; // Collision duration, in # of frames
 	private int deathCounter = 0;
 	
 	private double health;
@@ -61,7 +60,6 @@ public class Player {
 		
 		// Rectangle class stores player's position; used for collision detection
 		position = new Rectangle(x, y, width, height);
-		collisionDuration = 0;
 		
 		//Store a reference to the obstacles
 		obstacles = stage.getObstacles();
@@ -260,178 +258,170 @@ public class Player {
     
     public void draw(Graphics2D g) 
     {
-    	if (!dead)
-    	{
-    		if (velocityX == 0 && velocityY == 0)
-    		{
-    			// Idle state
-    			switch (lastPosition)
-    			{
-    			case "left":
-    				g.drawImage(left_idle, (int) x, (int) y, width, height, null);
-    				break;
-    			case "right":
-    				g.drawImage(right_idle, (int) x, (int) y, width, height, null);
-    				break;
-    			case "up":
-    				g.drawImage(back_idle, (int) x, (int) y, width, height, null);
-    				break;
-    			case "down":
-    				g.drawImage(front_idle, (int) x, (int) y, width, height, null);
-    				break;
-    			}    		
-    		}
-    		else
-    		{
-    			if (left)
-    			{
-    				if (frames % 64 < 8)
-    				{
-    					g.drawImage(left_walk_00, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 16)
-    				{
-    					g.drawImage(left_walk_01, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 24)
-    				{
-    					g.drawImage(left_walk_02, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 32)
-    				{
-    					g.drawImage(left_walk_03, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 40)
-    				{
-    					g.drawImage(left_walk_04, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 48)
-    				{
-    					g.drawImage(left_walk_05, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 56)
-    				{
-    					g.drawImage(left_walk_06, (int) x, (int) y, width, height, null);
-    				}
-    				else 
-    				{
-    					g.drawImage(left_walk_07, (int) x, (int) y, width, height, null);
-    				}
-    			}
-    			if (right)
-    			{
-    				if (frames % 64 < 8)
-    				{
-    					g.drawImage(right_walk_00, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 16)
-    				{
-    					g.drawImage(right_walk_01, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 24)
-    				{
-    					g.drawImage(right_walk_02, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 32)
-    				{
-    					g.drawImage(right_walk_03, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 40)
-    				{
-    					g.drawImage(right_walk_04, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 48)
-    				{
-    					g.drawImage(right_walk_05, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 56)
-    				{
-    					g.drawImage(right_walk_06, (int) x, (int) y, width, height, null);
-    				}
-    				else 
-    				{
-    					g.drawImage(right_walk_07, (int) x, (int) y, width, height, null);
-    				}
-    			}
-    			if (up)
-    			{
-    				if (frames % 64 < 8)
-    				{
-    					g.drawImage(back_walk_00, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 16)
-    				{
-    					g.drawImage(back_walk_01, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 24)
-    				{
-    					g.drawImage(back_walk_02, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 32)
-    				{
-    					g.drawImage(back_walk_03, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 40)
-    				{
-    					g.drawImage(back_walk_04, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 48)
-    				{
-    					g.drawImage(back_walk_05, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 56)
-    				{
-    					g.drawImage(back_walk_06, (int) x, (int) y, width, height, null);
-    				}
-    				else 
-    				{
-    					g.drawImage(back_walk_07, (int) x, (int) y, width, height, null);
-    				}
-    			}
-    			if (down)
-    			{
-    				if (frames % 64 < 8)
-    				{
-    					g.drawImage(front_walk_00, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 16)
-    				{
-    					g.drawImage(front_walk_01, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 24)
-    				{
-    					g.drawImage(front_walk_02, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 32)
-    				{
-    					g.drawImage(front_walk_03, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 40)
-    				{
-    					g.drawImage(front_walk_04, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 48)
-    				{
-    					g.drawImage(front_walk_05, (int) x, (int) y, width, height, null);
-    				}
-    				else if (frames % 64 < 56)
-    				{
-    					g.drawImage(front_walk_06, (int) x, (int) y, width, height, null);
-    				}
-    				else 
-    				{
-    					g.drawImage(front_walk_07, (int) x, (int) y, width, height, null);
-    				}
-    			}
-    			
-    		}
-    		weapon.draw(g);
-    	} 
-    	else
-    	{
-    		g.setColor(Color.black);
-    		g.fillOval((int) x, (int) y, width, height);
-    	}
+    	if (velocityX == 0 && velocityY == 0)
+		{
+			// Idle state
+			switch (lastPosition)
+			{
+			case "left":
+				g.drawImage(left_idle, (int) x, (int) y, width, height, null);
+				break;
+			case "right":
+				g.drawImage(right_idle, (int) x, (int) y, width, height, null);
+				break;
+			case "up":
+				g.drawImage(back_idle, (int) x, (int) y, width, height, null);
+				break;
+			case "down":
+				g.drawImage(front_idle, (int) x, (int) y, width, height, null);
+				break;
+			}    		
+		}
+		else
+		{
+			if (left)
+			{
+				if (frames % 64 < 8)
+				{
+					g.drawImage(left_walk_00, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 16)
+				{
+					g.drawImage(left_walk_01, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 24)
+				{
+					g.drawImage(left_walk_02, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 32)
+				{
+					g.drawImage(left_walk_03, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 40)
+				{
+					g.drawImage(left_walk_04, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 48)
+				{
+					g.drawImage(left_walk_05, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 56)
+				{
+					g.drawImage(left_walk_06, (int) x, (int) y, width, height, null);
+				}
+				else 
+				{
+					g.drawImage(left_walk_07, (int) x, (int) y, width, height, null);
+				}
+			}
+			if (right)
+			{
+				if (frames % 64 < 8)
+				{
+					g.drawImage(right_walk_00, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 16)
+				{
+					g.drawImage(right_walk_01, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 24)
+				{
+					g.drawImage(right_walk_02, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 32)
+				{
+					g.drawImage(right_walk_03, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 40)
+				{
+					g.drawImage(right_walk_04, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 48)
+				{
+					g.drawImage(right_walk_05, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 56)
+				{
+					g.drawImage(right_walk_06, (int) x, (int) y, width, height, null);
+				}
+				else 
+				{
+					g.drawImage(right_walk_07, (int) x, (int) y, width, height, null);
+				}
+			}
+			if (up)
+			{
+				if (frames % 64 < 8)
+				{
+					g.drawImage(back_walk_00, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 16)
+				{
+					g.drawImage(back_walk_01, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 24)
+				{
+					g.drawImage(back_walk_02, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 32)
+				{
+					g.drawImage(back_walk_03, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 40)
+				{
+					g.drawImage(back_walk_04, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 48)
+				{
+					g.drawImage(back_walk_05, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 56)
+				{
+					g.drawImage(back_walk_06, (int) x, (int) y, width, height, null);
+				}
+				else 
+				{
+					g.drawImage(back_walk_07, (int) x, (int) y, width, height, null);
+				}
+			}
+			if (down)
+			{
+				if (frames % 64 < 8)
+				{
+					g.drawImage(front_walk_00, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 16)
+				{
+					g.drawImage(front_walk_01, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 24)
+				{
+					g.drawImage(front_walk_02, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 32)
+				{
+					g.drawImage(front_walk_03, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 40)
+				{
+					g.drawImage(front_walk_04, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 48)
+				{
+					g.drawImage(front_walk_05, (int) x, (int) y, width, height, null);
+				}
+				else if (frames % 64 < 56)
+				{
+					g.drawImage(front_walk_06, (int) x, (int) y, width, height, null);
+				}
+				else 
+				{
+					g.drawImage(front_walk_07, (int) x, (int) y, width, height, null);
+				}
+			}
+			
+		}
+		weapon.draw(g);
         inventory.draw(g);
     }
     

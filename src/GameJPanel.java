@@ -41,12 +41,10 @@ public class GameJPanel extends JPanel
 			@Override
 			public void mouseEntered(MouseEvent e)
 			{
-
 			}
 			@Override
 			public void mouseExited(MouseEvent e)
 			{
-
 			}
 			@Override
 			public void mousePressed(MouseEvent e)
@@ -65,17 +63,23 @@ public class GameJPanel extends JPanel
 	{
 		//Get the current time in milliseconds
 		long time = System.nanoTime() / 1000000;
+		
 		//If the past time hasn't been defined define it as the current time
 		if(pastTime == 0)
 			pastTime = time;
+		
 		//Calculate the change in time since the last run through of the loop 
 		int deltaTime = (int)(time-pastTime);
+		
 		//Update the current GameScreen through the GameScreenManager
 		GameScreenManager.getInstance().update(deltaTime);
+		
 		//Set the pastTime to the current time
 		pastTime = time;
+		
 		//Get mouse position on the X axis
 		mouseX = MouseInfo.getPointerInfo().getLocation().x - this.getLocationOnScreen().x;
+		
 		//Get the mouse position on the Y axis
 		mouseY = MouseInfo.getPointerInfo().getLocation().y - this.getLocationOnScreen().y;
 	}

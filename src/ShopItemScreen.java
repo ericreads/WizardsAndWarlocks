@@ -20,6 +20,7 @@ public class ShopItemScreen extends GameScreen {
 	
 	@Override
 	public void initialize() {
+		
 		titleFont = new Font(Font.SANS_SERIF, Font.BOLD, 50);
 		buttonFont = new Font(Font.SANS_SERIF, Font.BOLD, 30);
 		descriptionFont = new Font(Font.SANS_SERIF, Font.PLAIN, 25);

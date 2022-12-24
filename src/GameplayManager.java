@@ -39,7 +39,8 @@ public class GameplayManager {
 	            stage.randomize(stageRands[level]);
 	            enemyManager.newWave(enemyLevels[level], enemyFreq[level]);
 	            player.reset();
-        	} else
+        	} 
+        	else
         	{
         		GameScreenManager.getInstance().clearScreens();
         		GameScreenManager.getInstance().addScreen(new MainMenu());
@@ -51,7 +52,7 @@ public class GameplayManager {
     public void draw(Graphics2D g)
     {
     	//Draw all the actors
-        stage.draw(g);
+    	stage.draw(g);
         enemyManager.draw(g);
         player.draw(g);
         spellManager.draw(g);
@@ -67,7 +68,7 @@ public class GameplayManager {
     }
     public void mouseClicked(MouseEvent e)
     {
-    	
+
     }
     public void mousePressed(MouseEvent e)
     {
@@ -76,5 +77,6 @@ public class GameplayManager {
     public void mouseReleased(MouseEvent e)
     {
     	player.mouseReleased(e);
+    	hud.mouseReleased(e);
     }
 }

@@ -241,13 +241,17 @@ public class Player {
     //Called when the mouse is pressed
     public void mousePressed(MouseEvent e)
     {
-    	if(e.getButton() == MouseEvent.BUTTON1)
+    	// Ensure that MouseEvent is not home button being pressed
+    	// Prevents player from casting spell while trying to return to main menu
+		if (e.getButton() == MouseEvent.BUTTON1 /* && (GameJPanel.getMouseX() < 1193 || GameJPanel.getMouseX() > 1238)
+				&& (GameJPanel.getMouseY() < 10 || GameJPanel.getMouseY() > 55) */)
     		weapon.press();
     }
     //Called when the mouse is released
     public void mouseReleased(MouseEvent e)
     {
-    	if(e.getButton() == MouseEvent.BUTTON1)
+    	if(e.getButton() == MouseEvent.BUTTON1 /* &&  (GameJPanel.getMouseX() < 1193 || GameJPanel.getMouseX() > 1238)
+				&& (GameJPanel.getMouseY() < 10 || GameJPanel.getMouseY() > 55) */)
     		weapon.release();
     }
 
@@ -534,6 +538,13 @@ public class Player {
     	
     	frames++;
     }
-    public double getHealth() { return health; }
-    public int getMaxHealth() { return maxHealth; }
+    public double getHealth() 
+    { 
+    	return health; 
+    }
+    
+    public int getMaxHealth() 
+    { 
+    	return maxHealth; 
+    }
 }

@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -15,6 +16,11 @@ public class HUD {
 	private BufferedImage coin; 
 	private BufferedImage pause1, pause2, pause3;
 	private BufferedImage home1, home2, home3;
+	private BufferedImage play1;
+	
+	private boolean homePressed = false; 
+	private boolean pausePressed = false;
+	private int frames = 0; 
 	
 	public HUD(Player player, int curLevel)
 	{
@@ -35,6 +41,8 @@ public class HUD {
 			healthBarLeft = ImageIO.read(getClass().getResourceAsStream("/ui/health_bar_left.png"));
 			healthBarRight = ImageIO.read(getClass().getResourceAsStream("/ui/health_bar_right.png"));
 			segment = ImageIO.read(getClass().getResourceAsStream("/ui/health_segment.png"));
+			
+			play1 = ImageIO.read(getClass().getResourceAsStream("/ui/play1.png"));
 			
 			pause1 = ImageIO.read(getClass().getResourceAsStream("/ui/pause1.png"));
 			pause2 = ImageIO.read(getClass().getResourceAsStream("/ui/pause2.png"));
@@ -62,6 +70,25 @@ public class HUD {
 		floatingText.add(new FloatingText(text, x + (int)(Math.random() * 40), y, 1000, color));
 	}
 	
+	public void mouseReleased(MouseEvent e)
+	{
+		if (GameJPanel.getMouseX() > 1193 && GameJPanel.getMouseX() < 1238 
+				&& GameJPanel.getMouseY() > 10 && GameJPanel.getMouseY() < 55)
+		{
+			homePressed = true; 
+		}
+//		else if (GameJPanel.getMouseX() < 0 || GameJPanel.getMouseX() > 1265 || GameJPanel.getMouseY() < 0
+//				|| GameJPanel.getMouseY() > 688)
+//		{
+//			pausePressed = true;
+//		}
+		else if (GameJPanel.getMouseX() > 1135 && GameJPanel.getMouseX() < 1180 
+				&& GameJPanel.getMouseY() > 10 && GameJPanel.getMouseY() < 55)
+		{
+			pausePressed = true;
+		}
+	}
+	
 	public void update(int deltaTime)
 	{
 		for(FloatingText text : floatingText)
@@ -74,6 +101,33 @@ public class HUD {
 			{
 				floatingText.remove(i);
 				i--;
+			}
+		}
+		
+		if (homePressed || pausePressed)
+		{
+			frames++;
+		}
+		
+		if (frames > 15)
+		{
+			frames = 0;
+			
+			if (homePressed)
+			{
+				homePressed = false;
+				
+				// After button animation has completed, return to main menu 
+				SaveManager.getInstance().saveVals();
+				GameScreenManager.getInstance().clearScreens();
+				GameScreenManager.getInstance().addScreen(new MainMenu());
+			}
+			else if (pausePressed)
+			{
+				pausePressed = false;
+				
+				SaveManager.getInstance().saveVals();
+				GameScreenManager.getInstance().addScreen(new PauseScreen());
 			}
 		}
 	}
@@ -118,7 +172,44 @@ public class HUD {
 		g.drawString("Wave : " + curLevel, 555, 35);
 		
 		// Display home and pause buttons
-		g.drawImage(pause1, 1135, 10, 45, 45, null);
-		g.drawImage(home1, 1193, 10, 45, 45, null);
+		if (!pausePressed)
+		{
+			g.drawImage(pause1, 1135, 10, 45, 45, null);
+		}
+		else
+		{
+			if (frames < 5)
+			{
+				g.drawImage(pause2, 1135, 10, 45, 45, null);
+			}
+			else if (frames < 10)
+			{
+				g.drawImage(pause3, 1135, 10, 45, 45, null);
+			}
+			else
+			{
+				g.drawImage(play1, 1135, 10, 45, 45, null);
+			}
+		}
+		
+		if (!homePressed)
+		{
+			g.drawImage(home1, 1193, 10, 45, 45, null);
+		}
+		else 
+		{
+			if (frames < 5)
+			{
+				g.drawImage(home2, 1193, 10, 45, 45, null);
+			}
+			else if (frames < 10)
+			{
+				g.drawImage(home3, 1193, 10, 45, 45, null);
+			}
+			else
+			{
+				g.drawImage(home1, 1193, 10, 45, 45, null);
+			}
+		}
 	}
 }

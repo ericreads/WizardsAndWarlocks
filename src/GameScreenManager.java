@@ -9,7 +9,7 @@ public class GameScreenManager {
 	private ArrayList<GameScreen> screens;
 	//The instance that will be statically returned allowing this class to be called *anywhere*
 	private static GameScreenManager instance;
-	//Boolean that stores wether or not the window should close
+	//Boolean that stores whether or not the window should close
 	private boolean shouldClose = false;
 	//Constructor is private to ensure only our static instance can be accessed 
 	private GameScreenManager()
@@ -30,7 +30,7 @@ public class GameScreenManager {
 	public void addScreen(GameScreen gameScreen)
 	{
 		screens.add(gameScreen);
-		screens.get(screens.size()-1).runInitialize();
+		screens.get(screens.size() - 1).runInitialize();
 	}
 	//Removes one screen from the top of the list (making the one below it the one being rendered)
 	public void clearScreen()
@@ -39,6 +39,15 @@ public class GameScreenManager {
 		if(screens.size() - 1 >= 0)
 			screens.remove(screens.size()-1);
 	}
+	// Removes the screen at the bottom of the list 
+	public void clearFirst()
+	{
+		if (screens.size() > 0)
+		{
+			screens.remove(0);
+		}
+	}
+	
 	//Remove all the screens from the list
 	public void clearScreens()
 	{
@@ -50,11 +59,11 @@ public class GameScreenManager {
 		if(screens.size() > 0)
 			screens.get(screens.size()-1).runUpdate(deltaTime);
 	}
-	//Calls the draw method of the screen at the top of the list
+	//Calls the draw method of each screen in the list
 	public void draw(Graphics2D g)
 	{
-		if(screens.size() > 0)
-			screens.get(screens.size()-1).runDraw(g);
+		for (GameScreen screen : screens)
+			screen.runDraw(g);
 	}
 	//Calls the keyPressed method of the screen at the top of the list
 	public void keyPressed(KeyEvent e)

@@ -18,10 +18,12 @@ public class ObjectShopButton {
 	
 	public void update()
 	{
-		if(GameJPanel.getMouseX() > x && GameJPanel.getMouseX() < x+dimensions && GameJPanel.getMouseY() > y && GameJPanel.getMouseY() < y+dimensions)
+		if (GameJPanel.getMouseX() > x && GameJPanel.getMouseX() < x + dimensions && GameJPanel.getMouseY() > y
+				&& GameJPanel.getMouseY() < y + dimensions)
 		{
 			hovered = true;
-		} else
+		} 
+		else
 		{
 			hovered = false;
 		}
@@ -32,19 +34,28 @@ public class ObjectShopButton {
 		if(object!= null)
 		{
 			if(hovered)
+			{
 				g.setColor(Color.green);
+			}
 			else
+			{
 				g.setColor(Color.black);
-		
+			}
 			g.drawImage(object.getIcon(), x, y, dimensions, dimensions, null);
-		} else
+		}
+		else
+		{
 			g.setColor(Color.black);
+		}
 		g.drawRect(x, y, dimensions, dimensions);
 	}
 	
 	public void mouseClicked(MouseEvent e)
 	{
 		if(e.getButton() == MouseEvent.BUTTON1 && hovered && object != null)
+		{	
 			GameScreenManager.getInstance().addScreen(new ShopItemScreen(object));
+			GameScreenManager.getInstance().clearFirst();
+		}
 	}
 }

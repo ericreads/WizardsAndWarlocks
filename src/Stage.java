@@ -116,8 +116,6 @@ public class Stage
 				}
 			}
 		}
-		
-		
 	}
 
 	public void draw(Graphics2D g) 

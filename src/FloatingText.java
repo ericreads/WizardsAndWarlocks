@@ -1,5 +1,9 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
+
+import javax.imageio.ImageIO;
+
 import java.awt.*;
 public class FloatingText {
 	private String text;
@@ -11,6 +15,7 @@ public class FloatingText {
 	private boolean dead;
 	private Font dogicaPixelBold;
 	private Color color;
+	private BufferedImage coin;
 	
 	public FloatingText(String text, int x, int y, int lifetime, Color color)
 	{
@@ -28,6 +33,8 @@ public class FloatingText {
 		{
 			InputStream is = getClass().getResourceAsStream("/fonts/dogicapixelbold.ttf");
 			dogicaPixelBold = Font.createFont(Font.TRUETYPE_FONT, is);
+			
+			coin = ImageIO.read(getClass().getResourceAsStream("/icons/coin.png"));
 		} 
 		catch (FontFormatException | IOException e) {
 			System.out.println(e.toString());
@@ -49,7 +56,20 @@ public class FloatingText {
 			g.setFont(dogicaPixelBold);
 			g.setFont(g.getFont().deriveFont(Font.PLAIN, 12F));
 			g.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), (int)(deathRatio*255)));
-			g.drawString(text, x, (int)(y+(-lifetime+countdown)/10));
+			
+			if (text.charAt(0) == '$')
+			{
+				g.drawString(text.substring(1), x, (int) (y + (-lifetime + countdown) / 10));
+				
+				g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float)deathRatio));
+				g.drawImage(coin, x - 19, (y + (-lifetime + countdown) / 10) - 11, 15, 15, null);
+				
+				g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
+			}
+			else
+			{
+				g.drawString(text, x, (int) (y + (-lifetime + countdown) / 10));
+			}
 		}
 	}
 	public boolean getDead() { return dead; }

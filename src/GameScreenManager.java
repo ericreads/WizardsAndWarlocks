@@ -32,6 +32,7 @@ public class GameScreenManager {
 		screens.add(gameScreen);
 		screens.get(screens.size() - 1).runInitialize();
 	}
+	
 	//Removes one screen from the top of the list (making the one below it the one being rendered)
 	public void clearScreen()
 	{

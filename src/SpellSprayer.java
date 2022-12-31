@@ -6,7 +6,7 @@ import java.awt.image.*;
 public class SpellSprayer extends Weapon {
 	public SpellSprayer(int x, int y, BufferedImage sprite, BufferedImage icon) {
 		super(x, y, 1, sprite, "Spell Sprayer",
-				"Shoots multiple low damage spells that can do \nmassive damage at close range.", icon);
+				"Shoots multiple low damage spells that can do \nmassive damage at close range.", icon, 500);
 	}
 
 	@Override

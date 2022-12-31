@@ -85,7 +85,7 @@ public class Enemy
 	{
 		health -= damage;
 		if(!(health <= 0))
-			hud.displayMoney("-" + Integer.toString(damage), (int)x, (int)y, Color.red);
+			hud.displayMoney("-" + Integer.toString(damage), (int) x, (int) y, new Color(232, 69, 55));
 	}
 
 	public void draw(Graphics2D g)
@@ -101,7 +101,7 @@ public class Enemy
 			if(!dead)
 			{
 				SaveManager.getInstance().setMoney(SaveManager.getInstance().getMoney()+50);
-				hud.displayMoney("$50", (int)x, (int)y, Color.green);
+				hud.displayMoney("$50", (int) x, (int) y, new Color(108, 190, 48));
 			}
 			dead = true;
 		}

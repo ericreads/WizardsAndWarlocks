@@ -56,7 +56,7 @@ public class Inventory {
     public void draw(Graphics2D g)
     {
         // Draw inventory slots
-    	// Had to move inventory up to see it on linux
+    	// Had to move inventory up to see it on linux - remove the constants added to y values to return inventory to previous position
     	
     	for (int i = 0; i < 4; i++)
 		{		

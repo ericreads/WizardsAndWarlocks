@@ -5,7 +5,7 @@ import java.awt.image.*;
 
 public class StarterWand extends Weapon {
 	public StarterWand(int x, int y, BufferedImage sprite, BufferedImage icon) {
-		super(x, y, 2, sprite, "Beginner's Wand", "The wand of a beginner, ok but not remarkable.", icon);
+		super(x, y, 2, sprite, "Starter Wand", "The wand of a beginner; okay, but not remarkable.", icon, 0);
 	}
 
 	@Override

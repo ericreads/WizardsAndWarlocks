@@ -22,7 +22,10 @@ public class MainMenu extends GameScreen {
 
 	private BufferedImage background;
 	
-	private Color brown, tan, black, red;
+	private Color brown;
+	private Color tan;
+	private Color black;
+	private Color red;
 	
 	@Override
 	public void initialize() {

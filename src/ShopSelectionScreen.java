@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -9,23 +10,35 @@ import java.awt.image.*;
 import java.io.*;
 
 import javax.imageio.ImageIO;
-public class ShopSelectionScreen extends GameScreen {
+public class ShopSelectionScreen extends GameScreen 
+{
 	private Object[] purchasableItems;
-	private ObjectShopButton[][] itemButtons;
+	private ObjectShopButton[] itemButtons;
+	
 	private BufferedImage starterWandSprite;
 	private BufferedImage spellSlingerSprite;
 	private BufferedImage spellSprayerSprite;
 	private BufferedImage starterWandIcon;
 	private BufferedImage spellSlingerIcon;
 	private BufferedImage spellSprayerIcon;
+	private BufferedImage coin; 
+	private BufferedImage background; 
+	
 	private Button backButton;
+	private Font dogicaPixelBold;
 	private Font buttonFont;
-	private static int dimensions = 100;
+	private Color brown;
+	private Color red;
+	private static int width = 215;
+	private static int height = 550;
+	
 	@Override
 	public void initialize() {
-		buttonFont = new Font(Font.SANS_SERIF, Font.BOLD, 30);
-		backButton = new BackButton(20, 25, "Back", buttonFont, Color.black, Color.red);
-		try {
+		try 
+		{
+			InputStream is = getClass().getResourceAsStream("/fonts/dogicapixelbold.ttf");
+			dogicaPixelBold = Font.createFont(Font.TRUETYPE_FONT, is);
+			
 			//Wand Sprites
 			starterWandSprite = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0127(rotated).png"));
 			spellSlingerSprite = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0130(rotated).png"));
@@ -35,24 +48,43 @@ public class ShopSelectionScreen extends GameScreen {
 			starterWandIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0127.png"));
 			spellSlingerIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0130.png"));
 			spellSprayerIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0129.png"));
-		} catch (IOException e)
-		{
+			
+			// Coin icon
+			coin = ImageIO.read(getClass().getResourceAsStream("icons/coin.png"));
+			
+			// Background
+			background = ImageIO.read(getClass().getResourceAsStream("ui/store_background.png"));
+		} 
+		catch (FontFormatException | IOException e) {
 			e.printStackTrace();
-		}
+		} 
+		
 		purchasableItems = new Object[] {new StarterWand(0, 0, starterWandSprite, starterWandIcon), new SpellSlinger(0, 0, spellSlingerSprite, spellSlingerIcon), new SpellSprayer(0, 0, spellSprayerSprite, spellSprayerIcon)};
-		itemButtons = new ObjectShopButton[680/(dimensions+10)-1][1200/(dimensions+10)];
-		int k = 0;
-		for(int i = 0; i < itemButtons.length; i++)
+		itemButtons = new ObjectShopButton[5];
+
+		int j = 0; 
+		
+		for (int i = 0; i < itemButtons.length; i++)
 		{
-			for(int j = 0; j < itemButtons[i].length; j++)
+			if (j < purchasableItems.length)
 			{
-				if(k < purchasableItems.length)
-					itemButtons[i][j] = new ObjectShopButton(j*(dimensions+10)+80, i*(dimensions+10)+40, dimensions, purchasableItems[k]);
-				else
-					itemButtons[i][j] = new ObjectShopButton(j*(dimensions+10)+80, i*(dimensions+10)+40, dimensions, null);
-				k++;
+				itemButtons[i] = new ObjectShopButton(i * (width + 30) + 30, 75, width,
+						height, purchasableItems[j]);
 			}
+			else
+			{
+				itemButtons[i] = new ObjectShopButton(i * (width + 30) + 30, 75, width,
+						height, null);
+			}
+			j++;
 		}
+		
+		brown = new Color(63, 38, 49);
+		red = new Color(232, 69, 55);
+		
+		buttonFont = dogicaPixelBold.deriveFont(Font.PLAIN, 20F);
+		backButton = new BackButton(30, 45, "BACK", buttonFont, brown, red);
+		
 		SaveManager.getInstance().refreshVals();
 	}
 
@@ -60,29 +92,41 @@ public class ShopSelectionScreen extends GameScreen {
 	public void update(int deltaTime) {
 		for(int i = 0; i < itemButtons.length; i++)
 		{
-			for(int j = 0; j < itemButtons[i].length; j++)
-			{
-				itemButtons[i][j].update();
-			}
+			itemButtons[i].update();
 		}
 		backButton.update();
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		backButton.draw(g);
-		g.setFont(buttonFont);
-		g.setColor(Color.black);
 		AffineTransform at = new AffineTransform();
-        FontRenderContext frc = new FontRenderContext(at, true, true);
-		g.drawString("$"+SaveManager.getInstance().getMoney(), (int)(1100-buttonFont.getStringBounds("$"+SaveManager.getInstance().getMoney(), frc).getX()), 25);
+		FontRenderContext frc = new FontRenderContext(at, true, true);
+		
+		// Draw background
+		g.drawImage(background, 0, 0, null);
+		g.setFont(g.getFont().deriveFont(Font.PLAIN, 20F));
+		backButton.draw(g);
+		
+		buttonFont = dogicaPixelBold.deriveFont(Font.PLAIN, 16F);
+		
+		g.setFont(buttonFont);
+       
 		for(int i = 0; i < itemButtons.length; i++)
 		{
-			for(int j = 0; j < itemButtons[i].length; j++)
-			{
-				itemButtons[i][j].draw(g);
-			}
+			itemButtons[i].draw(g);
 		}
+		
+		// Header
+		g.setFont(g.getFont().deriveFont(Font.PLAIN, 28F));
+		g.setColor(brown);
+		g.drawString("STORE", (int)(1265 / 2 - g.getFont().getStringBounds("STORE", frc).getWidth() / 2), 50);
+		
+		// Display money
+		String money = String.valueOf(SaveManager.getInstance().getMoney());
+		g.setFont(g.getFont().deriveFont(Font.PLAIN, 18F));
+		
+		g.drawImage(coin,(int)(1130 - dogicaPixelBold.getStringBounds(money, frc).getWidth()), 25, 25, 25, null); 
+		g.drawString(money, (int)(1160 - dogicaPixelBold.getStringBounds(money, frc).getWidth()), 45); // right align text
 	}
 
 	@Override
@@ -107,10 +151,7 @@ public class ShopSelectionScreen extends GameScreen {
 	public void mouseClicked(MouseEvent e) {
 		for(int i = 0; i < itemButtons.length; i++)
 		{
-			for(int j = 0; j < itemButtons[i].length; j++)
-			{
-				itemButtons[i][j].mouseClicked(e);
-			}
+			itemButtons[i].mouseClicked(e);
 		}
 		backButton.mouseClicked(e);
 	}

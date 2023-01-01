@@ -1,16 +1,30 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.*;
 import java.util.*;
+import java.io.*;
 
 public class Inventory {
     private ArrayList<Weapon> inventory;
     private int index; // # of item equipped
+    private BufferedImage inventorySlot, inventoryCursor;
     
     public Inventory(ArrayList<Weapon> inventory)
     {
     	this.inventory = inventory;
         this.index = 0;
+        
+        try
+        {
+        	inventorySlot = ImageIO.read(getClass().getResourceAsStream("/ui/inventory_slot.png"));
+        	inventoryCursor = ImageIO.read(getClass().getResourceAsStream("/ui/inventory_cursor.png"));
+        }
+        catch (IOException e)
+        {
+        	System.out.println(e.toString());
+        }
     }
 
     // Returns the weapon that is currently equipped
@@ -42,20 +56,21 @@ public class Inventory {
     public void draw(Graphics2D g)
     {
         // Draw inventory slots
-    	//Had to move inventory up to see it on linux
-		for (int i = 0; i < 4; i++)
-		{
-			g.setColor(new Color(0, 0, 0, 20));
-			g.fillRect((i * 60) + 515, 550, 45, 45);
-
-			g.setColor(Color.black);
-			g.drawRect((i * 60) + 515, 550, 45, 45);
+    	// Had to move inventory up to see it on linux - remove the constants added to y values to return inventory to previous position
+    	
+    	for (int i = 0; i < 4; i++)
+		{		
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.85F)); // Set opacity of image
+			g.drawImage(inventorySlot, (i * 60) + 508, 550 + 25, 50, 50, null);
+			
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F)); // Set opacity to 100%
 			if(i < inventory.size())
-				g.drawImage(inventory.get(i).getIcon(), (i * 60) + 515, 550, 45, 45, null);
+				g.drawImage(inventory.get(i).getIcon(), (i * 60) + 513, 550 + 30, 40, 40, null);
 		}
 
 		// Draw inventory cursor (representing item player has equipped)
+		
 		g.setStroke(new BasicStroke(4));
-		g.drawRect((index * 60) + 515, 550, 45, 45);
+		g.drawImage(inventoryCursor, (index * 60) + 508, 550 + 25, 50, 50, null);
     }
 }

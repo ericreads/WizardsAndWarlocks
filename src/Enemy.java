@@ -85,7 +85,7 @@ public class Enemy
 	{
 		health -= damage;
 		if(!(health <= 0))
-			hud.displayMoney("-" + Integer.toString(damage), (int)x, (int)y, Color.red);
+			hud.displayMoney("-" + Integer.toString(damage), (int) x, (int) y, new Color(232, 69, 55));
 	}
 
 	public void draw(Graphics2D g)
@@ -101,7 +101,7 @@ public class Enemy
 			if(!dead)
 			{
 				SaveManager.getInstance().setMoney(SaveManager.getInstance().getMoney()+50);
-				hud.displayMoney("$50", (int)x, (int)y, Color.green);
+				hud.displayMoney("$50", (int) x, (int) y, new Color(108, 190, 48));
 			}
 			dead = true;
 		}
@@ -131,7 +131,7 @@ public class Enemy
 			}
 			
 			// Execute A* path finding when Enemy is on-screen
-			if ((this.x > 0 && this.x + width < 1230) && (this.y > 0 && this.y + height < 680))
+			if ((this.x > 0 && this.x + width < 1200) && (this.y > 0 && this.y + height < 680))
 			{
 				// Instantiate nodes and assign G, H, and F Costs
 				this.setNodes();

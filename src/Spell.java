@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -10,18 +11,21 @@ public class Spell {
 	private float vx, vy;
 	private int damage;
 	private boolean isDead = false;
+	private Color colour; 
 	
-	public Spell(Image sprite, Rectangle bounds, float vx, float vy, int damage)
+	public Spell(Image sprite, Rectangle bounds, float vx, float vy, int damage, Color colour)
 	{
 		this.bounds = bounds;
 		this.sprite = sprite;
 		this.vx = vx;
 		this.vy = vy;
 		this.damage = damage;
+		this.colour = colour; 
 	}
 	
 	public void draw(Graphics2D g) 
 	{
+		g.setColor(colour);
 		if(!isDead)
 			g.drawOval(bounds.x, bounds.y, bounds.width, bounds.height);
 	}

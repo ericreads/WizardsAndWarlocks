@@ -9,7 +9,8 @@ public class BackButton extends Button {
 	}
 	@Override
 	public void onClick() {
-		GameScreenManager.getInstance().clearScreen();
+		GameScreenManager.getInstance().clearScreens();
+		GameScreenManager.getInstance().addScreen(new MainMenu());
 		SaveManager.getInstance().saveVals();
 		SaveManager.getInstance().refreshVals();
 	}

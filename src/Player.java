@@ -490,7 +490,7 @@ public class Player {
     		if(deathCounter > 1000)
     		{
     			GameScreenManager.getInstance().clearScreens();
-    			GameScreenManager.getInstance().addScreen(new MainMenu());
+    			GameScreenManager.getInstance().addScreen(new WinScreen());
     		}
     	}
     	

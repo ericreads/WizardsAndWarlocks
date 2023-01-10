@@ -13,7 +13,7 @@ public class TutorialScreen extends GameScreen
 	@Override
 	public void initialize() 
 	{
-		instructionScreen = new InstructionScreen();
+		instructionScreen = new InstructionScreen(1);
 		tutorialScreen = new TutorialGameplayScreen();
 		
 		GameScreenManager.getInstance().clearScreens();

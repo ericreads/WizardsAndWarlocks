@@ -8,7 +8,7 @@ public class SpellSlinger extends Weapon {
 	private int shootCounter = 0;
 
 	public SpellSlinger(int x, int y, BufferedImage sprite, BufferedImage icon) {
-		super(x, y, 2, sprite, "Spell Slinger", "A wand that casts spells quickly.", icon, 500);
+		super(x, y, 2, sprite, "Spell Slinger", "A wand that casts spells quickly.", icon, 1000);
 	}
 
 	@Override

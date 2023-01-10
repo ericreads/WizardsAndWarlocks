@@ -11,6 +11,6 @@ public class PlayButton extends Button {
 	@Override
 	public void onClick() {
 		GameScreenManager.getInstance().clearScreens();
-		GameScreenManager.getInstance().addScreen(new TestScreen());
+		GameScreenManager.getInstance().addScreen(new TutorialScreen());
 	}
 }

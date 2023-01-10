@@ -54,6 +54,9 @@ public class InstructionScreen extends GameScreen
 		}
 		else if (stage == 1)
 		{
+			g.setColor(new Color(35, 35, 35, 100));
+			g.fillRect(0, 0, 1280, 680);
+			
 			String[] text = {"Use WASD or arrow keys to move.", " ", 
 					 	 	 "Move your cursor to aim and click the",
 					 		 "left mouse button to cast a spell.", " ",
@@ -64,6 +67,9 @@ public class InstructionScreen extends GameScreen
 		}
 		else if (stage == 2)
 		{
+			g.setColor(new Color(35, 35, 35, 100));
+			g.fillRect(0, 0, 1280, 680);
+			
 			String[] text = {"Change your equipped inventory ", 
 							 "item using the number keys.", " ",
 							 "You can purchase items from the shop.", " ", 

@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 
+import javax.imageio.ImageIO;
+
 public class TextBox 
 {
 	private String[] text;
@@ -22,6 +24,8 @@ public class TextBox
 			
 			is = getClass().getResourceAsStream("/fonts/dogicapixel.ttf");
 			dogicaPixel = Font.createFont(Font.TRUETYPE_FONT, is);
+			
+			image = ImageIO.read(getClass().getResourceAsStream("ui/text_box.png"));
 		} 
 		catch (FontFormatException | IOException e) 
 		{
@@ -40,12 +44,9 @@ public class TextBox
 	public void draw(Graphics2D g)
 	{
 		g.setFont(dogicaPixel.deriveFont(Font.PLAIN, 14F));
-		
-		g.setColor(new Color(189, 108, 74, 100));
-		g.fillRect(400, 224, 465, 200);
-		
 		g.setColor(brown);
-		g.drawRect(400, 224, 465, 200);
+
+		g.drawImage(image, 400, 224, null);
 		
 		for (int i = 0; i < text.length; i++)
 		{

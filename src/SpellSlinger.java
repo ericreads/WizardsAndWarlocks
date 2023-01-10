@@ -4,6 +4,7 @@ import java.awt.*;
 public class SpellSlinger extends Weapon {
 	private boolean shooting = false;
 	private int shootCounter = 0;
+	private int reload = 50;
 	
 	public SpellSlinger(int x, int y, Image sprite)
 	{
@@ -15,7 +16,7 @@ public class SpellSlinger extends Weapon {
 	{
 		super.update(deltaTime);
 		//Shoot at a certain interval
-		if(shooting && shootCounter > 75)
+		if(getShooting() && shootCounter > 75)
 		{
 			shoot();
 			shootCounter = 0;
@@ -28,12 +29,12 @@ public class SpellSlinger extends Weapon {
 	@Override
 	public void release()
 	{
-		shooting = false;
+		setShooting(false);
 	}
 	@Override
 	public void press()
 	{
-		shooting = true;
+		setShooting(true);
 		shootCounter = 51;
 	}
 	public void shoot()
@@ -41,5 +42,16 @@ public class SpellSlinger extends Weapon {
 		double[] unitVector = Helper.unitVector(bounds.x, bounds.y, GameJPanel.getMouseX(), GameJPanel.getMouseY());
 		//Shoot a particle in the direction of the mouse
 		spellManager.add(new Spell(null, new Rectangle(bounds.x + (int)(unitVector[0]*40), bounds.y + (int)(unitVector[1]*40), 10, 10), (float)unitVector[0], (float)unitVector[1], damagePerParticle), true);
+		reload = getReload();
+		setReload(reload -= 1);
+		if (getReload() == 0 || getReload() == 50)
+		{
+			setShooting(false);
+			setReload(50);
+	
+		}
+
+		System.out.println(getReload());
 	}
+	
 }

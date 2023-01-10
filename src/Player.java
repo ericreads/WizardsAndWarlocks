@@ -120,6 +120,7 @@ public class Player {
         if (e.getKeyCode() == KeyEvent.VK_R) 
         {
             weapon.setReload(50);
+            weapon.setShooting(false);
         }
     }
 

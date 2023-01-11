@@ -7,52 +7,33 @@ import java.io.*;
 
 import javax.imageio.ImageIO;
 
-public class WinScreen extends GameScreen
-{
-	private Font dogicaPixelBold;
-	private Font dogicaPixel;
-	private Font buttonFont;
-	
-	private Button mainMenuButton;
-	private Button exitButton;
-	
+public class WinScreen extends GameScreen {
+	private TextBox textBox;
 	private Color brown, black, tan, red;
 
-	private BufferedImage background;
+	private Font dogicaPixelBold;
+	private Font dogicaPixel;
+
 	private int frames = 0;
 
 	@Override
-	public void initialize() 
-	{
-		try
-		{
+	public void initialize() {
+		try {
 			InputStream is = getClass().getResourceAsStream("/fonts/dogicapixelbold.ttf");
 			dogicaPixelBold = Font.createFont(Font.TRUETYPE_FONT, is);
-			
+
 			is = getClass().getResourceAsStream("/fonts/dogicapixel.ttf");
 			dogicaPixel = Font.createFont(Font.TRUETYPE_FONT, is);
-			
-			background = ImageIO.read(getClass().getResourceAsStream("/ui/main_menu.png"));
-		}
-		catch (IOException | FontFormatException e)
-		{
+		} catch (IOException | FontFormatException e) {
 			System.out.println(e.toString());
 		}
-		
-		AffineTransform at = new AffineTransform();
-        FontRenderContext frc = new FontRenderContext(at, true, true);
-		
+
 		brown = new Color(63, 38, 49);
 		black = new Color(35, 35, 35);
 		tan = new Color(207, 130, 84);
 		red = new Color(232, 69, 55);
-		
-		buttonFont = dogicaPixelBold.deriveFont(Font.PLAIN, 36F);
-		
-		mainMenuButton = new MainMenuButton(1265 / 2 - (int) buttonFont.getStringBounds("MAIN MENU", frc).getWidth() / 2, 425,
-				"MAIN MENU", buttonFont, black, brown);
-		exitButton = new ExitButton(1265 / 2 - (int) buttonFont.getStringBounds("EXIT", frc).getWidth() / 2, 500,
-				"EXIT", buttonFont, black, red);
+
+		textBox = new TextBox(null);
 	}
 
 	@Override
@@ -62,31 +43,41 @@ public class WinScreen extends GameScreen
 		} else {
 			frames++;
 		}
-		
-		mainMenuButton.update();
-		exitButton.update();
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		// Draw background
-		g.drawImage(background, 0, 0, null);
-
 		AffineTransform at = new AffineTransform();
 		FontRenderContext frc = new FontRenderContext(at, true, true);
 
-		g.setFont(dogicaPixelBold);
-		g.setFont(g.getFont().deriveFont(Font.PLAIN, 56F));
+		// Draw background
+		g.setColor(new Color(35, 35, 35, 100));
+		g.fillRect(0, 0, 1280, 680);
 
-		// Display title
-		String title = "You Won!";
+		// Draw text box
+		String[] text = { " ", " " };
+		textBox.setText(text);
+		textBox.draw(g);
 
+		// Draw text
+		g.setFont(dogicaPixelBold.deriveFont(Font.PLAIN, 22F));
 		g.setColor(brown);
-		g.drawString(title, 1265 / 2 - (int) g.getFont().getStringBounds(title, frc).getWidth() / 2, 300);
+
+		g.drawString("You Win!", (int) (632 - g.getFont().getStringBounds("You Win!", frc).getWidth() / 2), 285);
+
+		g.setFont(dogicaPixel.deriveFont(Font.PLAIN, 14F));
+		text[0] = "Congratulations! You defeated the King";
+		text[1] = "and the citizens of Exalos are free.";
+
+		for (int i = 0; i < text.length; i++) {
+			g.drawString(text[i], (int) (632 - g.getFont().getStringBounds(text[i], frc).getWidth() / 2),
+					325 + (25 * i));
+		}
 		
-		// Draw buttons
-		mainMenuButton.draw(g);
-		exitButton.draw(g);
+		g.setFont(dogicaPixelBold.deriveFont(Font.PLAIN, 15F));
+		g.drawString("Click to return to main menu.",
+				(int) (632 - g.getFont().getStringBounds("Click to return to main menu.", frc).getWidth() / 2),
+				390);
 	}
 
 	@Override
@@ -109,8 +100,8 @@ public class WinScreen extends GameScreen
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		mainMenuButton.mouseClicked(e);
-		exitButton.mouseClicked(e);
+		GameScreenManager.getInstance().clearScreens();
+		GameScreenManager.getInstance().addScreen(new MainMenu());
 	}
 
 	@Override

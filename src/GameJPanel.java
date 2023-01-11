@@ -107,11 +107,11 @@ public class GameJPanel extends JPanel
 
 	public static void main(String[] args) throws InterruptedException
 	{{
-		//Enable hardware accelerated graphics to improve performance for linux users(eric)
+		//Enable hardware accelerated graphics to improve performance for Linux users
 		System.setProperty("sun.java2d.opengl", "true");
 		
 		//Initialize a new window
-		JFrame frame = new JFrame("Wizards and Warlocks");
+		JFrame frame = new JFrame("Wizards & Warlocks");
 		GameJPanel p = new GameJPanel();
 		frame.add(p);
 		

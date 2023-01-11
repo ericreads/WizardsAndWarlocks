@@ -115,7 +115,7 @@ public class Enemy
 		
 				if (collisionDuration > 175) 
 				{
-	    			player.takeDamage(0.5f);
+	    			player.takeDamage(5);
 					collisionDuration = 0;
 	    		}
 			}

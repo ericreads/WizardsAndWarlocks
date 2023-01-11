@@ -48,6 +48,7 @@ public class Player {
   	private int frames = 0; 
   	
 	public Player(int x, int y, Stage stage) {
+		SaveManager.getInstance().refreshVals();
 		this.x = x;
 		this.y = y;
 		
@@ -70,8 +71,8 @@ public class Player {
 		down = false;
 	
 		// Initialize full health
-		maxHealth = 10;
-		health = 10;
+		maxHealth = SaveManager.getInstance().getPlayerHealth();
+		health = SaveManager.getInstance().getPlayerHealth();
 		dead = false;
 		
 		// Load sprites

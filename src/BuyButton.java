@@ -30,6 +30,10 @@ public class BuyButton extends Button {
 		{
 			SaveManager.getInstance().setMoney(SaveManager.getInstance().getMoney()-object.getCost());
 			SaveManager.getInstance().buySpellSprayer();
+		} else if(object.getName().equals("Health Upgrade +15") && SaveManager.getInstance().getPlayerHealth() <= 175)
+		{
+			SaveManager.getInstance().setMoney(SaveManager.getInstance().getMoney()-object.getCost());
+			SaveManager.getInstance().setPlayerHealth(SaveManager.getInstance().getPlayerHealth()+15);
 		}
 		SaveManager.getInstance().saveVals();
 		SaveManager.getInstance().refreshVals();

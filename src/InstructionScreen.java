@@ -82,12 +82,12 @@ public class InstructionScreen extends GameScreen
 			}
 			
 			g.setFont(dogicaPixelBold.deriveFont(Font.PLAIN, 15F));
-			g.drawString("Click anywhere to begin the tutorial.", 129, 434);
+			g.drawString("Press space to begin the tutorial.", 129, 434);
 		}
 		else if (stage == 1)
 		{			
 			String[] text = { "Use WASD or arrow keys to move.", " ", "Move your cursor to aim and click the",
-					"left mouse button to cast a spell.", " ", "Click to continue." };
+					"left mouse button to cast a spell.", " ", "Press space to continue." };
 			
 			textBox.setText(text);
 			textBox.draw(g);
@@ -95,7 +95,7 @@ public class InstructionScreen extends GameScreen
 		else if (stage == 2)
 		{
 			String[] text = { "Change your equipped inventory ", "item using the number keys.", " ",
-					"You can purchase items from the shop.", " ", "Click to continue." };
+					"You can purchase items from the shop.", " ", "Press space to continue." };
 	
 			textBox.setText(text);
 			textBox.draw(g);
@@ -103,7 +103,7 @@ public class InstructionScreen extends GameScreen
 		else if (stage == 4)
 		{
 			String[] text = { "You died!", " ", "The King's Guards defeated you this",
-					"time, but the fight is not over yet!", " ", "Click to try again" };
+					"time, but the fight is not over yet!", " ", "Press space to try again" };
 
 			textBox.setText(text);
 			textBox.draw(g);
@@ -128,11 +128,33 @@ public class InstructionScreen extends GameScreen
 	@Override
 	public void keyReleased(KeyEvent e) 
 	{
-		if (e.getKeyCode() == KeyEvent.VK_SPACE && stage == 5)
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
-			GameScreenManager.getInstance().clearScreens();
-			GameScreenManager.getInstance().addScreen(new GameplayScreen());
+			if (stage < 3)
+			{
+				stage++;
+			}
+			
+			if (stage == 3)
+			{
+				GameScreenManager.getInstance().clearScreen();
+			}
+			else if (stage == 4)
+			{
+				GameScreenManager.getInstance().clearScreen();
+				GameScreenManager.getInstance().addScreen(new TutorialGameplayScreen());
+			}
+			else if (stage == 5)
+			{
+				GameScreenManager.getInstance().clearScreens();
+				GameScreenManager.getInstance().addScreen(new GameplayScreen());
+			}
 		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			GameScreenManager.getInstance().clearScreens();
+			GameScreenManager.getInstance().addScreen(new MainMenu());
+		}		
 	}
 
 	@Override
@@ -144,20 +166,7 @@ public class InstructionScreen extends GameScreen
 	@Override
 	public void mouseClicked(MouseEvent e) 
 	{
-		if (stage < 3)
-		{
-			stage++;
-		}
 		
-		if (stage == 3)
-		{
-			GameScreenManager.getInstance().clearScreen();
-		}
-		else if (stage == 4)
-		{
-			GameScreenManager.getInstance().clearScreen();
-			GameScreenManager.getInstance().addScreen(new TutorialGameplayScreen());
-		}
 	}
 
 	@Override

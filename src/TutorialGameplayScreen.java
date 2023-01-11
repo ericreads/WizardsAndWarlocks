@@ -69,6 +69,11 @@ public class TutorialGameplayScreen extends GameScreen {
 	public void keyReleased(KeyEvent e) 
 	{
 		player.keyReleased(e);
+		
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			GameScreenManager.getInstance().clearScreens();
+			GameScreenManager.getInstance().addScreen(new MainMenu());
+		}
 	}
 
 	@Override

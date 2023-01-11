@@ -43,7 +43,7 @@ public class ShopItemScreen extends GameScreen
 			is = getClass().getResourceAsStream("/fonts/dogicapixel.ttf");
 			dogicaPixel = Font.createFont(Font.TRUETYPE_FONT, is);
 			
-			background = ImageIO.read(getClass().getResourceAsStream("ui/store_background.png"));
+			background = ImageIO.read(getClass().getResourceAsStream("ui/background.png"));
 			border = ImageIO.read(getClass().getResourceAsStream("ui/shop_item_border.png"));
 			coin = ImageIO.read(getClass().getResourceAsStream("icons/coin.png"));
 		} 

@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 import java.awt.image.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -72,6 +74,10 @@ public class HUD {
 	
 	public void mouseReleased(MouseEvent e)
 	{
+		if (curLevel == 0)
+		{
+			return;
+		}
 		if (GameJPanel.getMouseX() > 1193 && GameJPanel.getMouseX() < 1238 
 				&& GameJPanel.getMouseY() > 10 && GameJPanel.getMouseY() < 55)
 		{
@@ -134,6 +140,9 @@ public class HUD {
 	
 	public void draw(Graphics2D g)
 	{
+		AffineTransform at = new AffineTransform();
+		FontRenderContext frc = new FontRenderContext(at, true, true);
+		
 		//Ensure the bar is always 200 pixels no matter the player's health
 		int segmentWidth = 200/player.getMaxHealth();
 		
@@ -169,9 +178,21 @@ public class HUD {
 		
 		// Display wave number
 		g.setFont(g.getFont().deriveFont(Font.PLAIN, 20F));
-		g.drawString("Wave : " + curLevel, 555, 35);
+		
+		if (curLevel > 0)
+		{
+			g.drawString("Wave : " + curLevel, 555, 35);
+		}
+		else
+		{
+			g.drawString("TUTORIAL", 1265 / 2 - (int) g.getFont().getStringBounds("TUTORIAL", frc).getWidth() / 2, 35);
+		}
 		
 		// Display home and pause buttons
+		if (curLevel == 0)
+		{
+			return;
+		}
 		if (!pausePressed)
 		{
 			g.drawImage(pause1, 1135, 10, 45, 45, null);

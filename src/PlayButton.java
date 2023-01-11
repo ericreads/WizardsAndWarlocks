@@ -11,6 +11,15 @@ public class PlayButton extends Button {
 	@Override
 	public void onClick() {
 		GameScreenManager.getInstance().clearScreens();
-		GameScreenManager.getInstance().addScreen(new TutorialScreen());
+		
+		// If no previous game data is saved, begin tutorial
+		if (SaveManager.getInstance().isEmpty()) {
+			GameScreenManager.getInstance().addScreen(new TutorialScreen());
+		}
+		// Otherwise, skip to normal game-play
+		else
+		{
+			GameScreenManager.getInstance().addScreen(new GameplayScreen());
+		}
 	}
 }

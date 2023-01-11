@@ -10,6 +10,8 @@ public class TutorialGameplayScreen extends GameScreen {
 	private EnemyManager enemyManager;
 	private SpellManager spellManager;
 	
+	private int frames = 0;
+	
 	@Override
 	public void initialize() 
 	{
@@ -17,7 +19,7 @@ public class TutorialGameplayScreen extends GameScreen {
 		player = new Player(600, 370, stage);
 		hud = new HUD(player, 0);
 		
-		enemyManager = new EnemyManager(player, stage, hud, 1, 3000);
+		enemyManager = new EnemyManager(player, stage, hud, 0, 3000);
 		spellManager = new SpellManager(stage, enemyManager, player);
 		
 		player.setSpellManager(spellManager);
@@ -31,6 +33,20 @@ public class TutorialGameplayScreen extends GameScreen {
         spellManager.update(deltaTime);
 		hud.update(deltaTime);	
 		
+		if (player.getHealth() <= 0)
+		{
+			GameScreenManager.getInstance().addScreen(new InstructionScreen(4));
+		}
+		
+		// Check if player should advance to regular game-play
+        if (enemyManager.shouldAdvance())
+        {
+        	if ((frames++) > 60)
+        	{
+        		frames = 0;
+        		GameScreenManager.getInstance().addScreen(new InstructionScreen(5));
+        	}
+        }
 	}
 
 	@Override
@@ -41,13 +57,6 @@ public class TutorialGameplayScreen extends GameScreen {
         player.draw(g);
         spellManager.draw(g);
         hud.draw(g);
-        
-        // Check if player should advance to regular gameplay
-        if (enemyManager.shouldAdvance())
-        {
-        	GameScreenManager.getInstance().clearScreens();
-        	GameScreenManager.getInstance().addScreen(new InstructionScreen(4));
-        }
 	}
 
 	@Override
@@ -86,5 +95,4 @@ public class TutorialGameplayScreen extends GameScreen {
 		player.mouseReleased(e);
     	hud.mouseReleased(e);
 	}
-	
 }

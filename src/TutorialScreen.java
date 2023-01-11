@@ -5,15 +5,13 @@ import java.awt.event.*;
 
 public class TutorialScreen extends GameScreen 
 {
-	private int frames = 0;
-	
 	InstructionScreen instructionScreen;
 	TutorialGameplayScreen tutorialScreen;
 
 	@Override
 	public void initialize() 
 	{
-		instructionScreen = new InstructionScreen(1);
+		instructionScreen = new InstructionScreen(0);
 		tutorialScreen = new TutorialGameplayScreen();
 		
 		GameScreenManager.getInstance().clearScreens();

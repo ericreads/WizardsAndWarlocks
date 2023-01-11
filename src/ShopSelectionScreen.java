@@ -52,7 +52,7 @@ public class ShopSelectionScreen extends GameScreen {
 			coin = ImageIO.read(getClass().getResourceAsStream("icons/coin.png"));
 
 			// Background
-			background = ImageIO.read(getClass().getResourceAsStream("ui/store_background.png"));
+			background = ImageIO.read(getClass().getResourceAsStream("ui/background.png"));
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}

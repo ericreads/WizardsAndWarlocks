@@ -1,7 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 
-public class TestScreen extends GameScreen {
+public class GameplayScreen extends GameScreen 
+{
 
 	GameplayManager gameManager;
 	

@@ -15,6 +15,7 @@ public class GameplayManager {
     private int[] enemyFreq = new int[] {2000, 1500, 1000, 500, 250};
     //Into to store the current level
     private int level = 0;
+    
     public GameplayManager()
     {
         stage = new Stage(stageRands[0]);
@@ -24,6 +25,7 @@ public class GameplayManager {
 		spellManager = new SpellManager(stage, enemyManager, player);
 		player.setSpellManager(spellManager);
     }
+
     public void update(int deltaTime)
     {
         player.update(deltaTime);
@@ -68,7 +70,7 @@ public class GameplayManager {
     }
     public void mouseClicked(MouseEvent e)
     {
-
+    	
     }
     public void mousePressed(MouseEvent e)
     {

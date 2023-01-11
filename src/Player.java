@@ -543,6 +543,11 @@ public class Player {
     	return health; 
     }
     
+    public void setHealth(double health)
+    {
+    	this.health = health;
+    }
+    
     public int getMaxHealth() 
     { 
     	return maxHealth; 

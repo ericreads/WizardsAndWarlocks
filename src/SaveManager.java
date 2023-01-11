@@ -1,6 +1,7 @@
 import java.io.*;
 
-public class SaveManager {
+public class SaveManager 
+{
 	private File saveFile;
 	private static SaveManager instance;
 	private FileReader fr;
@@ -57,10 +58,26 @@ public class SaveManager {
 	{
 		return money;
 	}
-	public void buySpellSlinger() { hasSpellSlinger = true; }
-	public void buySpellSprayer() { hasSpellSprayer = true; }
-	public boolean hasSpellSlinger() { return hasSpellSlinger; }
-	public boolean hasSpellSprayer() { return hasSpellSprayer; }
+
+	public void buySpellSlinger() 
+	{
+		hasSpellSlinger = true;
+	}
+
+	public void buySpellSprayer() 
+	{
+		hasSpellSprayer = true;
+	}
+
+	public boolean hasSpellSlinger() 
+	{
+		return hasSpellSlinger;
+	}
+
+	public boolean hasSpellSprayer() 
+	{
+		return hasSpellSprayer;
+	}
 	//Save values stored in fields to save file
 	public void saveVals()
 	{
@@ -89,7 +106,8 @@ public class SaveManager {
 				hasSpellSlinger = false;
 				hasSpellSprayer = false;
 				pw.close();
-			} else
+			} 
+			else
 			{
 				String[] vals = br.readLine().split(",");
 				money = Integer.parseInt(vals[0]);
@@ -102,5 +120,10 @@ public class SaveManager {
 		{
 			System.out.println(e.toString());
 		}
+	}
+	
+	public boolean isEmpty()
+	{
+		return ((money == 0) && !hasSpellSlinger && !hasSpellSprayer);
 	}
 }

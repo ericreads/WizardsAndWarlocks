@@ -488,8 +488,7 @@ public class Player {
     		deathCounter += deltaTime;
     		if(deathCounter > 1000)
     		{
-    			GameScreenManager.getInstance().clearScreens();
-    			GameScreenManager.getInstance().addScreen(new MainMenu());
+    			GameScreenManager.getInstance().addScreen(new DeathScreen());
     		}
     	}
     	

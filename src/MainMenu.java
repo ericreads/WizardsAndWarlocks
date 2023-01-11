@@ -65,9 +65,12 @@ public class MainMenu extends GameScreen {
 		shopButton.update();
 		playButton.update();
 
-		if (frames >= 360) {
+		if (frames >= 360) 
+		{
 			frames = 0;
-		} else {
+		} 
+		else 
+		{
 			frames++;
 		}
 	}
@@ -96,7 +99,7 @@ public class MainMenu extends GameScreen {
 		
 		g.setColor(tan);
 		g.drawString(title, 1265 / 2 - (int) g.getFont().getStringBounds(title, frc).getWidth() / 2 + 5,
-				(int) (12 * Math.sin(Math.toRadians(frames)) + y) + 75 + 5);
+				(int) (12 * Math.sin(Math.toRadians(frames)) + y) + 80);
 		
 		g.setColor(brown);
 		g.drawString(title, 1265 / 2 - (int) g.getFont().getStringBounds(title, frc).getWidth() / 2,

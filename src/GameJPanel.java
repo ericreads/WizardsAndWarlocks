@@ -115,7 +115,7 @@ public class GameJPanel extends JPanel
 		GameJPanel p = new GameJPanel();
 		frame.add(p);
 		
-		frame.setSize(1265, 688); 
+		frame.setSize(1264, 688); 
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);

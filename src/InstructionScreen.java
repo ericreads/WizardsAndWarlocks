@@ -103,7 +103,7 @@ public class InstructionScreen extends GameScreen
 		else if (stage == 4)
 		{
 			String[] text = { "You died!", " ", "The King's Guards defeated you this",
-					"time, but the fight is not yet over!", " ", "Click to try again" };
+					"time, but the fight is not over yet!", " ", "Click to try again" };
 
 			textBox.setText(text);
 			textBox.draw(g);

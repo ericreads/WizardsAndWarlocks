@@ -19,7 +19,7 @@ public class TutorialGameplayScreen extends GameScreen {
 		player = new Player(600, 370, stage);
 		hud = new HUD(player, 0);
 		
-		enemyManager = new EnemyManager(player, stage, hud, 0, 3000);
+		enemyManager = new EnemyManager(player, stage, hud, 4, 3000);
 		spellManager = new SpellManager(stage, enemyManager, player);
 		
 		player.setSpellManager(spellManager);

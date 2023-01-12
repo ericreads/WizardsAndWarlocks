@@ -104,7 +104,7 @@ public class WinScreen extends GameScreen {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+
 	}
 
 	@Override

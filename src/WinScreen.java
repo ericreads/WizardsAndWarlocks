@@ -75,9 +75,12 @@ public class WinScreen extends GameScreen {
 		}
 		
 		g.setFont(dogicaPixelBold.deriveFont(Font.PLAIN, 15F));
-		g.drawString("Press space to return to main menu.",
-				(int) (632 - g.getFont().getStringBounds("Click to return to main menu.", frc).getWidth() / 2),
-				390);
+		g.drawString("Press space to",
+				(int) (632 - g.getFont().getStringBounds("Press space to", frc).getWidth() / 2),
+				380);
+		g.drawString("return to the main menu.",
+				(int) (632 - g.getFont().getStringBounds("return to the main menu.", frc).getWidth() / 2),
+				400);
 	}
 
 	@Override

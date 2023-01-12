@@ -45,6 +45,7 @@ public class Player {
 	private BufferedImage starterWandIcon;
 	private BufferedImage spellSlingerIcon;
 	private BufferedImage spellSprayerIcon;
+	private BufferedImage healthPotionIcon;
 
 	private int animationFrames = 0;
 
@@ -129,6 +130,9 @@ public class Player {
 			starterWandIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0127.png"));
 			spellSlingerIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0130.png"));
 			spellSprayerIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0129.png"));
+			
+			//Potion Icon
+			healthPotionIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0115.png"));
 		} 
 		catch (IOException e) 
 		{
@@ -143,8 +147,7 @@ public class Player {
 		
 		if (SaveManager.getInstance().hasSpellSprayer())
 			weapons.add(new SpellSprayer(x, y, spellSprayerSprite, spellSprayerIcon));
-		
-		inventory = new Inventory(weapons);
+		inventory = new Inventory(weapons, new PotionOfHealing(healthPotionIcon), this);
 		weapon = inventory.getWeapon();
 	}
 
@@ -265,6 +268,8 @@ public class Player {
 	public void takeDamage(double damage) 
 	{
 		health -= damage;
+		if(health > maxHealth)
+			health = maxHealth;
 	}
 
 	public void draw(Graphics2D g) {

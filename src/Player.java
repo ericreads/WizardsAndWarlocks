@@ -486,6 +486,7 @@ public class Player {
     	}
     	else
     	{
+    		SaveManager.getInstance().saveVals();
     		deathCounter += deltaTime;
     		if(deathCounter > 1000)
     		{

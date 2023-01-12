@@ -63,8 +63,8 @@ public class InstructionScreen extends GameScreen
 		
 		if (stage == 0)
 		{
-			String dialogue[] = {"50 years ago, The Empire was a prosperous land, where those born with magic could freely",
-					"pratice it, until now. A new King takes to the throne, threatening to hunt down and kill",
+			String dialogue[] = {"50 years ago, The Kingdom of Exalos was a prosperous land, where those born with magic could",
+					"freely pratice it, until now. A new King takes to the throne, threatening to hunt down and kill",
 					"all commoners with magical abilities, including you.", " ",
 					"You have been caught by the King's Guards, awaiting your invetible punishment in the dungeon",
 					"palace. Fight your way through the palace with your sorceries and restore peace to the empire!", " " };

@@ -9,6 +9,7 @@ public class SaveManager
 	private FileWriter fw;
 	private PrintWriter pw;
 	private int money;
+	private int playerHealth;
 	private boolean hasSpellSprayer;
 	private boolean hasSpellSlinger;
 	private SaveManager()
@@ -19,10 +20,11 @@ public class SaveManager
 			{
 				fw = new FileWriter(saveFile);
 				pw = new PrintWriter(fw); 
-				pw.println("0,0,0");
+				pw.println("0,0,0,100");
 				money = 0;
 				hasSpellSlinger = false;
 				hasSpellSprayer = false;
+				playerHealth = 100;
 				pw.close();
 				fw.close();
 			} else
@@ -33,6 +35,7 @@ public class SaveManager
 				money = Integer.parseInt(vals[0]);
 				hasSpellSlinger = Helper.intToBool(Integer.parseInt(vals[1]));
 				hasSpellSprayer = Helper.intToBool(Integer.parseInt(vals[2]));
+				playerHealth = Integer.parseInt(vals[3]);
 				br.close();
 				fr.close();
 			}
@@ -85,7 +88,7 @@ public class SaveManager
 		{
 			fw = new FileWriter(saveFile);
 			pw = new PrintWriter(fw); 
-			pw.print(money + "," + Helper.boolToInt(hasSpellSlinger) + "," + Helper.boolToInt(hasSpellSprayer));
+			pw.print(money + "," + Helper.boolToInt(hasSpellSlinger) + "," + Helper.boolToInt(hasSpellSprayer) + "," + playerHealth);
 			pw.close();
 		} catch (IOException e)
 		{
@@ -101,10 +104,11 @@ public class SaveManager
 			br = new BufferedReader(fr);
 			if(saveFile.createNewFile()) 
 			{
-				pw.println("0,0,0");
+				pw.println("0,0,0,100");
 				money = 0;
 				hasSpellSlinger = false;
 				hasSpellSprayer = false;
+				playerHealth = 100;
 				pw.close();
 			} 
 			else
@@ -113,6 +117,7 @@ public class SaveManager
 				money = Integer.parseInt(vals[0]);
 				hasSpellSlinger = Helper.intToBool(Integer.parseInt(vals[1]));
 				hasSpellSprayer = Helper.intToBool(Integer.parseInt(vals[2]));
+				playerHealth = Integer.parseInt(vals[3]);
 			}
 			br.close();
 			fr.close();
@@ -121,9 +126,15 @@ public class SaveManager
 			System.out.println(e.toString());
 		}
 	}
-	
+	public int getPlayerHealth() {
+		return playerHealth;
+	}
+	public void setPlayerHealth(int health)
+	{
+		playerHealth = health;
+	}
 	public boolean isEmpty()
 	{
-		return ((money == 0) && !hasSpellSlinger && !hasSpellSprayer);
+		return ((money == 0) && !hasSpellSlinger && !hasSpellSprayer && playerHealth == 100);
 	}
 }

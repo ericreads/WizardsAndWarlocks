@@ -121,7 +121,7 @@ public class ObjectShopButton {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1 && hovered && object != null) {
 			GameScreenManager.getInstance().addScreen(new ShopItemScreen(object));
-			GameScreenManager.getInstance().clearFirst();
+			//GameScreenManager.getInstance().clearFirst();
 		}
 	}
 }

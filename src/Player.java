@@ -48,6 +48,7 @@ public class Player {
   	private int frames = 0; 
   	
 	public Player(int x, int y, Stage stage) {
+		SaveManager.getInstance().refreshVals();
 		this.x = x;
 		this.y = y;
 		
@@ -70,8 +71,8 @@ public class Player {
 		down = false;
 	
 		// Initialize full health
-		maxHealth = 10;
-		health = 10;
+		maxHealth = SaveManager.getInstance().getPlayerHealth();
+		health = maxHealth;
 		dead = false;
 		
 		// Load sprites
@@ -485,6 +486,7 @@ public class Player {
     	}
     	else
     	{
+    		SaveManager.getInstance().saveVals();
     		deathCounter += deltaTime;
     		if(deathCounter > 1000)
     		{
@@ -533,18 +535,13 @@ public class Player {
     	position.setLocation((int) x, (int) y);
     	frames++;
     	weapon.updatePosition((int)x+20, (int)y+20);
-    	weapon.update(deltaTime);
+    	weapon.update(deltaTime); 
     	
     	frames++;
     }
     public double getHealth() 
     { 
     	return health; 
-    }
-    
-    public void setHealth(double health)
-    {
-    	this.health = health;
     }
     
     public int getMaxHealth() 

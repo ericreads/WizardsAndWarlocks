@@ -8,7 +8,7 @@ public class ShopButton extends Button {
 	}
 	@Override
 	public void onClick() {
-		GameScreenManager.getInstance().clearScreens();
+		//GameScreenManager.getInstance().clearScreens();
 		GameScreenManager.getInstance().addScreen(new ShopSelectionScreen());
 	}
 

@@ -6,12 +6,12 @@ import java.awt.event.MouseEvent;
 public abstract class Button {
 	private int x;
 	private int y;
-    private String text;
+    protected String text;
     private Font font;
     //The color the button is normally
-    private Color defaultColor;
+    protected Color defaultColor;
     //The color the button is while being hovered over
-    private Color hoverColor;
+    protected Color hoverColor;
     private Color currentColor;
     
     public Button(int x, int y, String text, Font font, Color defaultColor, Color hoverColor)

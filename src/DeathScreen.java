@@ -87,22 +87,25 @@ public class DeathScreen extends GameScreen {
 					325 + (25 * i));
 		}
 		
-		g.setFont(dogicaPixelBold.deriveFont(Font.PLAIN, 15F));
-		g.drawString("Click to return to main menu.",
-				(int) (632 - g.getFont().getStringBounds("Click to return to main menu.", frc).getWidth() / 2),
+		g.setFont(dogicaPixelBold.deriveFont(Font.PLAIN, 13F));
+		g.drawString("Press space to return to main menu.",
+				(int) (632 - g.getFont().getStringBounds("Press space to return to main menu.", frc).getWidth() / 2),
 				390);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
+		{
+			GameScreenManager.getInstance().clearScreens();
+			GameScreenManager.getInstance().addScreen(new MainMenu());
+		}
 	}
 
 	@Override
@@ -113,8 +116,7 @@ public class DeathScreen extends GameScreen {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		GameScreenManager.getInstance().clearScreens();
-		GameScreenManager.getInstance().addScreen(new MainMenu());
+		
 	}
 
 	@Override

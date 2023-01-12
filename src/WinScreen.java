@@ -74,9 +74,9 @@ public class WinScreen extends GameScreen {
 					325 + (25 * i));
 		}
 		
-		g.setFont(dogicaPixelBold.deriveFont(Font.PLAIN, 15F));
+		g.setFont(dogicaPixelBold.deriveFont(Font.PLAIN, 13F));
 		g.drawString("Click to return to main menu.",
-				(int) (632 - g.getFont().getStringBounds("Click to return to main menu.", frc).getWidth() / 2),
+				(int) (632 - g.getFont().getStringBounds("Press space to main menu.", frc).getWidth() / 2),
 				390);
 	}
 
@@ -88,7 +88,11 @@ public class WinScreen extends GameScreen {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
+		{
+			GameScreenManager.getInstance().clearScreens();
+			GameScreenManager.getInstance().addScreen(new MainMenu());
+		}
 
 	}
 
@@ -100,8 +104,7 @@ public class WinScreen extends GameScreen {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		GameScreenManager.getInstance().clearScreens();
-		GameScreenManager.getInstance().addScreen(new MainMenu());
+		
 	}
 
 	@Override

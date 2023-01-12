@@ -193,7 +193,7 @@ public class HUD {
 		
 		if (curLevel > 0)
 		{
-			g.drawString("Wave : " + curLevel, 555, 35);
+			g.drawString("Floor : " + curLevel, 555, 35);
 		}
 		else
 		{

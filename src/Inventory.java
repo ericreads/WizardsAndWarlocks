@@ -85,11 +85,13 @@ public class Inventory {
 			if(i < inventory.size())
 				g.drawImage(inventory.get(i).getIcon(), (i * 60) + 513, 550 + 30, 40, 40, null);
 		}
-    	g.drawImage(potion.getIcon(), (3 * 60) + 513, 550 + 30, 40, 40, null);
-    	g.setFont(dogicaPixel.deriveFont(Font.PLAIN, 18F));
-    	g.setColor(Color.white);
-    	g.drawString(SaveManager.getInstance().getHealthPotionNum() + "", (3 * 60) + 525, 550 + 90);
-
+    	if(SaveManager.getInstance().getHealthPotionNum() > 0)
+    	{
+    		g.drawImage(potion.getIcon(), (3 * 60) + 513, 550 + 30, 40, 40, null);
+    		g.setFont(dogicaPixel.deriveFont(Font.PLAIN, 18F));
+    		g.setColor(Color.white);
+    		g.drawString(SaveManager.getInstance().getHealthPotionNum() + "", (3 * 60) + 525, 550 + 90);
+    	}
 		// Draw inventory cursor (representing item player has equipped)
 		
 		g.setStroke(new BasicStroke(4));

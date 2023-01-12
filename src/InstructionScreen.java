@@ -64,10 +64,10 @@ public class InstructionScreen extends GameScreen
 		if (stage == 0)
 		{
 			String dialogue[] = {"50 years ago, The Kingdom of Exalos was a prosperous land, where those born with magic could",
-					"freely practice it, until now. A new King takes to the throne, threatening to hunt down and kill",
-					"all commoners with magical abilities, including you.", " ",
-					"You have been caught by the King's Guards, awaiting your invetible punishment in the dungeon",
-					"palace. Fight your way through the palace with your sorceries and restore peace to Exalos!", " " };
+					"freely practice it, but no longer. A new King has taken the throne, and has begun to hunt down",
+					"and kill all commoners with magical abilities, including you.", " ",
+					"You have been caught by the King's Guards, and await your invetible punishment in the palace",
+					"dungeon. Fight your way through the palace with your sorceries and restore peace to Exalos!", " " };
 			
 			g.drawImage(background, 0, 0, null);
 			g.drawImage(textBackground, 100, 179, null);
@@ -95,7 +95,7 @@ public class InstructionScreen extends GameScreen
 		else if (stage == 2)
 		{
 			String[] text = { "Change your equipped inventory ", "item using the number keys.", " ",
-					"You can purchase items from the shop.", "You can use healing potions with 4", "Press space to continue." };
+					"You can purchase items from the shop.", "You can use healing potions with 4.", "Press space to continue." };
 	
 			textBox.setText(text);
 			textBox.draw(g);
@@ -111,8 +111,8 @@ public class InstructionScreen extends GameScreen
 		}
 		else if (stage == 5)
 		{
-			String[] text = { "Congrats! You completed the tutorial.", " ", "You are now ready to enter the dungeon",
-					"and face the King's Guards.", " ", "Press space to begin gameplay." };
+			String[] text = { "Congrats! You completed the tutorial.", "You are now ready to enter the dungeon",
+					"and face the King's Guards.", "The dungeon has 10 floors.", " ", "Press space to begin gameplay." };
 
 			textBox.setText(text);
 			textBox.draw(g);

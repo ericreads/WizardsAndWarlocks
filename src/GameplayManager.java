@@ -44,8 +44,7 @@ public class GameplayManager {
         	} 
         	else
         	{
-        		GameScreenManager.getInstance().clearScreens();
-        		GameScreenManager.getInstance().addScreen(new MainMenu());
+        		GameScreenManager.getInstance().addScreen(new WinScreen());
         	}
         }
         hud.update(deltaTime);

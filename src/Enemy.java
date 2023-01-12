@@ -204,7 +204,7 @@ public class Enemy
 			}
 			
 			// Execute A* path finding when Enemy is on-screen
-			if ((this.x > 0 && this.x + width < 1200) && (this.y > 0 && this.y + height < 680))
+			if ((this.x > 0 && this.x + width < 1264) && (this.y > 0 && this.y + height < 680))
 			{
 				// Instantiate nodes and assign G, H, and F Costs
 				this.setNodes();
@@ -253,7 +253,7 @@ public class Enemy
 				{
 					velocityX = speed;
 				}
-				else if (this.x + width >= 1230)
+				else if (this.x + width >= 1265)
 				{
 					velocityX = -speed;
 				}

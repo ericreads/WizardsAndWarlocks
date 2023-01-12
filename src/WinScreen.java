@@ -73,7 +73,7 @@ public class WinScreen extends GameScreen {
 			g.drawString(text[i], (int) (632 - g.getFont().getStringBounds(text[i], frc).getWidth() / 2),
 					325 + (25 * i));
 		}
-		
+    
 		g.setFont(dogicaPixelBold.deriveFont(Font.PLAIN, 15F));
 		g.drawString("Press space to",
 				(int) (632 - g.getFont().getStringBounds("Press space to", frc).getWidth() / 2),
@@ -95,7 +95,11 @@ public class WinScreen extends GameScreen {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
+		{
+			GameScreenManager.getInstance().clearScreens();
+			GameScreenManager.getInstance().addScreen(new MainMenu());
+		}
 
 	}
 

@@ -18,7 +18,7 @@ public class GameplayManager {
     
     public GameplayManager()
     {
-        stage = new Stage(stageRands[0]);
+    	stage = new Stage(stageRands[0]);
 		player = new Player(600, 370, stage);
 		hud = new HUD(player, 1);
 		enemyManager = new EnemyManager(player, stage, hud, enemyLevels[0], enemyFreq[0]);

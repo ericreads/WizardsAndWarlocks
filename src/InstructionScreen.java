@@ -8,8 +8,6 @@ import javax.imageio.ImageIO;
 
 public class InstructionScreen extends GameScreen 
 {
-
-	private int frames = 0;
 	private int stage;
 	
 	private Color brown; 
@@ -52,7 +50,7 @@ public class InstructionScreen extends GameScreen
 	@Override
 	public void update(int deltaTime) 
 	{
-		frames++;
+	
 	}
 
 	@Override
@@ -113,7 +111,7 @@ public class InstructionScreen extends GameScreen
 		{
 			String[] text = { "Congrats! You completed the tutorial.", "You are now ready to enter the dungeon",
 					"and face the King's Guards.", "The dungeon has 10 floors.", " ", "Press space to begin gameplay." };
-
+          
 			textBox.setText(text);
 			textBox.draw(g);
 		}

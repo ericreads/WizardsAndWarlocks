@@ -1,6 +1,5 @@
-import javax.swing.*;
-import java.awt.*;
 import java.awt.image.*;
+
 public abstract class Object {
     
     private String name;
@@ -16,8 +15,23 @@ public abstract class Object {
     	this.cost = cost;
     }
     
-    public BufferedImage getIcon() { return icon; }
-    public String getName() { return name; }
-    public String getDescription() { return description; }
-    public int getCost() { return cost; }
+	public BufferedImage getIcon() 
+	{
+		return icon;
+	}
+
+	public String getName() 
+	{
+		return name;
+	}
+
+	public String getDescription() 
+	{
+		return description;
+	}
+
+	public int getCost() 
+	{
+		return cost;
+	}
 }

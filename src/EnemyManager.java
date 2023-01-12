@@ -34,16 +34,19 @@ public class EnemyManager {
             //Randomly spawn enemies on each side of the screen
             if(randValue < 0.25)
             {
-                enemies.add(new Enemy((int)(randValue * 1280), -70, player, stage, hud));
-            } else if(randValue < 0.5)
+				enemies.add(new Enemy((int) (randValue * 1264), -70, player, stage, hud));
+            } 
+            else if(randValue < 0.5)
             {
-                enemies.add(new Enemy((int)(randValue*1280), 790, player,stage, hud));
-            } else if(randValue < 0.75)
+				enemies.add(new Enemy((int) (randValue*1264), 790, player,stage, hud));
+            } 
+            else if(randValue < 0.75)
             {
-                enemies.add(new Enemy(-70, (int)(randValue*720), player, stage, hud));
-            } else
+				enemies.add(new Enemy(-70, (int) (randValue*648), player, stage, hud));
+            } 
+            else
             {
-                enemies.add(new Enemy(1350, (int)(randValue*720), player, stage, hud));
+				enemies.add(new Enemy(1350, (int) (randValue*648), player, stage, hud));
             }
         }
         for(Enemy enemy : enemies)

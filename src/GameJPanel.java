@@ -106,7 +106,7 @@ public class GameJPanel extends JPanel
 	}
 
 	public static void main(String[] args) throws InterruptedException
-	{{
+	{
 		//Enable hardware accelerated graphics to improve performance for Linux users
 		System.setProperty("sun.java2d.opengl", "true");
 		
@@ -135,5 +135,5 @@ public class GameJPanel extends JPanel
 		}
 		//close the game when the loop ends
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-	}}	
+	}
 }

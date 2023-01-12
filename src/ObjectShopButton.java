@@ -8,7 +8,8 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-public class ObjectShopButton {
+public class ObjectShopButton 
+{
 	private Object object;
 
 	private int x;

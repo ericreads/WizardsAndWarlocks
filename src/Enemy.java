@@ -180,7 +180,7 @@ public class Enemy
 				{
 					velocityX = speed;
 				}
-				else if (this.x + width >= 1230)
+				else if (this.x + width >= 1270)
 				{
 					velocityX = -speed;
 				}
@@ -189,7 +189,7 @@ public class Enemy
 				{
 					velocityY = speed;
 				}
-				else if (this.y + height >= 681)
+				else if (this.y + height >= 691)
 				{
 					velocityY = -speed;
 				}

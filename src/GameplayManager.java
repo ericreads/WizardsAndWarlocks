@@ -10,9 +10,9 @@ public class GameplayManager {
     private HUD hud;
    
     //Arrays to hold random stage values and the number of enemies spawned in each level and enemy spawn speeds
-    private float[] stageRands = new float[] {0.25f, 0.15f, 0.10f, 0.05f, 0.25f};
-    private int[] enemyLevels = new int[] {10, 20, 30, 40, 50, 75};
-    private int[] enemyFreq = new int[] {2000, 1500, 1000, 500, 250};
+    private float[] stageRands = new float[] {0.25f, 0.20f, 0.27f, 0.25f, 0.15f, 0.15f, 0.3f, 0.25f, 0.2f, 0.3f};
+    private int[] enemyLevels = new int[] {10, 15, 20, 25, 30, 35, 40, 50, 60, 80};
+    private int[] enemyFreq = new int[] {2000, 1700, 1500, 1300, 1000, 750, 600, 700, 600, 800};
     //Into to store the current level
     private int level = 0;
     

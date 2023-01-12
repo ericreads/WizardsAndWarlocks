@@ -15,7 +15,7 @@ public class BuyButton extends Button {
 	
 	public BuyButton(int x, int y, String text, Font font, Color defaultColor, Color hoverColor)
 	{
-		super(x, y, "ALREADY OWNED", font, defaultColor, hoverColor);
+		super(x, y, text, font, defaultColor, hoverColor);
 	}
 	
 	@Override

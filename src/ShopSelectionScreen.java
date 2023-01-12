@@ -21,8 +21,10 @@ public class ShopSelectionScreen extends GameScreen {
 	private BufferedImage starterWandIcon;
 	private BufferedImage spellSlingerIcon;
 	private BufferedImage spellSprayerIcon;
+	private BufferedImage healthUpgradeIcon;
 	private BufferedImage coin;
 	private BufferedImage background;
+	private BufferedImage healthPotionIcon;
 
 	private Button backButton;
 	private Font dogicaPixelBold;
@@ -50,6 +52,10 @@ public class ShopSelectionScreen extends GameScreen {
 
 			// Coin icon
 			coin = ImageIO.read(getClass().getResourceAsStream("icons/coin.png"));
+			
+			//Health Item Icons
+			healthUpgradeIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0114.png"));
+			healthPotionIcon = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0115.png"));
 
 			// Background
 			background = ImageIO.read(getClass().getResourceAsStream("ui/background.png"));
@@ -59,7 +65,9 @@ public class ShopSelectionScreen extends GameScreen {
 
 		purchasableItems = new Object[] { new StarterWand(0, 0, starterWandSprite, starterWandIcon),
 				new SpellSprayer(0, 0, spellSprayerSprite, spellSprayerIcon),
-				new SpellSlinger(0, 0, spellSlingerSprite, spellSlingerIcon)};
+				new SpellSlinger(0, 0, spellSlingerSprite, spellSlingerIcon),
+				new HealthUpgrade(healthUpgradeIcon),
+				new PotionOfHealing(healthPotionIcon)};
 		itemButtons = new ObjectShopButton[5];
 
 		int j = 0;

@@ -14,7 +14,7 @@ public class HUD {
 	private Font dogicaPixelBold;
 	private ArrayList<FloatingText> floatingText;
 	
-	private BufferedImage healthBarEmpty, healthBarLeft, healthBarRight, segment;
+	private BufferedImage healthBarEmpty, healthBarLeft, healthBarRight, segment, upgradedSegment, upgradedRight;
 	private BufferedImage coin; 
 	private BufferedImage pause1, pause2, pause3;
 	private BufferedImage home1, home2, home3;
@@ -42,7 +42,9 @@ public class HUD {
 			healthBarEmpty = ImageIO.read(getClass().getResourceAsStream("/ui/health_bar.png"));
 			healthBarLeft = ImageIO.read(getClass().getResourceAsStream("/ui/health_bar_left.png"));
 			healthBarRight = ImageIO.read(getClass().getResourceAsStream("/ui/health_bar_right.png"));
+			upgradedRight = ImageIO.read(getClass().getResourceAsStream("/ui/health_bar_right_yellow.png"));
 			segment = ImageIO.read(getClass().getResourceAsStream("/ui/health_segment.png"));
+			upgradedSegment = ImageIO.read(getClass().getResourceAsStream("ui/health_segment_yellow.png"));
 			
 			play1 = ImageIO.read(getClass().getResourceAsStream("/ui/play1.png"));
 			
@@ -144,20 +146,30 @@ public class HUD {
 		FontRenderContext frc = new FontRenderContext(at, true, true);
 		
 		//Ensure the bar is always 200 pixels no matter the player's health
-		int segmentWidth = 200/player.getMaxHealth();
+		int segmentWidth = 2;
 		
 		// Draw health bar
 		g.drawImage(healthBarEmpty, 18, 12, null);
 		
-		if (player.getHealth() > 0.5)
+		if (player.getHealth() > 5)
 		{
 			g.drawImage(healthBarLeft, 18, 12, null);
 			
 			for (int i = 0; i < player.getHealth() * segmentWidth - 24; i++) {
-				g.drawImage(segment, 30 + i, 12, null);
+				if((i/segmentWidth + 24) < 100)
+					g.drawImage(segment, 30 + i, 12, null);
+				else
+				{
+					if(player.getHealth() > 100)
+						g.drawImage(upgradedSegment, 30 + i, 12, null);
+					else
+						g.drawImage(segment, 30 + i, 12, null);
+				}
 			}
-
-			g.drawImage(healthBarRight, (int)(player.getHealth() * segmentWidth + 6), 12, null);
+			if(player.getHealth() <= 100)
+				g.drawImage(healthBarRight, (int)(player.getHealth() * segmentWidth + 6), 12, null);
+			else
+				g.drawImage(upgradedRight, (int)(player.getHealth() * segmentWidth + 6), 12, null);
 		}
 	
 		for(FloatingText text : floatingText)
@@ -181,7 +193,7 @@ public class HUD {
 		
 		if (curLevel > 0)
 		{
-			g.drawString("Wave : " + curLevel, 555, 35);
+			g.drawString("Floor : " + curLevel, 555, 35);
 		}
 		else
 		{

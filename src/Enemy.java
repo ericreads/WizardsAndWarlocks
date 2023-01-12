@@ -1,6 +1,10 @@
 // Import required modules
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.*;
+
+import javax.imageio.ImageIO;
 
 public class Enemy 
 {
@@ -14,8 +18,8 @@ public class Enemy
 	private double playerX;
 	private double playerY;
 	
-	private static int width = 40;
-	private static int height = 40;
+	private static int width = 45;
+	private static int height = 45;
 
 	private double health;
 	private boolean dead;
@@ -36,7 +40,15 @@ public class Enemy
 	private Player player;
 	private HUD hud;
 	
+	private BufferedImage[] idle;
+	private BufferedImage[] front_walk;
+	private BufferedImage[] back_walk;
+	private BufferedImage[] left_walk;
+	private BufferedImage[] right_walk;
+	
 	private double frames = 0;
+	private int animationFrames = 0;
+	
 	public Enemy(int x, int y, Player player, Stage stage, HUD hud)
 	{
 		this.x = x;
@@ -69,6 +81,53 @@ public class Enemy
 				nodes[i][j] = stage.getObstacles()[i][j];
 			}
 		}
+		
+		// Load sprites
+		idle = new BufferedImage[4];
+		front_walk = new BufferedImage[8];
+		back_walk = new BufferedImage[8];
+		left_walk = new BufferedImage[8];
+		right_walk = new BufferedImage[8];
+		
+		try 
+		{
+			// Player idle
+			idle[0] = ImageIO.read(getClass().getResourceAsStream("/enemy_sprites/elf_front_idle.png"));
+			idle[1] = ImageIO.read(getClass().getResourceAsStream("/enemy_sprites/elf_back_idle.png"));
+			idle[2] = ImageIO.read(getClass().getResourceAsStream("/enemy_sprites/elf_side02_idle.png")); // left
+			idle[3] = ImageIO.read(getClass().getResourceAsStream("/enemy_sprites/elf_side01_idle.png")); // right
+
+			// Player running forward
+			for (int i = 0; i < 8; i++) 
+			{
+				front_walk[i] = ImageIO
+						.read(getClass().getResourceAsStream("/enemy_sprites/elf_front_walk" + (i + 1) + ".png"));
+			}
+
+			// Player running back
+			for (int i = 0; i < 8; i++) 
+			{
+				back_walk[i] = ImageIO
+						.read(getClass().getResourceAsStream("/enemy_sprites/elf_back_walk" + (i + 1) + ".png"));
+			}
+
+			// Player running left
+			for (int i = 0; i < 8; i++) 
+			{
+				left_walk[i] = ImageIO
+						.read(getClass().getResourceAsStream("/enemy_sprites/elf_side02_walk" + (i + 1) + ".png"));
+			}
+			
+			// Player running right
+			for (int i = 0; i < 8; i++) 
+			{
+				right_walk[i] = ImageIO
+						.read(getClass().getResourceAsStream("/enemy_sprites/elf_side01_walk" + (i + 1) + ".png"));
+			}
+		} 
+		catch (IOException e) {
+			System.out.println(e.toString());
+		}
 	}
 
 	public Rectangle getPosition()
@@ -90,8 +149,22 @@ public class Enemy
 
 	public void draw(Graphics2D g)
 	{
-		g.setColor(Color.BLUE);
-		g.fillOval((int) x, (int) y, width, height);
+		if (velocityX < 0) 
+		{
+			g.drawImage(left_walk[(animationFrames % 64) / 8], (int) x, (int) y, width, height, null);
+		}
+		if (velocityX > 0) 
+		{
+			g.drawImage(right_walk[(animationFrames % 64) / 8], (int) x, (int) y, width, height, null);
+		}
+		if (velocityY < 0) 
+		{
+			g.drawImage(back_walk[(animationFrames % 64) / 8], (int) x, (int) y, width, height, null);
+		}
+		if (velocityY > 0) 
+		{
+			g.drawImage(front_walk[(animationFrames % 64) / 8], (int) x, (int) y, width, height, null);
+		}
 	}
 	
 	public void update(int deltaTime) 
@@ -115,7 +188,7 @@ public class Enemy
 		
 				if (collisionDuration > 175) 
 				{
-	    			player.takeDamage(0.5f);
+	    			player.takeDamage(5);
 					collisionDuration = 0;
 	    		}
 			}
@@ -244,6 +317,7 @@ public class Enemy
 			position.setLocation((int)x, (int)y);
 		}
 		frames += deltaTime;
+		animationFrames++;
 	}
 	
 	private void setNodes()

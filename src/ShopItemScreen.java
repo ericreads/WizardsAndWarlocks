@@ -72,7 +72,13 @@ public class ShopItemScreen extends GameScreen
 					(int) (1280 / 2 - buttonFont.getStringBounds("Already Owned", frc).getWidth() / 2), 590,
 					"Already Owned", buttonFont, brown, brown);
 			buyable = false;
-		} 
+		} else if(object.getName().equals("Health Upgrade +15") && SaveManager.getInstance().getPlayerHealth() >= 175)
+		{
+			buyButton = new BuyButton(
+					(int) (1280 / 2 - buttonFont.getStringBounds("Maximum Health Reached", frc).getWidth() / 2), 590,
+					"Maximum Health Reached", buttonFont, brown, brown);
+			buyable = false;
+		}
 		else if(object.getCost() > SaveManager.getInstance().getMoney())
 		{
 			buyButton = new BuyButton(1280 / 2 - 100, 590, object, buttonFont, lightBrown,

@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class PauseScreen extends GameScreen 
 {
 	private Button exitButton;
-	private Button shopButton;
+	private TextBox textBox;
 	
 	private Font dogicaPixelBold;
 	private Font buttonFont; 
@@ -46,7 +46,10 @@ public class PauseScreen extends GameScreen
 			System.out.println(e.toString());
 		}
 		
-		buttonFont = dogicaPixelBold.deriveFont(Font.PLAIN, 36F);
+		String[] text = {" "};
+		textBox = new TextBox(text);
+		
+		buttonFont = dogicaPixelBold.deriveFont(Font.PLAIN, 24F);
 
 		AffineTransform at = new AffineTransform();
 		FontRenderContext frc = new FontRenderContext(at, true, true);
@@ -55,10 +58,8 @@ public class PauseScreen extends GameScreen
 		black = new Color(20, 20, 20);
 		red = new Color(232, 69, 55);
 		
-		exitButton = new ExitButton(1265 / 2 - (int) buttonFont.getStringBounds("EXIT", frc).getWidth() / 2, 510,
-				"EXIT", buttonFont, black, red);
-		shopButton = new ShopButton(1265 / 2 - (int) buttonFont.getStringBounds("SHOP", frc).getWidth() / 2, 435,
-				"SHOP", buttonFont, black, brown);
+		exitButton = new ExitButton(1265 / 2 - (int) buttonFont.getStringBounds("EXIT TO DESKTOP", frc).getWidth() / 2, 375,
+				"EXIT TO DESKTOP", buttonFont, black, brown);
 	}
 
 	@Override
@@ -84,7 +85,6 @@ public class PauseScreen extends GameScreen
 		}
 		
 		exitButton.update();
-		shopButton.update();
 	}
 
 	@Override
@@ -95,14 +95,16 @@ public class PauseScreen extends GameScreen
 		g.setColor(new Color(35, 35, 35, 100));
 		g.fillRect(0, 0, 1280, 680);
 		
+		textBox.draw(g);
+		
 		g.setFont(dogicaPixelBold);
 		g.setColor(red);
-		g.setFont(g.getFont().deriveFont(Font.PLAIN, 56F));
+		g.setFont(g.getFont().deriveFont(Font.PLAIN, 42F));
 
 		String title = "PAUSED";
 
 		g.drawString(title, 1265 / 2 - (int) g.getFont().getStringBounds(title, frc).getWidth() / 2,
-				680 / 2 - (int) g.getFont().getStringBounds(title, frc).getHeight() / 2);
+				320);
 		
 		
 		// Draw play button
@@ -148,7 +150,6 @@ public class PauseScreen extends GameScreen
 		}
 		
 		exitButton.draw(g);
-		shopButton.draw(g);
 	}
 
 	@Override
@@ -172,7 +173,6 @@ public class PauseScreen extends GameScreen
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		exitButton.mouseClicked(e);
-		shopButton.mouseClicked(e);
 	}
 
 	@Override

@@ -27,17 +27,25 @@ public class BuyButton extends Button {
 				SaveManager.getInstance().setMoney(SaveManager.getInstance().getMoney()-object.getCost());
 				SaveManager.getInstance().buySpellSlinger();
 				super.text = "ALREADY OWNED";
+				super.hoverColor = new Color(197, 119, 82);
+				super.defaultColor = super.hoverColor;
 			} else if(object.getName().equals("Spell Sprayer") && !SaveManager.getInstance().hasSpellSprayer())
 			{
 				SaveManager.getInstance().setMoney(SaveManager.getInstance().getMoney()-object.getCost());
 				SaveManager.getInstance().buySpellSprayer();
 				super.text = "ALREADY OWNED";
-			} else if(object.getName().equals("Health Upgrade") && SaveManager.getInstance().getPlayerHealth() <= 175)
+				super.hoverColor = new Color(197, 119, 82);
+				super.defaultColor = super.hoverColor;
+			} else if(object.getName().equals("Health Upgrade") && SaveManager.getInstance().getPlayerHealth() < 175)
 			{
 				SaveManager.getInstance().setMoney(SaveManager.getInstance().getMoney()-object.getCost());
 				SaveManager.getInstance().setPlayerHealth(SaveManager.getInstance().getPlayerHealth()+15);
-				if(SaveManager.getInstance().getPlayerHealth() <= 175)
+				if(SaveManager.getInstance().getPlayerHealth() >= 175)
+				{
 					super.text = "Maximum Health Reached";
+					super.hoverColor = new Color(197, 119, 82);
+					super.defaultColor = super.hoverColor;
+				}
 			} else if(object.getName().equals("Potion of Healing"))
 			{
 				SaveManager.getInstance().setMoney(SaveManager.getInstance().getMoney()-object.getCost());

@@ -62,7 +62,7 @@ public class Inventory {
         	if(fourPressed == false)
         	{
         		SaveManager.getInstance().setHealthPotionNum(SaveManager.getInstance().getHealthPotionNum()-1);
-        		player.takeDamage(-50);
+        		player.takeDamage(-(player.getMaxHealth()/4));
         	}
         	fourPressed = true;
         } else

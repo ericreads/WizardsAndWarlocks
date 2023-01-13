@@ -41,7 +41,7 @@ public class DeathScreen extends GameScreen {
 		dialogue[4] = "\"You'll see, I can use magic/njust as well as you.\"";
 		
 		// Set text as a random dialogue piece
-		message = dialogue[(int)(Math.random() * 4)].split("/n");
+		message = dialogue[(int)(Math.floor(Math.random() * 5))].split("/n");
 		
 		brown = new Color(63, 38, 49);
 		black = new Color(35, 35, 35);

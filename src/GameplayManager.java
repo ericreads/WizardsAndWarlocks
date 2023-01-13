@@ -44,6 +44,7 @@ public class GameplayManager {
         	} 
         	else
         	{
+        		SaveManager.getInstance().saveVals();
         		GameScreenManager.getInstance().addScreen(new WinScreen());
         	}
         }

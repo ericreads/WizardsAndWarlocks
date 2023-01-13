@@ -74,7 +74,7 @@ public class ShopSelectionScreen extends GameScreen {
 
 		for (int i = 0; i < itemButtons.length; i++) {
 			if (j < purchasableItems.length) {
-				itemButtons[i] = new ObjectShopButton(i * (width + 30) + 30, 75, width, height, purchasableItems[j]);
+				itemButtons[i] = new ObjectShopButton(i * (width + 28) + 30, 75, width, height, purchasableItems[j]);
 			} else {
 				itemButtons[i] = new ObjectShopButton(i * (width + 30) + 30, 75, width, height, null);
 			}
@@ -125,9 +125,9 @@ public class ShopSelectionScreen extends GameScreen {
 		String money = String.valueOf(SaveManager.getInstance().getMoney());
 		g.setFont(g.getFont().deriveFont(Font.PLAIN, 18F));
 
-		g.drawImage(coin, (int) (1130 - dogicaPixelBold.getStringBounds(money, frc).getWidth()), 25, 25, 25, null);
-		g.drawString(money, (int) (1160 - dogicaPixelBold.getStringBounds(money, frc).getWidth()), 45); // right align
-																										// text
+		g.drawImage(coin, (int) (1190 - g.getFont().getStringBounds(money, frc).getWidth()), 25, 25, 25, null);
+		g.drawString(money, (int) (1220 - g.getFont().getStringBounds(money, frc).getWidth()), 45); // right align
+																										
 	}
 
 	@Override

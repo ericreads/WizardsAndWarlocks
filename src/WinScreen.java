@@ -66,7 +66,7 @@ public class WinScreen extends GameScreen {
 
 		if (position == 0)
 		{
-			g.drawString("You Win!", (int) (632 - g.getFont().getStringBounds("You Win!", frc).getWidth() / 2), 280);
+			g.drawString("You Win!", (int) (632 - g.getFont().getStringBounds("You Win!", frc).getWidth() / 2), 275);
 
 			g.setFont(dogicaPixel.deriveFont(Font.PLAIN, 14F));
 			text[0] = "Congratulations! You defeated the King";
@@ -74,14 +74,14 @@ public class WinScreen extends GameScreen {
 
 			for (int i = 0; i < text.length; i++) {
 				g.drawString(text[i], (int) (632 - g.getFont().getStringBounds(text[i], frc).getWidth() / 2),
-						325 + (25 * i));
+						318 + (25 * i));
 			}
 	    
 			
 		}
 		else
 		{
-			g.drawString("Credits", (int) (632 - g.getFont().getStringBounds("Credits", frc).getWidth() / 2), 280);
+			g.drawString("Credits", (int) (632 - g.getFont().getStringBounds("Credits", frc).getWidth() / 2), 275);
 			
 			String[] names = {"Eric", "Dev", "Thaneesha"};
 				
@@ -89,7 +89,7 @@ public class WinScreen extends GameScreen {
 			
 			for (int i = 0; i < 3; i++)
 			{
-				g.drawString("Developer: " + names[i], 430, 310 + (i * 30) );
+				g.drawString("Developer: " + names[i], 420, 310 + (i * 30) );
 			}
 		}
 		

@@ -18,13 +18,12 @@ public class PauseScreen extends GameScreen
 	
 	private BufferedImage play1, play2, play3;
 	private BufferedImage home1, home2, home3;
-	private BufferedImage pause1;
 	
 	private boolean playPressed = false;
 	private boolean homePressed = false; 
 	private int frames = 0; 	
 	
-	private Color brown, black, red;
+	private Color black, red;
 	
 	@Override
 	public void initialize() {
@@ -39,8 +38,6 @@ public class PauseScreen extends GameScreen
 			home1 = ImageIO.read(getClass().getResourceAsStream("/ui/home1.png"));
 			home2 = ImageIO.read(getClass().getResourceAsStream("/ui/home2.png"));
 			home3 = ImageIO.read(getClass().getResourceAsStream("/ui/home3.png"));
-			
-			pause1 = ImageIO.read(getClass().getResourceAsStream("/ui/pause1.png"));
 		} 
 		catch (FontFormatException | IOException e) {
 			System.out.println(e.toString());
@@ -54,12 +51,11 @@ public class PauseScreen extends GameScreen
 		AffineTransform at = new AffineTransform();
 		FontRenderContext frc = new FontRenderContext(at, true, true);
 
-		brown = new Color(63, 38, 49);
-		black = new Color(20, 20, 20);
+		black = new Color(35, 35, 35);
 		red = new Color(232, 69, 55);
 		
 		exitButton = new ExitButton(1265 / 2 - (int) buttonFont.getStringBounds("EXIT TO DESKTOP", frc).getWidth() / 2, 375,
-				"EXIT TO DESKTOP", buttonFont, black, brown);
+				"EXIT TO DESKTOP", buttonFont, black, red);
 	}
 
 	@Override
@@ -98,7 +94,7 @@ public class PauseScreen extends GameScreen
 		textBox.draw(g);
 		
 		g.setFont(dogicaPixelBold);
-		g.setColor(red);
+		g.setColor(black);
 		g.setFont(g.getFont().deriveFont(Font.PLAIN, 42F));
 
 		String title = "PAUSED";
@@ -108,44 +104,44 @@ public class PauseScreen extends GameScreen
 		
 		
 		// Draw play button
-		if (!playPressed)
+		if (!homePressed)
 		{
-			g.drawImage(play1, 1135, 10, 45, 45, null);
+			g.drawImage(home1, 1135, 10, 45, 45, null);
 		}
 		else
 		{
 			if (frames < 5)
 			{
-				g.drawImage(play2, 1135, 10, 45, 45, null);
+				g.drawImage(home2, 1135, 10, 45, 45, null);
 			}
 			else if (frames < 10)
 			{
-				g.drawImage(play3, 1135, 10, 45, 45, null);
+				g.drawImage(home3, 1135, 10, 45, 45, null);
 			}
 			else
 			{
-				g.drawImage(pause1, 1135, 10, 45, 45, null);
+				g.drawImage(home1, 1135, 10, 45, 45, null);
 			}
 		}
 		
 		// Draw home button
-		if (!homePressed)
+		if (!playPressed)
 		{
-			g.drawImage(home1, 1193, 10, 45, 45, null);
+			g.drawImage(play1, 1193, 10, 45, 45, null);
 		}
 		else 
 		{
 			if (frames < 5)
 			{
-				g.drawImage(home2, 1193, 10, 45, 45, null);
+				g.drawImage(play2, 1193, 10, 45, 45, null);
 			}
 			else if (frames < 10)
 			{
-				g.drawImage(home3, 1193, 10, 45, 45, null);
+				g.drawImage(play3, 1193, 10, 45, 45, null);
 			}
 			else
 			{
-				g.drawImage(home1, 1193, 10, 45, 45, null);
+				g.drawImage(play1, 1193, 10, 45, 45, null);
 			}
 		}
 		
@@ -186,12 +182,12 @@ public class PauseScreen extends GameScreen
 		if (GameJPanel.getMouseX() > 1135 && GameJPanel.getMouseX() < 1180 
 				&& GameJPanel.getMouseY() > 10 && GameJPanel.getMouseY() < 55)
 		{
-			playPressed = true;
+			homePressed = true;
 		}
 		else if (GameJPanel.getMouseX() > 1193 && GameJPanel.getMouseX() < 1238 
 				&& GameJPanel.getMouseY() > 10 && GameJPanel.getMouseY() < 55)
 		{
-			homePressed = true; 
+			playPressed = true; 
 		}
 		
 	}

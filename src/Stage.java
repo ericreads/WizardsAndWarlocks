@@ -50,10 +50,8 @@ public class Stage {
 			tiles[9] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0049.png")); // detailed ground piece
 			tiles[10] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0072.png")); // detailed ground piece
 			tiles[11] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0052.png")); // left/right wall
-			tiles[12] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0001.png")); // right bottom inner
-																								// corner
-			tiles[13] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0003.png")); // left bottom inner
-																								// corner
+			tiles[12] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0001.png")); // right bottom inner corner												// corner
+			tiles[13] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0003.png")); // left bottom inner corner
 			tiles[14] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0025.png")); // right top inner corner
 			tiles[15] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0027.png")); // left top inner corner
 			tiles[16] = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0006.png")); // single block font
@@ -104,6 +102,10 @@ public class Stage {
 						obstacles[i][j].enable();
 					else
 						obstacles[i][j].disable();
+				}
+				if (i == obstacles.length - 3 && j == obstacles[i].length - 3)
+				{
+					obstacles[i][j].enable();
 				}
 			}
 		}

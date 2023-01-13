@@ -80,18 +80,18 @@ public class HUD {
 		{
 			return;
 		}
-		if (GameJPanel.getMouseX() > 1193 && GameJPanel.getMouseX() < 1238 
-				&& GameJPanel.getMouseY() > 10 && GameJPanel.getMouseY() < 55)
-		{
-			homePressed = true; 
-		}
+//		if (GameJPanel.getMouseX() > 1193 && GameJPanel.getMouseX() < 1238 
+//				&& GameJPanel.getMouseY() > 10 && GameJPanel.getMouseY() < 55)
+//		{
+//			homePressed = true; 
+//		}
 //		else if (GameJPanel.getMouseX() < 0 || GameJPanel.getMouseX() > 1265 || GameJPanel.getMouseY() < 0
 //				|| GameJPanel.getMouseY() > 688)
 //		{
 //			pausePressed = true;
 //		}
-		else if (GameJPanel.getMouseX() > 1135 && GameJPanel.getMouseX() < 1180 
-				&& GameJPanel.getMouseY() > 10 && GameJPanel.getMouseY() < 55)
+		if (GameJPanel.getMouseX() > 1193 && GameJPanel.getMouseX() < 1238 
+			&& GameJPanel.getMouseY() > 10 && GameJPanel.getMouseY() < 55)
 		{
 			pausePressed = true;
 		}
@@ -207,42 +207,42 @@ public class HUD {
 		}
 		if (!pausePressed)
 		{
-			g.drawImage(pause1, 1135, 10, 45, 45, null);
+			g.drawImage(pause1, 1193, 10, 45, 45, null);
 		}
 		else
 		{
 			if (frames < 5)
 			{
-				g.drawImage(pause2, 1135, 10, 45, 45, null);
+				g.drawImage(pause2, 1193, 10, 45, 45, null);
 			}
 			else if (frames < 10)
 			{
-				g.drawImage(pause3, 1135, 10, 45, 45, null);
+				g.drawImage(pause3, 1193, 10, 45, 45, null);
 			}
 			else
 			{
-				g.drawImage(play1, 1135, 10, 45, 45, null);
+				g.drawImage(play1, 1193, 10, 45, 45, null);
 			}
 		}
 		
-		if (!homePressed)
-		{
-			g.drawImage(home1, 1193, 10, 45, 45, null);
-		}
-		else 
-		{
-			if (frames < 5)
-			{
-				g.drawImage(home2, 1193, 10, 45, 45, null);
-			}
-			else if (frames < 10)
-			{
-				g.drawImage(home3, 1193, 10, 45, 45, null);
-			}
-			else
-			{
-				g.drawImage(home1, 1193, 10, 45, 45, null);
-			}
-		}
+//		if (!homePressed)
+//		{
+//			g.drawImage(home1, 1193, 10, 45, 45, null);
+//		}
+//		else 
+//		{
+//			if (frames < 5)
+//			{
+//				g.drawImage(home2, 1193, 10, 45, 45, null);
+//			}
+//			else if (frames < 10)
+//			{
+//				g.drawImage(home3, 1193, 10, 45, 45, null);
+//			}
+//			else
+//			{
+//				g.drawImage(home1, 1193, 10, 45, 45, null);
+//			}
+//		}
 	}
 }

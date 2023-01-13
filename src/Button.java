@@ -4,10 +4,10 @@ import java.awt.geom.*;
 
 import java.awt.event.MouseEvent;
 public abstract class Button {
-	private int x;
+	protected int x;
 	private int y;
     protected String text;
-    private Font font;
+    protected Font font;
     //The color the button is normally
     protected Color defaultColor;
     //The color the button is while being hovered over

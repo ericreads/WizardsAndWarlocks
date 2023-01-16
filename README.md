@@ -13,6 +13,8 @@ You have been caught by the King's Guards, and await your invetible punishment i
 dungeon. Fight your way through the palace with your sorceries and restore peace to Exalos!
 
 - - -
+
+Play the game on itch: https://harperic.itch.io/wizards-and-warlocks
 ### Credits
 
 - Eric Harper (Project Manager & Developer)
